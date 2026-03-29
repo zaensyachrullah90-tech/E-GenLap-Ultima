@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#09090b">
   <title>E-GenLap | SDM PKH Nasional</title>
   
-  <!-- Library -->
+  <!-- Library Tailwind CSS & FontAwesome & Supabase -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -76,8 +76,8 @@
 
 <body class="app-bg font-sans antialiased text-gray-100 selection:bg-blue-500 selection:text-white relative">
 
-  <!-- LOADING UI (Dipercepat tanpa delay lambat) -->
-  <div id="fullscreenLoading" class="fixed inset-0 bg-[#09090b]/95 backdrop-blur-xl z-[9999] hidden flex-col items-center justify-center transition-opacity duration-200 opacity-0">
+  <!-- LOADING UI (Dipercepat presisi di tengah HP) -->
+  <div id="fullscreenLoading" class="fixed inset-0 bg-[#09090b]/95 backdrop-blur-xl z-[9999] hidden flex-col items-center justify-center transition-opacity duration-200 opacity-0 h-screen w-screen">
       <div class="relative w-20 h-20 flex items-center justify-center mb-4 mx-auto">
           <div class="absolute inset-0 border-4 border-blue-900/50 rounded-full animate-ping"></div>
           <div class="absolute inset-2 border-4 border-blue-500/30 rounded-full animate-spin shadow-[0_0_30px_rgba(59,130,246,0.4)]" style="animation-direction: reverse; animation-duration: 1.5s;"></div>
@@ -86,7 +86,7 @@
               <i class="fas fa-bolt text-lg text-blue-400"></i>
           </div>
       </div>
-      <h2 class="text-sm font-black text-blue-400 tracking-[0.2em] animate-pulse">MEMPROSES DATA...</h2>
+      <h2 class="text-sm font-black text-blue-400 tracking-[0.2em] animate-pulse text-center">MEMPROSES DATA...</h2>
   </div>
 
   <!-- TOAST NOTIFICATION CONTAINER -->
@@ -107,7 +107,7 @@
           </button>
       </div>
 
-      <!-- List Menu -->
+      <!-- List Menu Utama -->
       <div class="flex-grow overflow-y-auto py-4 px-4 space-y-1.5 custom-scrollbar">
           <button onclick="nav('dashboard'); toggleMenu()" class="w-full flex items-center p-3 rounded-xl hover:bg-blue-600/10 text-sm font-bold text-zinc-300 hover:text-blue-400 transition-all border border-transparent hover:border-blue-500/30">
               <i class="fas fa-home w-6 text-center mr-2 text-blue-500"></i> Dashboard
@@ -133,10 +133,6 @@
               <i class="fas fa-coins w-6 text-center mr-2 text-yellow-500"></i> Beli Token
           </button>
 
-          <button onclick="nav('panduan'); toggleMenu()" class="w-full flex items-center p-3 rounded-xl hover:bg-blue-600/10 text-sm font-bold text-zinc-300 hover:text-blue-400 transition-all border border-transparent hover:border-blue-500/30">
-              <i class="fas fa-book w-6 text-center mr-2 text-blue-500"></i> Panduan
-          </button>
-          
           <!-- Menu Khusus Admin -->
           <div id="adminSideLinks" class="hidden mt-4 pt-4 border-t border-zinc-700/50 space-y-1.5">
               <p class="text-[10px] text-blue-500 font-black px-3 uppercase tracking-wider mb-2">Super Admin</p>
@@ -160,6 +156,29 @@
           <button onclick="logout()" class="w-full bg-red-500/10 text-red-500 border border-red-500/30 p-3 rounded-xl font-bold hover:bg-red-500/30 transition-all text-sm flex items-center justify-center">
               <i class="fas fa-power-off mr-2"></i> Keluar Akun
           </button>
+      </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL KHUSUS PEMBELIAN TOKEN (HARGA RAKSASA)   -->
+  <!-- ============================================== -->
+  <div id="modalConfirmBeli" class="fixed inset-0 bg-[#09090b]/90 backdrop-blur-md z-[9999] hidden flex-col items-center justify-center p-4">
+      <div class="glossy-monster w-full max-w-sm rounded-2xl p-6 text-center shadow-[0_0_40px_rgba(59,130,246,0.6)]">
+          <i class="fas fa-shopping-cart text-5xl text-yellow-400 mb-4 drop-shadow-[0_0_15px_rgba(250,204,21,0.8)]"></i>
+          <h3 class="text-xl font-black text-white mb-1 uppercase tracking-widest">Konfirmasi Beli</h3>
+          <p class="text-sm text-blue-300 font-bold mb-4" id="txtPaketBeli">Paket (Token)</p>
+          
+          <div class="bg-black/50 p-4 rounded-xl border border-yellow-500/50 mb-5">
+              <p class="text-xs text-zinc-400 font-bold uppercase mb-1">Total yang harus dibayar:</p>
+              <p class="text-4xl font-black text-yellow-400 tracking-tighter" id="txtHargaBeli">Rp 0</p>
+          </div>
+          
+          <div class="flex gap-3">
+              <button onclick="document.getElementById('modalConfirmBeli').classList.add('hidden')" class="w-1/2 p-3 rounded-xl bg-zinc-800 text-sm font-bold text-zinc-300 hover:bg-zinc-700 transition-all">Batal</button>
+              <button onclick="eksekusiBeliWA()" class="w-1/2 p-3 rounded-xl bg-gradient-to-r from-green-500 to-green-400 text-white text-sm font-extrabold hover:shadow-[0_0_20px_rgba(34,197,94,0.6)] transition-all">
+                  <i class="fab fa-whatsapp mr-1"></i> Lanjut WA
+              </button>
+          </div>
       </div>
   </div>
 
@@ -252,7 +271,7 @@
             <ul class="text-[10px] text-zinc-300 text-left space-y-2">
                 <li><i class="fas fa-robot text-blue-500 w-4"></i> <b>Generate AI Cerdas:</b> Laporan otomatis disusun sempurna dalam hitungan detik.</li>
                 <li><i class="fas fa-balance-scale text-blue-500 w-4"></i> <b>Analisis Hukum:</b> Dasar hukum riil Kemensos dianalisa & disisipkan otomatis ke PDF.</li>
-                <li><i class="fas fa-folder-tree text-blue-500 w-4"></i> <b>Arsip Drive Terstruktur:</b> PDF tersusun rapi dalam folder berhierarki (Tahun/Bulan/Kategori RHK).</li>
+                <li><i class="fas fa-folder-tree text-blue-500 w-4"></i> <b>Arsip Drive Terstruktur:</b> PDF tersusun rapi dalam folder berhierarki (RHK/Bulan/Kegiatan).</li>
                 <li><i class="fas fa-gift text-yellow-400 w-4 animate-pulse"></i> <b class="text-yellow-400">Daftar Sekarang:</b> Dapatkan 1 Token Laporan GRATIS hari ini!</li>
             </ul>
         </div>
@@ -325,10 +344,18 @@
                 
                 <select id="filterBulanDashboard" class="p-1 text-[10px] rounded bg-zinc-800 text-white border border-zinc-600 font-bold" onchange="hitungStatistikDashboard()">
                     <option value="all">Semua Bulan</option>
-                    <option value="01">Januari</option><option value="02">Februari</option><option value="03">Maret</option>
-                    <option value="04">April</option><option value="05">Mei</option><option value="06">Juni</option>
-                    <option value="07">Juli</option><option value="08">Agustus</option><option value="09">September</option>
-                    <option value="10">Oktober</option><option value="11">November</option><option value="12">Desember</option>
+                    <option value="01">Januari</option>
+                    <option value="02">Februari</option>
+                    <option value="03">Maret</option>
+                    <option value="04">April</option>
+                    <option value="05">Mei</option>
+                    <option value="06">Juni</option>
+                    <option value="07">Juli</option>
+                    <option value="08">Agustus</option>
+                    <option value="09">September</option>
+                    <option value="10">Oktober</option>
+                    <option value="11">November</option>
+                    <option value="12">Desember</option>
                 </select>
             </div>
             
@@ -354,7 +381,9 @@
                         </tr>
                     </thead>
                     <tbody id="dashRincianRHK" class="divide-y divide-zinc-800/50">
-                        <tr><td colspan="3" class="text-center italic p-3 text-zinc-500">Memuat rincian...</td></tr>
+                        <tr>
+                            <td colspan="3" class="text-center italic p-3 text-zinc-500">Memuat rincian...</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -453,27 +482,53 @@
                    </div>
                  </div>
             </div>
-            <button type="button" onclick="tambahSurat()" class="text-[10px] text-blue-400 hover:text-blue-300 mt-2 font-bold flex items-center gap-1"><i class="fas fa-plus-circle"></i> Tambah Surat</button>
+            <button type="button" onclick="tambahSurat()" class="text-[10px] text-blue-400 hover:text-blue-300 mt-2 font-bold flex items-center gap-1">
+                <i class="fas fa-plus-circle"></i> Tambah Surat
+            </button>
           </div>
 
           <div class="grid grid-cols-2 gap-3 mb-4">
-             <div><label class="block text-xs font-bold text-blue-300 mb-1">Tanggal</label><input type="date" id="tanggalLaporan" class="w-full p-3 text-sm rounded-xl glossy-input" required></div>
-             <div><label class="block text-xs font-bold text-blue-300 mb-1">Jam</label><input type="time" id="jamMulai" class="w-full p-3 text-sm rounded-xl glossy-input" required></div>
+             <div>
+                 <label class="block text-xs font-bold text-blue-300 mb-1">Tanggal</label>
+                 <input type="date" id="tanggalLaporan" class="w-full p-3 text-sm rounded-xl glossy-input" required>
+             </div>
+             <div>
+                 <label class="block text-xs font-bold text-blue-300 mb-1">Jam</label>
+                 <input type="time" id="jamMulai" class="w-full p-3 text-sm rounded-xl glossy-input" required>
+             </div>
           </div>
   
           <div class="grid grid-cols-2 gap-3 mb-4">
-             <div><label class="block text-xs font-bold text-blue-300 mb-1">Nama Petugas</label><input type="text" id="namaPetugas" class="w-full p-3 text-sm rounded-xl glossy-input" readonly></div>
-             <div><label class="block text-xs font-bold text-blue-300 mb-1">NIP</label><input type="text" id="nip" class="w-full p-3 text-sm rounded-xl glossy-input" readonly></div>
+             <div>
+                 <label class="block text-xs font-bold text-blue-300 mb-1">Nama Petugas</label>
+                 <input type="text" id="namaPetugas" class="w-full p-3 text-sm rounded-xl glossy-input" readonly>
+             </div>
+             <div>
+                 <label class="block text-xs font-bold text-blue-300 mb-1">NIP</label>
+                 <input type="text" id="nip" class="w-full p-3 text-sm rounded-xl glossy-input" readonly>
+             </div>
           </div>
  
           <div class="grid grid-cols-2 gap-3 mb-4">
-             <div><label class="block text-xs font-bold text-blue-300 mb-1">Jabatan</label><input type="text" id="jabatan" class="w-full p-3 text-sm rounded-xl glossy-input" readonly></div>
-             <div><label class="block text-xs font-bold text-blue-300 mb-1">Email</label><input type="email" id="emailTarget" class="w-full p-3 text-sm rounded-xl glossy-input" readonly></div>
+             <div>
+                 <label class="block text-xs font-bold text-blue-300 mb-1">Jabatan</label>
+                 <input type="text" id="jabatan" class="w-full p-3 text-sm rounded-xl glossy-input" readonly>
+             </div>
+             <div>
+                 <label class="block text-xs font-bold text-blue-300 mb-1">Email</label>
+                 <input type="email" id="emailTarget" class="w-full p-3 text-sm rounded-xl glossy-input" readonly>
+             </div>
           </div>
        
           <div class="grid grid-cols-2 gap-3 mb-4">
-            <div><label class="block text-xs font-bold text-blue-300 mb-1">Kabupaten/Kota</label><input type="text" id="kabupaten" value="Tapin" class="w-full p-3 text-sm rounded-xl glossy-input" required></div>
-             <div><label class="block text-xs font-bold text-blue-300 mb-1">Lokasi</label><input type="text" id="lokasi" class="w-full p-3 text-sm rounded-xl glossy-input" placeholder="Kantor Desa..." required></div>
+            <div>
+                <label class="block text-xs font-bold text-blue-300 mb-1">Kabupaten/Kota</label>
+                <input type="text" id="kabupaten" value="Tapin" class="w-full p-3 text-sm rounded-xl glossy-input" required>
+            </div>
+             <div>
+                 <label class="block text-xs font-bold text-blue-300 mb-1">Lokasi</label>
+                 <input type="text" id="lokasi" class="w-full p-3 text-sm rounded-xl glossy-input" placeholder="Kantor Desa..." required>
+             </div>
           </div>
 
           <div class="mb-4 bg-blue-900/10 p-3 rounded-xl border border-blue-500/30">
@@ -489,16 +544,21 @@
           <div class="mb-4">
             <label class="block text-xs font-bold text-blue-300 mb-1">Upload TTD</label>
             <input type="file" id="formTtdFile" accept="image/png, image/jpeg" class="w-full text-sm rounded-xl glossy-input text-zinc-400 file:mr-3 file:py-2 file:px-4 file:rounded-l-xl file:border-0 file:text-xs file:font-bold file:bg-blue-500 file:text-white cursor-pointer" onchange="prosesTtdForm(event)" required>
+            
             <div id="previewTtdContainer" class="hidden mt-3 relative w-[100px] h-[50px] bg-white rounded-lg p-1 shadow-md">
                 <img id="imgTtdPreview" src="" class="w-full h-full object-contain">
-                <div onclick="hapusTtdForm()" class="absolute -top-2 -right-2 bg-red-600 text-white w-5 h-5 flex items-center justify-center rounded-full cursor-pointer"><i class="fas fa-times"></i></div>
+                <div onclick="hapusTtdForm()" class="absolute -top-2 -right-2 bg-red-600 text-white w-5 h-5 flex items-center justify-center rounded-full cursor-pointer">
+                    <i class="fas fa-times"></i>
+                </div>
             </div>
           </div>
 
           <div class="mb-4">
             <label class="block text-xs font-bold text-blue-300 mb-2">Lampiran (Maks 3)</label>
             <div class="bg-black/40 border border-blue-500/20 p-3 rounded-xl min-h-[60px] flex items-center gap-2 overflow-x-auto">
-                <div onclick="document.getElementById('lampiranFile').click()" class="shrink-0 w-12 h-12 bg-blue-500/10 border border-dashed border-blue-500/50 flex items-center justify-center rounded-lg cursor-pointer text-blue-400"><i class="fas fa-paperclip"></i></div>
+                <div onclick="document.getElementById('lampiranFile').click()" class="shrink-0 w-12 h-12 bg-blue-500/10 border border-dashed border-blue-500/50 flex items-center justify-center rounded-lg cursor-pointer text-blue-400">
+                    <i class="fas fa-paperclip"></i>
+                </div>
                 <div id="previewLampiranContainer" class="flex gap-2"></div>
                 <input type="file" id="lampiranFile" accept="image/*" multiple class="hidden" onchange="prosesLampiran(event)">
             </div>
@@ -508,8 +568,12 @@
           <div class="mb-5">
             <label class="block text-xs font-bold text-blue-300 mb-2">Foto Kegiatan (Maks 10)</label>
             <div class="bg-black/40 border border-blue-500/20 p-3 rounded-xl min-h-[60px] flex items-center gap-2 overflow-x-auto">
-                <div onclick="document.getElementById('inputKamera').click()" class="shrink-0 w-12 h-12 bg-blue-500/10 border border-dashed border-blue-500/50 flex items-center justify-center rounded-lg cursor-pointer text-blue-400"><i class="fas fa-camera"></i></div>
-                <div onclick="document.getElementById('inputGaleri').click()" class="shrink-0 w-12 h-12 bg-blue-500/10 border border-dashed border-blue-500/50 flex items-center justify-center rounded-lg cursor-pointer text-blue-400"><i class="fas fa-image"></i></div>
+                <div onclick="document.getElementById('inputKamera').click()" class="shrink-0 w-12 h-12 bg-blue-500/10 border border-dashed border-blue-500/50 flex items-center justify-center rounded-lg cursor-pointer text-blue-400">
+                    <i class="fas fa-camera"></i>
+                </div>
+                <div onclick="document.getElementById('inputGaleri').click()" class="shrink-0 w-12 h-12 bg-blue-500/10 border border-dashed border-blue-500/50 flex items-center justify-center rounded-lg cursor-pointer text-blue-400">
+                    <i class="fas fa-image"></i>
+                </div>
                 <div id="previewFotoContainer" class="flex gap-2"></div>
                 <input type="file" id="inputKamera" accept="image/*" capture="environment" class="hidden" onchange="prosesFoto(event)">
                 <input type="file" id="inputGaleri" accept="image/*" multiple class="hidden" onchange="prosesFoto(event)">
@@ -546,10 +610,17 @@
         <div class="overflow-x-auto overflow-y-auto custom-scrollbar rounded-lg border border-zinc-700 pb-2 relative w-full">
              <table class="min-w-full text-left text-[10px] text-zinc-300">
                 <thead class="bg-zinc-900/80 text-blue-400 border-b border-blue-500/20 sticky top-0 z-10">
-                    <tr><th class="p-3 whitespace-nowrap">Nama</th><th class="p-3 whitespace-nowrap">Tanggal & Jam</th><th class="p-3 whitespace-nowrap">Kegiatan</th><th class="p-3 whitespace-nowrap">Status</th></tr>
+                    <tr>
+                        <th class="p-3 whitespace-nowrap">Nama</th>
+                        <th class="p-3 whitespace-nowrap">Tanggal & Jam</th>
+                        <th class="p-3 whitespace-nowrap">Kegiatan</th>
+                        <th class="p-3 whitespace-nowrap">Status</th>
+                    </tr>
                 </thead>
                 <tbody id="tableBody" class="divide-y divide-zinc-800/50">
-                    <tr><td colspan="4" class="text-center p-6"><i class="fas fa-spinner fa-spin text-blue-500 mb-2"></i></td></tr>
+                    <tr>
+                        <td colspan="4" class="text-center p-6"><i class="fas fa-spinner fa-spin text-blue-500 mb-2"></i></td>
+                    </tr>
                 </tbody>
              </table>
         </div>
@@ -567,15 +638,23 @@
       <section id="sec-arsip" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
         <div class="flex justify-between items-center mb-4 border-b border-zinc-700 pb-2">
             <h2 class="text-lg font-bold text-blue-400"><i class="fas fa-folder-open mr-2"></i> Arsip Laporan (Drive)</h2>
-            <button onclick="loadDashboardData()" class="text-xs bg-blue-500/20 text-blue-400 hover:bg-blue-500/40 p-2 rounded-lg"><i class="fas fa-sync-alt"></i></button>
+            <button onclick="loadDashboardData()" class="text-xs bg-blue-500/20 text-blue-400 hover:bg-blue-500/40 p-2 rounded-lg">
+                <i class="fas fa-sync-alt"></i>
+            </button>
         </div>
         <div class="overflow-y-auto max-h-[65vh] custom-scrollbar rounded-lg border border-zinc-700 w-full">
            <table class="min-w-full text-left text-[10px] text-zinc-300">
                <thead class="bg-zinc-900/80 text-blue-400 sticky top-0 z-10">
-                   <tr><th class="p-3 whitespace-nowrap">Tanggal</th><th class="p-3">Rencana Aksi / Kegiatan</th><th class="p-3 text-center whitespace-nowrap">Link Drive</th></tr>
+                   <tr>
+                       <th class="p-3 whitespace-nowrap">Tanggal</th>
+                       <th class="p-3">Rencana Aksi / Kegiatan</th>
+                       <th class="p-3 text-center whitespace-nowrap">Link Drive</th>
+                   </tr>
                </thead>
                <tbody id="tableArsipBody" class="divide-y divide-zinc-800/50">
-                   <tr><td colspan="3" class="text-center p-6"><i class="fas fa-spinner fa-spin text-blue-500"></i></td></tr>
+                   <tr>
+                       <td colspan="3" class="text-center p-6"><i class="fas fa-spinner fa-spin text-blue-500"></i></td>
+                   </tr>
                </tbody>
            </table>
         </div>
@@ -595,18 +674,42 @@
         </div>
         
         <div class="mb-3 bg-blue-900/20 border border-blue-500/30 p-4 rounded-xl flex justify-between items-center">
-            <div><h3 class="font-bold text-white text-md">Paket Basic</h3><p class="text-xs text-zinc-300">6 Token</p></div>
-            <div class="text-right"><p class="text-lg font-black text-blue-400 mb-1">Rp 10.000</p><button onclick="konfirmasiWA('Basic', 6, 10000)" class="bg-green-600 text-white font-bold py-1.5 px-3 rounded-lg text-xs"><i class="fab fa-whatsapp"></i> Beli</button></div>
+            <div>
+                <h3 class="font-bold text-white text-md">Paket Basic</h3>
+                <p class="text-xs text-zinc-300">6 Token</p>
+            </div>
+            <div class="text-right">
+                <p class="text-lg font-black text-blue-400 mb-1">Rp 10.000</p>
+                <button onclick="konfirmasiWA('Basic', 6, 10000)" class="bg-green-600 text-white font-bold py-1.5 px-3 rounded-lg text-xs hover:scale-95 transition-transform">
+                    <i class="fab fa-whatsapp"></i> Beli
+                </button>
+            </div>
         </div>
         
         <div class="mb-3 bg-blue-900/20 border border-blue-500/30 p-4 rounded-xl flex justify-between items-center">
-            <div><h3 class="font-bold text-white text-md flex items-center gap-1">Paket Pro <i class="fas fa-star text-yellow-400 text-[10px]"></i></h3><p class="text-xs text-zinc-300">20 Token</p></div>
-            <div class="text-right"><p class="text-lg font-black text-blue-400 mb-1">Rp 30.000</p><button onclick="konfirmasiWA('Pro', 20, 30000)" class="bg-green-600 text-white font-bold py-1.5 px-3 rounded-lg text-xs"><i class="fab fa-whatsapp"></i> Beli</button></div>
+            <div>
+                <h3 class="font-bold text-white text-md flex items-center gap-1">Paket Pro <i class="fas fa-star text-yellow-400 text-[10px]"></i></h3>
+                <p class="text-xs text-zinc-300">20 Token</p>
+            </div>
+            <div class="text-right">
+                <p class="text-lg font-black text-blue-400 mb-1">Rp 30.000</p>
+                <button onclick="konfirmasiWA('Pro', 20, 30000)" class="bg-green-600 text-white font-bold py-1.5 px-3 rounded-lg text-xs hover:scale-95 transition-transform">
+                    <i class="fab fa-whatsapp"></i> Beli
+                </button>
+            </div>
         </div>
         
         <div class="mb-4 bg-blue-900/20 border border-blue-500/30 p-4 rounded-xl flex justify-between items-center">
-            <div><h3 class="font-bold text-white text-md flex items-center gap-1">Paket Ultra <i class="fas fa-crown text-yellow-400 text-[10px]"></i></h3><p class="text-xs text-zinc-300">35 Token</p></div>
-            <div class="text-right"><p class="text-lg font-black text-blue-400 mb-1">Rp 50.000</p><button onclick="konfirmasiWA('Ultra', 35, 50000)" class="bg-green-600 text-white font-bold py-1.5 px-3 rounded-lg text-xs"><i class="fab fa-whatsapp"></i> Beli</button></div>
+            <div>
+                <h3 class="font-bold text-white text-md flex items-center gap-1">Paket Ultra <i class="fas fa-crown text-yellow-400 text-[10px]"></i></h3>
+                <p class="text-xs text-zinc-300">35 Token</p>
+            </div>
+            <div class="text-right">
+                <p class="text-lg font-black text-blue-400 mb-1">Rp 50.000</p>
+                <button onclick="konfirmasiWA('Ultra', 35, 50000)" class="bg-green-600 text-white font-bold py-1.5 px-3 rounded-lg text-xs hover:scale-95 transition-transform">
+                    <i class="fab fa-whatsapp"></i> Beli
+                </button>
+            </div>
         </div>
         
         <div class="p-3 bg-red-900/20 border border-red-500/30 rounded-xl mb-2">
@@ -622,15 +725,23 @@
       <!-- ============================================== -->
       <section id="sec-admin" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
          <h2 class="text-lg font-bold text-blue-400 border-b border-zinc-700 pb-2"><i class="fas fa-user-shield mr-2"></i> Manajemen User & Token</h2>
-         <button onclick="loadAdminUsers()" class="w-full mt-4 p-2 bg-blue-500/20 text-blue-400 border border-blue-500/50 rounded-xl text-xs font-bold mb-3"><i class="fas fa-sync"></i> Refresh User</button>
+         <button onclick="loadAdminUsers()" class="w-full mt-4 p-2 bg-blue-500/20 text-blue-400 border border-blue-500/50 rounded-xl text-xs font-bold mb-3">
+             <i class="fas fa-sync"></i> Refresh User
+         </button>
          
          <div class="overflow-x-auto rounded-lg border border-zinc-700">
             <table class="min-w-full text-left text-[10px] text-zinc-300">
              <thead class="bg-zinc-900/80 text-blue-400 border-b border-blue-500/20">
-                 <tr><th class="p-2">User / Email</th><th class="p-2 text-center">Token</th><th class="p-2 text-center">Aksi Token</th></tr>
+                 <tr>
+                     <th class="p-2">User / Email</th>
+                     <th class="p-2 text-center">Token</th>
+                     <th class="p-2 text-center">Aksi (Token/Hapus)</th>
+                 </tr>
             </thead>
             <tbody id="adminUserTable" class="divide-y divide-zinc-800/50">
-               <tr><td colspan="3" class="text-center p-4">Klik Refresh User</td></tr>
+               <tr>
+                   <td colspan="3" class="text-center p-4">Klik Refresh User</td>
+               </tr>
             </tbody>
            </table>
          </div>
@@ -688,21 +799,35 @@
                  <option value="Hari Ini">Hari Ini</option>
                  <option value="Bulan Ini">Bulan Ini</option>
              </select>
-             <button onclick="loadMonitoringAdmin()" class="bg-blue-500/20 text-blue-400 border border-blue-500/50 px-3 py-2 rounded-lg text-xs font-bold hover:bg-blue-500/30"><i class="fas fa-sync-alt"></i></button>
+             <button onclick="loadMonitoringAdmin()" class="bg-blue-500/20 text-blue-400 border border-blue-500/50 px-3 py-2 rounded-lg text-xs font-bold hover:bg-blue-500/30">
+                 <i class="fas fa-sync-alt"></i>
+             </button>
          </div>
          
          <div id="monitoringSummary" class="bg-zinc-900/80 p-3 rounded-xl border border-blue-500/30 mb-4 hidden">
-             <div class="flex justify-between text-xs text-zinc-300 mb-1"><span>Pendapatan:</span><span id="txtTotalPendapatan" class="text-blue-400 font-bold text-sm">Rp 0</span></div>
-             <div class="flex justify-between text-xs text-zinc-300"><span>Token Terjual:</span><span id="txtTotalToken" class="text-white font-bold text-sm">0 Token</span></div>
+             <div class="flex justify-between text-xs text-zinc-300 mb-1">
+                 <span>Pendapatan:</span>
+                 <span id="txtTotalPendapatan" class="text-blue-400 font-bold text-sm">Rp 0</span>
+             </div>
+             <div class="flex justify-between text-xs text-zinc-300">
+                 <span>Token Terjual:</span>
+                 <span id="txtTotalToken" class="text-white font-bold text-sm">0 Token</span>
+             </div>
          </div>
          
          <div class="overflow-x-auto overflow-y-auto max-h-40 custom-scrollbar rounded-lg border border-zinc-700 mb-4 w-full">
              <table class="min-w-full text-left text-[10px] text-zinc-300">
                   <thead class="bg-zinc-900/80 text-blue-400 sticky top-0">
-                    <tr><th class="p-2 whitespace-nowrap">Nama Pembeli</th><th class="p-2 text-center whitespace-nowrap">Total Token</th><th class="p-2 text-right whitespace-nowrap">Total Nominal (Rp)</th></tr>
+                    <tr>
+                        <th class="p-2 whitespace-nowrap">Nama Pembeli</th>
+                        <th class="p-2 text-center whitespace-nowrap">Total Token</th>
+                        <th class="p-2 text-right whitespace-nowrap">Total Nominal (Rp)</th>
+                    </tr>
                  </thead>
                 <tbody id="rekapUserTable" class="divide-y divide-zinc-800/50">
-                     <tr><td colspan="3" class="text-center p-4 text-zinc-500">Memuat data...</td></tr>
+                     <tr>
+                         <td colspan="3" class="text-center p-4 text-zinc-500">Memuat data...</td>
+                     </tr>
                </tbody>
             </table>
          </div>
@@ -740,17 +865,22 @@
     <nav id="bottomNav" class="fixed bottom-0 w-full max-w-md left-1/2 transform -translate-x-1/2 bg-[#09090b] border-t border-blue-900/40 shadow-[0_-10px_20px_rgba(0,0,0,0.8)] flex justify-between px-2 py-2 z-[9000] h-16 items-center rounded-t-3xl backdrop-blur-xl bg-opacity-95 hidden">
         <button onclick="nav('dashboard', this)" class="nav-btn flex-1 flex flex-col items-center text-blue-400"><i class="fas fa-home text-lg"></i><span class="text-[9px] font-bold mt-1">Beranda</span></button>
         <button onclick="nav('agenda', this)" class="nav-btn flex-1 flex flex-col items-center text-zinc-500 hover:text-blue-300"><i class="fas fa-calendar-alt text-lg"></i><span class="text-[9px] font-bold mt-1">Agenda</span></button>
-        <div class="relative flex-[1.2] flex justify-center"><button onclick="nav('generate')" class="absolute top-0 transform -translate-y-[60%] bg-gradient-to-tr from-blue-500 to-blue-300 text-white w-14 h-14 rounded-full border-4 border-[#09090b] flex items-center justify-center shadow-[0_0_15px_rgba(59,130,246,0.6)]"><i class="fas fa-plus text-xl drop-shadow-md"></i></button></div>
+        <div class="relative flex-[1.2] flex justify-center">
+            <button onclick="nav('generate')" class="absolute top-0 transform -translate-y-[60%] bg-gradient-to-tr from-blue-500 to-blue-300 text-white w-14 h-14 rounded-full border-4 border-[#09090b] flex items-center justify-center shadow-[0_0_15px_rgba(59,130,246,0.6)]">
+                <i class="fas fa-plus text-xl drop-shadow-md"></i>
+            </button>
+        </div>
         <button onclick="nav('report', this)" class="nav-btn flex-1 flex flex-col items-center text-zinc-500 hover:text-blue-300"><i class="fas fa-history text-lg"></i><span class="text-[9px] font-bold mt-1">Riwayat</span></button>
         <button onclick="nav('arsip', this)" class="nav-btn flex-1 flex flex-col items-center text-zinc-500 hover:text-blue-300"><i class="fas fa-folder-open text-lg"></i><span class="text-[9px] font-bold mt-1">Arsip</span></button>
     </nav>
   </div>
 
+  <!-- SCRIPT LOGIKA UTAMA -->
   <script>
     // ==========================================
     // API ENDPOINT - LINK WEB APP GAS ANDA (PENTING)
     // ==========================================
-    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbyix0w6NIDuvCQ1qRo93dPR0C_59Okd9oezSyhs2j-UZKYmoshM578HUgLASXLbRYrs/exec";
+    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzhP38wQWAuvxmvyQaDLK31sDTHMR21DoEdRgC5kg4c_99Ok4ijNJAdNOMRF4wdJ_7H/exec";
 
     const $ = id => document.getElementById(id);
     const SUPABASE_URL = "https://rtqfwssxwsrgttvfgerg.supabase.co"; 
@@ -775,6 +905,10 @@
     let adminWA = "6289504686529";
     let adminRek = "BSI: 1234567890 a.n Admin";
     let adminQRIS = "https://drive.google.com/thumbnail?id=1DenWfIyBEbCrK1zaFHe_Xa9cHqfZXYCf&sz=w800";
+    
+    let tempBeliPaket = "";
+    let tempBeliJml = 0;
+    let tempBeliHarga = 0;
 
     // HARDCODED FALLBACK RHK (AGAR TIDAK PERNAH KOSONG)
     const fbRHK = [
@@ -852,6 +986,7 @@
         const t = document.createElement('div');
         const i = type==='success' ? '<i class="fas fa-check-circle text-blue-400 text-lg"></i>' : '<i class="fas fa-times-circle text-red-500 text-lg"></i>';
         const b = type==='success' ? 'bg-zinc-900 border-blue-500/40' : 'bg-red-950 border-red-500/50';
+        
         t.className = `flex items-center gap-3 p-3 rounded-xl backdrop-blur-md shadow-2xl border transform transition-all duration-300 translate-y-[-20px] opacity-0 ${b} text-white`; 
         t.innerHTML = `${i} <span class="text-sm font-bold">${msg}</span>`; 
         $('toastContainer').appendChild(t);
@@ -1005,7 +1140,7 @@
     }
 
     // ==========================================
-    // AUTHENTICATION LOGIC (DENGAN BYPASS ADMIN)
+    // AUTHENTICATION LOGIC (DENGAN BYPASS ADMIN MUTLAK)
     // ==========================================
     function toggleAuthForm() { 
         $('formLogin').classList.toggle('hidden'); 
@@ -1104,14 +1239,30 @@
         $('btnHeaderHamburger').classList.remove('hidden');
         $('sideMenuRole').innerText = currentUser.data.email;
         
+        const readOnlyFields = ['namaPetugas', 'nip', 'jabatan', 'emailTarget'];
+
         if(currentUser.role === 'admin') { 
             $('adminSideLinks').classList.remove('hidden'); 
             $('adminFilterContainer').classList.remove('hidden'); 
+            
+            // ADMIN BISA MENGUBAH FORM INPUT (TIDAK READONLY)
+            readOnlyFields.forEach(id => {
+               const el = $(id);
+               if(el) { el.readOnly = false; el.classList.remove('opacity-70', 'cursor-not-allowed', 'bg-zinc-900/50'); }
+            });
+            
             nav('admin'); 
             cekNotifAdmin(); 
         } else { 
             $('adminSideLinks').classList.add('hidden'); 
             $('adminFilterContainer').classList.add('hidden'); 
+            
+            // USER BIASA DIKUNCI FORM INPUTNYA
+            readOnlyFields.forEach(id => {
+               const el = $(id);
+               if(el) { el.readOnly = true; el.classList.add('opacity-70', 'cursor-not-allowed', 'bg-zinc-900/50'); }
+            });
+            
             nav('dashboard'); 
         }
         
@@ -1156,7 +1307,7 @@
             const { data, error } = await db.from('agenda_kegiatan').select('*').eq('email_user', currentUser.data.email).order('tanggal', { ascending: false });
             if(error) throw error; 
             globalAgendaData = data || [];
-            let grouped = {}, mths = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Ags","Sep","Okt","Nov","Des"];
+            let grouped = {}, mths = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
             
             globalAgendaData.forEach(ag => { 
                 const p = ag.tanggal.split('-'); 
@@ -1282,8 +1433,18 @@
             let hj = (x.jam && x.jam !== "-") ? `<span class="text-blue-300 bg-blue-900/30 px-1 rounded">${x.jam}</span>` : "";
             let lA = x.url ? `<a href="${x.url}" target="_blank" class="text-blue-400 hover:text-white"><i class="fas fa-folder"></i></a>` : "-"; 
             
-            ra += `<tr class="border-b border-zinc-800/50"><td class="p-2 text-[9px]">${x.tanggal}</td><td class="p-2 text-[9px] text-blue-100">${x.kegiatan}</td><td class="p-2 text-center">${lA}</td></tr>`; 
-            r += `<tr class="border-b border-zinc-800/50">${currentUser.role === 'admin' ? `<td class="p-2 text-[9px] text-blue-300">${x.nama}</td>` : ''}<td class="p-2 text-[9px]">${x.tanggal}<br>${hj}</td><td class="p-2 text-[9px]">${x.kegiatan}</td><td class="p-2 text-[9px] ${st}">${x.keterangan}</td></tr>`; 
+            ra += `<tr class="border-b border-zinc-800/50">
+                      <td class="p-2 text-[9px]">${x.tanggal}</td>
+                      <td class="p-2 text-[9px] text-blue-100">${x.kegiatan}</td>
+                      <td class="p-2 text-center">${lA}</td>
+                   </tr>`; 
+                   
+            r += `<tr class="border-b border-zinc-800/50">
+                    ${currentUser.role === 'admin' ? `<td class="p-2 text-[9px] text-blue-300">${x.nama}</td>` : ''}
+                    <td class="p-2 text-[9px]">${x.tanggal}<br>${hj}</td>
+                    <td class="p-2 text-[9px]">${x.kegiatan}</td>
+                    <td class="p-2 text-[9px] ${st}">${x.keterangan}</td>
+                  </tr>`; 
         });
         
         tb.innerHTML = r; 
@@ -1298,7 +1459,12 @@
     // GENERATE LAPORAN AI
     // ==========================================
     function tambahSurat() { 
-        $('containerDataSurat').insertAdjacentHTML('beforeend', `<div class="surat-item grid grid-cols-2 gap-3 mb-2 relative pt-4 border-t border-zinc-700/50 mt-2"><button type="button" onclick="this.parentElement.remove()" class="absolute top-1 right-0 text-red-500 text-[10px] font-bold"><i class="fas fa-times"></i> Hapus</button><div><input type="text" class="input-dasar-surat w-full p-2 text-xs rounded-lg glossy-input" placeholder="Dasar Surat Tambahan"></div><div><input type="text" class="input-perihal-surat w-full p-2 text-xs rounded-lg glossy-input" placeholder="Perihal Tambahan"></div></div>`); 
+        $('containerDataSurat').insertAdjacentHTML('beforeend', `
+            <div class="surat-item grid grid-cols-2 gap-3 mb-2 relative pt-4 border-t border-zinc-700/50 mt-2">
+                <button type="button" onclick="this.parentElement.remove()" class="absolute top-1 right-0 text-red-500 text-[10px] font-bold"><i class="fas fa-times"></i> Hapus</button>
+                <div><input type="text" class="input-dasar-surat w-full p-2 text-xs rounded-lg glossy-input" placeholder="Dasar Surat Tambahan"></div>
+                <div><input type="text" class="input-perihal-surat w-full p-2 text-xs rounded-lg glossy-input" placeholder="Perihal Tambahan"></div>
+            </div>`); 
     }
     
     function renderDynamicForm() { 
@@ -1328,14 +1494,54 @@
 
     function prosesTtdForm(e) { if(e.target.files[0]) resizeImg(e.target.files[0], 400, b=>{ formTtdBase64=b; $('imgTtdPreview').src=b; $('previewTtdContainer').classList.remove('hidden'); }); }
     function hapusTtdForm() { formTtdBase64=null; $('formTtdFile').value=""; $('previewTtdContainer').classList.add('hidden'); $('imgTtdPreview').src=""; }
-    function prosesLampiran(e) { for(let f of e.target.files) { if(arrayLampiranBase64.length>=3)break; resizeImg(f, 800, b=>{ arrayLampiranBase64.push(b); const c=$('previewLampiranContainer'); c.innerHTML=""; arrayLampiranBase64.forEach((b, i)=>c.innerHTML+=`<div class="relative shrink-0 w-12 h-12 rounded-lg border border-blue-500/50 overflow-hidden"><img src="${b}" class="w-full h-full object-cover"><div onclick="arrayLampiranBase64.splice(${i},1); renderLampiranPreviews()" class="absolute top-0 right-0 bg-red-600 text-white w-4 h-4 flex items-center justify-center cursor-pointer text-[8px]"><i class="fas fa-times"></i></div></div>`); $('lampiranStatus').innerText=`${arrayLampiranBase64.length} / 3 File`; }); } $('lampiranFile').value=""; }
-    function prosesFoto(e) { for(let f of e.target.files) { if(arrayFotoBase64.length>=10)break; resizeImg(f, 800, b=>{ arrayFotoBase64.push(b); const c=$('previewFotoContainer'); c.innerHTML=""; arrayFotoBase64.forEach((b, i)=>c.innerHTML+=`<div class="relative shrink-0 w-12 h-12 rounded-lg border border-blue-500/50 overflow-hidden"><img src="${b}" class="w-full h-full object-cover"><div onclick="arrayFotoBase64.splice(${i},1); renderFotoPreviews()" class="absolute top-0 right-0 bg-red-600 text-white w-4 h-4 flex items-center justify-center cursor-pointer text-[8px]"><i class="fas fa-times"></i></div></div>`); $('photoStatus').innerText=`${arrayFotoBase64.length} / 10 Foto`; }); } $('inputKamera').value=""; $('inputGaleri').value=""; }
+    function prosesLampiran(e) { 
+        for(let f of e.target.files) { 
+            if(arrayLampiranBase64.length>=3)break; 
+            resizeImg(f, 800, b=>{ 
+                arrayLampiranBase64.push(b); 
+                const c=$('previewLampiranContainer'); 
+                c.innerHTML=""; 
+                arrayLampiranBase64.forEach((b, i)=>c.innerHTML+=`<div class="relative shrink-0 w-12 h-12 rounded-lg border border-blue-500/50 overflow-hidden"><img src="${b}" class="w-full h-full object-cover"><div onclick="arrayLampiranBase64.splice(${i},1); renderLampiranPreviews()" class="absolute top-0 right-0 bg-red-600 text-white w-4 h-4 flex items-center justify-center cursor-pointer text-[8px]"><i class="fas fa-times"></i></div></div>`); 
+                $('lampiranStatus').innerText=`${arrayLampiranBase64.length} / 3 File`; 
+            }); 
+        } 
+        $('lampiranFile').value=""; 
+    }
+    
+    function renderLampiranPreviews() {
+        const c=$('previewLampiranContainer'); 
+        c.innerHTML=""; 
+        arrayLampiranBase64.forEach((b, i)=>c.innerHTML+=`<div class="relative shrink-0 w-12 h-12 rounded-lg border border-blue-500/50 overflow-hidden"><img src="${b}" class="w-full h-full object-cover"><div onclick="arrayLampiranBase64.splice(${i},1); renderLampiranPreviews()" class="absolute top-0 right-0 bg-red-600 text-white w-4 h-4 flex items-center justify-center cursor-pointer text-[8px]"><i class="fas fa-times"></i></div></div>`); 
+        $('lampiranStatus').innerText=`${arrayLampiranBase64.length} / 3 File`;
+    }
+    
+    function prosesFoto(e) { 
+        for(let f of e.target.files) { 
+            if(arrayFotoBase64.length>=10)break; 
+            resizeImg(f, 800, b=>{ 
+                arrayFotoBase64.push(b); 
+                const c=$('previewFotoContainer'); 
+                c.innerHTML=""; 
+                arrayFotoBase64.forEach((b, i)=>c.innerHTML+=`<div class="relative shrink-0 w-12 h-12 rounded-lg border border-blue-500/50 overflow-hidden"><img src="${b}" class="w-full h-full object-cover"><div onclick="arrayFotoBase64.splice(${i},1); renderFotoPreviews()" class="absolute top-0 right-0 bg-red-600 text-white w-4 h-4 flex items-center justify-center cursor-pointer text-[8px]"><i class="fas fa-times"></i></div></div>`); 
+                $('photoStatus').innerText=`${arrayFotoBase64.length} / 10 Foto`; 
+            }); 
+        } 
+        $('inputKamera').value=""; $('inputGaleri').value=""; 
+    }
+    
+    function renderFotoPreviews() {
+        const c=$('previewFotoContainer'); 
+        c.innerHTML=""; 
+        arrayFotoBase64.forEach((b, i)=>c.innerHTML+=`<div class="relative shrink-0 w-12 h-12 rounded-lg border border-blue-500/50 overflow-hidden"><img src="${b}" class="w-full h-full object-cover"><div onclick="arrayFotoBase64.splice(${i},1); renderFotoPreviews()" class="absolute top-0 right-0 bg-red-600 text-white w-4 h-4 flex items-center justify-center cursor-pointer text-[8px]"><i class="fas fa-times"></i></div></div>`); 
+        $('photoStatus').innerText=`${arrayFotoBase64.length} / 10 Foto`;
+    }
 
     function tampilkanReview(e) { 
         e.preventDefault(); 
         if(!formTtdBase64) { showToast("Tanda tangan wajib!", "error"); return; }
         const sel = $('kegiatanSelect'); if(!sel.value) { showToast("Pilih RHK!", "error"); return; }
-        $('reviewContent').innerHTML = `<p><b>Kegiatan:</b> ${sel.options[sel.selectedIndex].text}</p><p><b>Waktu:</b> ${$('tanggalLaporan').value} (${$('jamMulai').value})</p><p><b>Lokasi:</b> ${$('lokasi').value}, ${$('kabupaten').value}</p>`; $('modalReview').classList.remove('hidden'); 
+        $('reviewContent').innerHTML = `<p><b>Kegiatan:</b> ${sel.options[sel.selectedIndex].text}</p><p><b>Waktu:</b> ${$('tanggalLaporan').value} (${$('jamMulai').value})</p><p><b>Lokasi:</b> ${$('lokasi').value}, ${$('kabupaten').value}</p><p class="mt-2 text-blue-400"><b>Lampiran:</b> ${arrayLampiranBase64.length} Berkas</p><p class="text-blue-400"><b>Dokumentasi:</b> ${arrayFotoBase64.length} Foto</p>`; 
+        $('modalReview').classList.remove('hidden'); 
     }
     
     function executeGenerate() { 
@@ -1367,13 +1573,33 @@
     function loadAdminUsers() {
         const tb = $('adminUserTable'); tb.innerHTML = `<tr><td colspan="3" class="text-center p-4"><i class="fas fa-spinner fa-spin text-blue-400"></i></td></tr>`;
         apiCall('getAllUsersAdmin', {}).then(users => {
-            let h = ''; users.forEach(u => { h += `<tr class="border-b border-zinc-800/50"><td class="p-2"><div class="font-bold text-blue-300 text-[10px]">${u.nama}</div><div class="text-[9px] text-zinc-500">${u.email}</div></td><td class="p-2 font-black text-center text-yellow-400">${u.token}</td><td class="p-2 text-center"><input type="number" id="in-tok-${u.rowIdx.replace(/[^a-zA-Z0-9]/g, '')}" class="w-10 text-center p-1 text-black text-[9px] font-bold rounded" placeholder="+/-"><button onclick="updateToken('${u.email}')" class="bg-blue-600 text-white px-1.5 py-1 rounded text-[8px] font-bold"><i class="fas fa-coins"></i></button></td></tr>`; }); tb.innerHTML = h;
+            let h = ''; 
+            users.forEach(u => { 
+                h += `<tr class="border-b border-zinc-800/50">
+                        <td class="p-2"><div class="font-bold text-blue-300 text-[10px]">${u.nama}</div><div class="text-[9px] text-zinc-500">${u.email}</div></td>
+                        <td class="p-2 font-black text-center text-yellow-400">${u.token}</td>
+                        <td class="p-2 text-center">
+                            <input type="number" id="in-tok-${u.rowIdx.replace(/[^a-zA-Z0-9]/g, '')}" class="w-10 text-center p-1 text-black text-[9px] font-bold rounded" placeholder="+/-">
+                            <button onclick="updateToken('${u.email}')" class="bg-blue-600 text-white px-1.5 py-1 rounded text-[8px] font-bold"><i class="fas fa-coins"></i></button>
+                            <button onclick="hapusUserByAdmin('${u.email}')" class="bg-red-600 text-white px-1.5 py-1 rounded text-[8px] font-bold ml-1"><i class="fas fa-trash"></i></button>
+                        </td>
+                      </tr>`; 
+            }); 
+            tb.innerHTML = h;
         }).catch(e => { tb.innerHTML = `<tr><td colspan="3" class="text-center p-4 text-red-500">${e.message}</td></tr>`; });
     }
     
     function updateToken(email) {
         const v = $(`in-tok-${email.replace(/[^a-zA-Z0-9]/g, '')}`).value; if(!v) return; showLoadingUI(true);
         apiCall('updateTokenAdmin', { emailUser: email, nominalToken: parseInt(v) }).then(res => { showLoadingUI(false); showToast("Sukses"); loadAdminUsers(); }).catch(e => { showLoadingUI(false); showToast(e.message, "error"); });
+    }
+    
+    function hapusUserByAdmin(emailUser) {
+        if(!confirm(`YAKIN HAPUS PERMANEN USER ${emailUser}?`)) return;
+        showLoadingUI(true);
+        apiCall('hapusUserAdmin', { emailTarget: emailUser }).then(res => {
+            showLoadingUI(false); showToast(res.message); loadAdminUsers();
+        }).catch(e => { showLoadingUI(false); showToast(e.message, "error"); });
     }
 
     function simpanProfileAdmin() {
@@ -1437,13 +1663,26 @@
         $('monitoringSummary').classList.remove('hidden');
     }
     
-    async function konfirmasiWA(pkt, jml, hrga) {
+    function konfirmasiWA(namaPaket, jmlToken, hargaNum) {
         if(!currentUser) { showToast("Login dulu!", "error"); nav('auth'); return; } 
-        if(!$('cekSyaratToken').checked) { showToast("Centang Persetujuan Mutlak!", "error"); return; }
+        if(!document.getElementById('cekSyaratToken').checked) { showToast("Centang Persetujuan Mutlak!", "error"); return; }
+        
+        tempBeliPaket = namaPaket;
+        tempBeliJml = jmlToken;
+        tempBeliHarga = hargaNum;
+        
+        document.getElementById('txtPaketBeli').innerText = `Paket ${namaPaket} (${jmlToken} Token)`;
+        document.getElementById('txtHargaBeli').innerText = `Rp ${hargaNum.toLocaleString('id-ID')}`;
+        document.getElementById('modalConfirmBeli').classList.remove('hidden');
+    }
+    
+    async function eksekusiBeliWA() {
+        document.getElementById('modalConfirmBeli').classList.add('hidden');
         if(db) {
-            try { await db.from('notifikasi_admin').insert([{ pesan: `User ${currentUser.data.nama} klik BELI Paket ${pkt} (${jml} Token) seharga Rp ${hrga.toLocaleString('id-ID')}` }]); } catch(e) {}
+            try { await db.from('notifikasi_admin').insert([{ pesan: `User ${currentUser.data.nama} klik BELI Paket ${tempBeliPaket} (${tempBeliJml} Token) seharga Rp ${tempBeliHarga.toLocaleString('id-ID')}` }]); } catch(e) {}
         }
-        window.open(`https://api.whatsapp.com/send?phone=${adminWA}&text=Halo%20Admin%20E-GenLap,%0A%0ASaya%20telah%20melakukan%20pembayaran%20QRIS/Transfer%20untuk%20token%20AI.%0A%0A*Nama:*%20${currentUser.data.nama}%0A*Paket:*%20${pkt}%20(${jml}%20Token)%0A*Nominal:*%20Rp%20${hrga.toLocaleString('id-ID')}%0A%0ABerikut%20saya%20lampirkan%20struknya.%20Terima%20kasih.`, '_blank');
+        const pesan = `Halo Admin E-GenLap,%0A%0ASaya telah melakukan pembayaran QRIS/Transfer untuk token AI.%0A%0A*Nama:* ${currentUser.data.nama}%0A*Paket:* ${tempBeliPaket} (${tempBeliJml} Token)%0A*Nominal:* Rp ${tempBeliHarga.toLocaleString('id-ID')}%0A%0ABerikut saya lampirkan struknya. Terima kasih.`;
+        window.open(`https://api.whatsapp.com/send?phone=${adminWA}&text=${pesan}`, '_blank');
     }
   </script>
 </body>
