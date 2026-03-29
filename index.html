@@ -21,7 +21,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
     .glossy-input { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(59, 130, 246, 0.2); color: white; backdrop-filter: blur(5px); transition: all 0.3s ease; }
     .glossy-input:focus { background: rgba(255, 255, 255, 0.1); border-color: #60a5fa; outline: none; box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); }
     .glossy-input option { background: #09090b; color: #60a5fa; }
-    html, body { width: 100%; min-height: 100%; margin: 0; padding: 0; overflow-x: hidden; }
+    html, body { width: 100%; min-height: 100vh; margin: 0; padding: 0; overflow-x: hidden; }
     input, textarea { user-select: text; }
     .app-bg { background: linear-gradient(180deg, #09090b 0%, #18181b 100%); }
     .section-hidden { display: none; }
@@ -31,15 +31,15 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
     .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); border-radius: 4px; }
     .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(59, 130, 246, 0.5); border-radius: 4px; }
     
-    /* Hamburger Menu Transition - Diperhalus & Dirapikan */
+    /* Hamburger Menu Transition - Dirapikan Super Presisi */
     #sideMenu { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
     .menu-open { transform: translateX(0) !important; }
   </style>
 </head>
-<body class="app-bg font-sans antialiased text-gray-100 selection:bg-blue-500 selection:text-white">
+<body class="app-bg font-sans antialiased text-gray-100 selection:bg-blue-500 selection:text-white relative">
 
   <!-- FULLSCREEN LOADING -->
-  <div id="fullscreenLoading" class="fixed inset-0 bg-[#09090b]/95 backdrop-blur-xl z-[999] hidden flex-col items-center justify-center transition-opacity duration-300 opacity-0 h-screen w-screen">
+  <div id="fullscreenLoading" class="fixed inset-0 bg-[#09090b]/95 backdrop-blur-xl z-[9999] hidden flex-col items-center justify-center transition-opacity duration-300 opacity-0 h-screen w-screen">
       <div class="relative w-24 h-24 flex items-center justify-center mb-6 mx-auto">
           <div class="absolute inset-0 border-4 border-blue-900/50 rounded-full animate-ping"></div>
           <div class="absolute inset-2 border-4 border-blue-500/30 rounded-full animate-spin shadow-[0_0_30px_rgba(59,130,246,0.4)]" style="animation-direction: reverse; animation-duration: 2s;"></div>
@@ -52,32 +52,32 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
   </div>
 
   <!-- TOAST NOTIFICATION -->
-  <div id="toastContainer" class="fixed top-5 left-1/2 transform -translate-x-1/2 w-11/12 max-w-sm z-[1000] flex flex-col gap-2 pointer-events-none"></div>
+  <div id="toastContainer" class="fixed top-5 left-1/2 transform -translate-x-1/2 w-11/12 max-w-sm z-[9999] flex flex-col gap-2 pointer-events-none"></div>
 
   <!-- HAMBURGER SIDEBAR MENU -->
-  <div id="menuOverlay" onclick="toggleMenu()" class="fixed inset-0 bg-black/60 backdrop-blur-md z-[700] hidden opacity-0 transition-opacity duration-300"></div>
-  <div id="sideMenu" class="fixed top-0 right-0 h-full w-64 glossy-monster z-[800] transform translate-x-full border-l border-blue-500/30 pt-5 pb-20 flex flex-col shadow-[-10px_0_30px_rgba(0,0,0,0.8)]">
+  <div id="menuOverlay" onclick="toggleMenu()" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[8000] hidden opacity-0 transition-opacity duration-300"></div>
+  <div id="sideMenu" class="fixed top-0 right-0 h-full w-64 bg-[#09090b]/95 backdrop-blur-2xl z-[8100] transform translate-x-full border-l border-blue-500/30 pt-5 pb-6 flex flex-col shadow-[-10px_0_30px_rgba(0,0,0,0.9)]">
       <div class="px-5 pb-4 border-b border-zinc-700/50 flex justify-between items-center">
-          <div>
-              <h2 class="font-bold text-blue-400 text-lg"><i class="fas fa-bars mr-2"></i> Menu</h2>
-              <p class="text-[10px] text-zinc-400" id="sideMenuRole">User Menu</p>
+          <div class="overflow-hidden">
+              <h2 class="font-bold text-blue-400 text-lg tracking-wide"><i class="fas fa-bars mr-2"></i> Navigasi</h2>
+              <p class="text-[10px] text-zinc-400 truncate w-40" id="sideMenuRole">User Menu</p>
           </div>
-          <button onclick="toggleMenu()" class="text-zinc-400 hover:text-white bg-zinc-800 w-8 h-8 rounded-full flex items-center justify-center transition-all"><i class="fas fa-times"></i></button>
+          <button onclick="toggleMenu()" class="text-zinc-400 hover:text-white bg-zinc-800/50 w-8 h-8 rounded-full flex items-center justify-center transition-all hover:bg-red-500/20 hover:text-red-400 border border-zinc-700 hover:border-red-500/50"><i class="fas fa-times"></i></button>
       </div>
-      <div class="flex-grow overflow-y-auto py-3 px-3 space-y-1 custom-scrollbar">
-          <button onclick="nav('dashboard'); toggleMenu()" class="w-full text-left p-3 rounded-xl hover:bg-blue-900/40 text-sm font-bold text-zinc-300 hover:text-blue-400 transition-colors flex items-center"><i class="fas fa-home w-6 text-center mr-2 text-blue-500"></i> Dashboard</button>
-          <button onclick="nav('generate'); toggleMenu()" class="w-full text-left p-3 rounded-xl hover:bg-blue-900/40 text-sm font-bold text-zinc-300 hover:text-blue-400 transition-colors flex items-center"><i class="fas fa-magic w-6 text-center mr-2 text-blue-500"></i> Form Laporan</button>
-          <button onclick="nav('agenda'); toggleMenu()" class="w-full text-left p-3 rounded-xl hover:bg-blue-900/40 text-sm font-bold text-zinc-300 hover:text-blue-400 transition-colors flex items-center"><i class="fas fa-calendar-alt w-6 text-center mr-2 text-blue-500"></i> Agenda Kegiatan</button>
-          <button onclick="nav('report'); toggleMenu()" class="w-full text-left p-3 rounded-xl hover:bg-blue-900/40 text-sm font-bold text-zinc-300 hover:text-blue-400 transition-colors flex items-center"><i class="fas fa-history w-6 text-center mr-2 text-blue-500"></i> Riwayat & Export</button>
-          <button onclick="nav('arsip'); toggleMenu()" class="w-full text-left p-3 rounded-xl hover:bg-blue-900/40 text-sm font-bold text-zinc-300 hover:text-blue-400 transition-colors flex items-center"><i class="fas fa-folder-open w-6 text-center mr-2 text-blue-500"></i> Arsip Drive</button>
-          <button onclick="nav('token'); toggleMenu()" class="w-full text-left p-3 rounded-xl hover:bg-blue-900/40 text-sm font-bold text-zinc-300 hover:text-blue-400 transition-colors flex items-center"><i class="fas fa-coins w-6 text-center mr-2 text-yellow-500"></i> Beli Token</button>
-          <button onclick="nav('panduan'); toggleMenu()" class="w-full text-left p-3 rounded-xl hover:bg-blue-900/40 text-sm font-bold text-zinc-300 hover:text-blue-400 transition-colors flex items-center"><i class="fas fa-book w-6 text-center mr-2 text-blue-500"></i> Panduan</button>
+      <div class="flex-grow overflow-y-auto py-4 px-4 space-y-1.5 custom-scrollbar">
+          <button onclick="nav('dashboard'); toggleMenu()" class="w-full flex items-center p-3 rounded-xl hover:bg-blue-600/10 text-sm font-bold text-zinc-300 hover:text-blue-400 transition-all border border-transparent hover:border-blue-500/30"><i class="fas fa-home w-6 text-center mr-2 text-blue-500"></i> Dashboard</button>
+          <button onclick="nav('generate'); toggleMenu()" class="w-full flex items-center p-3 rounded-xl hover:bg-blue-600/10 text-sm font-bold text-zinc-300 hover:text-blue-400 transition-all border border-transparent hover:border-blue-500/30"><i class="fas fa-magic w-6 text-center mr-2 text-blue-500"></i> Form Laporan</button>
+          <button onclick="nav('agenda'); toggleMenu()" class="w-full flex items-center p-3 rounded-xl hover:bg-blue-600/10 text-sm font-bold text-zinc-300 hover:text-blue-400 transition-all border border-transparent hover:border-blue-500/30"><i class="fas fa-calendar-alt w-6 text-center mr-2 text-blue-500"></i> Agenda Kegiatan</button>
+          <button onclick="nav('report'); toggleMenu()" class="w-full flex items-center p-3 rounded-xl hover:bg-blue-600/10 text-sm font-bold text-zinc-300 hover:text-blue-400 transition-all border border-transparent hover:border-blue-500/30"><i class="fas fa-history w-6 text-center mr-2 text-blue-500"></i> Riwayat & Export</button>
+          <button onclick="nav('arsip'); toggleMenu()" class="w-full flex items-center p-3 rounded-xl hover:bg-blue-600/10 text-sm font-bold text-zinc-300 hover:text-blue-400 transition-all border border-transparent hover:border-blue-500/30"><i class="fas fa-folder-open w-6 text-center mr-2 text-blue-500"></i> Arsip Drive</button>
+          <button onclick="nav('token'); toggleMenu()" class="w-full flex items-center p-3 rounded-xl hover:bg-yellow-600/10 text-sm font-bold text-zinc-300 hover:text-yellow-400 transition-all border border-transparent hover:border-yellow-500/30"><i class="fas fa-coins w-6 text-center mr-2 text-yellow-500"></i> Beli Token</button>
+          <button onclick="nav('panduan'); toggleMenu()" class="w-full flex items-center p-3 rounded-xl hover:bg-blue-600/10 text-sm font-bold text-zinc-300 hover:text-blue-400 transition-all border border-transparent hover:border-blue-500/30"><i class="fas fa-book w-6 text-center mr-2 text-blue-500"></i> Panduan</button>
           
-          <div id="adminSideLinks" class="hidden mt-4 pt-4 border-t border-zinc-700/50 space-y-1">
+          <div id="adminSideLinks" class="hidden mt-4 pt-4 border-t border-zinc-700/50 space-y-1.5">
               <p class="text-[10px] text-blue-500 font-black px-3 uppercase tracking-wider mb-2">Super Admin</p>
-              <button onclick="nav('admin'); toggleMenu()" class="w-full text-left p-3 rounded-xl hover:bg-blue-900/40 text-sm font-bold text-blue-300 hover:text-blue-200 transition-colors flex items-center"><i class="fas fa-user-shield w-6 text-center mr-2 text-blue-500"></i> Kelola User</button>
-              <button onclick="nav('keuangan'); toggleMenu()" class="w-full text-left p-3 rounded-xl hover:bg-blue-900/40 text-sm font-bold text-blue-300 hover:text-blue-200 transition-colors flex items-center"><i class="fas fa-wallet w-6 text-center mr-2 text-blue-500"></i> Keuangan</button>
-              <button onclick="nav('pengaturan'); toggleMenu()" class="w-full text-left p-3 rounded-xl hover:bg-blue-900/40 text-sm font-bold text-blue-300 hover:text-blue-200 transition-colors flex items-center"><i class="fas fa-cog w-6 text-center mr-2 text-blue-500"></i> Pengaturan Admin</button>
+              <button onclick="nav('admin'); toggleMenu()" class="w-full flex items-center p-3 rounded-xl hover:bg-blue-600/10 text-sm font-bold text-blue-300 hover:text-blue-200 transition-all border border-transparent hover:border-blue-500/30"><i class="fas fa-user-shield w-6 text-center mr-2 text-blue-500"></i> Kelola User</button>
+              <button onclick="nav('keuangan'); toggleMenu()" class="w-full flex items-center p-3 rounded-xl hover:bg-blue-600/10 text-sm font-bold text-blue-300 hover:text-blue-200 transition-all border border-transparent hover:border-blue-500/30"><i class="fas fa-wallet w-6 text-center mr-2 text-blue-500"></i> Keuangan</button>
+              <button onclick="nav('pengaturan'); toggleMenu()" class="w-full flex items-center p-3 rounded-xl hover:bg-blue-600/10 text-sm font-bold text-blue-300 hover:text-blue-200 transition-all border border-transparent hover:border-blue-500/30"><i class="fas fa-cog w-6 text-center mr-2 text-blue-500"></i> Pengaturan Admin</button>
           </div>
       </div>
       <div class="px-5 pt-3 border-t border-zinc-700/50">
@@ -86,7 +86,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
   </div>
 
   <!-- MODAL RESET & REGISTER & REVIEW -->
-  <div id="modalResetPass" class="fixed inset-0 bg-[#09090b]/90 backdrop-blur-sm z-[800] hidden flex-col items-center justify-center p-4">
+  <div id="modalResetPass" class="fixed inset-0 bg-[#09090b]/90 backdrop-blur-sm z-[7000] hidden flex-col items-center justify-center p-4">
     <div class="glossy-monster w-full max-w-sm rounded-2xl p-5 border border-blue-500/30 shadow-2xl relative text-center">
         <i class="fas fa-key text-4xl text-blue-400 mb-3"></i>
         <h3 class="text-lg font-bold text-white mb-2">Reset Password</h3>
@@ -104,7 +104,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
     </div>
   </div>
 
-  <div id="modalConfirmReg" class="fixed inset-0 bg-[#09090b]/90 backdrop-blur-sm z-[800] hidden flex-col items-center justify-center p-4">
+  <div id="modalConfirmReg" class="fixed inset-0 bg-[#09090b]/90 backdrop-blur-sm z-[7000] hidden flex-col items-center justify-center p-4">
     <div class="glossy-monster w-full max-w-sm rounded-2xl p-5 border border-blue-500/30 shadow-2xl relative text-center">
         <i class="fas fa-exclamation-triangle text-4xl text-yellow-500 mb-3"></i>
         <h3 class="text-lg font-bold text-blue-400 mb-2">Konfirmasi Biodata</h3>
@@ -116,7 +116,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
     </div>
   </div>
 
-  <div id="modalReview" class="fixed inset-0 bg-[#09090b]/90 backdrop-blur-sm z-[700] hidden flex-col items-center justify-center p-4">
+  <div id="modalReview" class="fixed inset-0 bg-[#09090b]/90 backdrop-blur-sm z-[7000] hidden flex-col items-center justify-center p-4">
       <div class="glossy-monster w-full max-w-sm rounded-2xl p-4 border border-blue-500/30 shadow-2xl relative">
           <div class="border-b border-zinc-700 pb-2 mb-3">
               <h3 class="text-lg font-bold text-blue-400"><i class="fas fa-clipboard-check mr-2"></i> Review Laporan</h3>
@@ -130,9 +130,11 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
       </div>
   </div>
 
-  <div class="max-w-md w-full mx-auto relative min-h-screen shadow-2xl bg-black/40 flex flex-col pb-24">
+  <!-- KONTANER UTAMA APLIKASI -->
+  <div class="max-w-md w-full mx-auto relative min-h-screen shadow-2xl bg-black/40 flex flex-col pb-24 z-10">
+    
     <!-- HEADER UTAMA -->
-    <header class="glossy-monster p-4 rounded-b-3xl shadow-lg flex-shrink-0 z-10 border-b border-blue-500/30 sticky top-0 flex justify-between items-center">
+    <header class="glossy-monster p-4 rounded-b-3xl shadow-lg flex-shrink-0 z-20 border-b border-blue-500/30 sticky top-0 flex justify-between items-center">
         <div>
             <h1 class="text-2xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-blue-500"><i class="fas fa-bolt mr-1"></i> E-GenLap</h1>
             <div id="realtimeClock" class="text-[10px] font-mono text-blue-400 tracking-widest mt-1">00:00:00 WITA</div>
@@ -144,7 +146,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         </div>
     </header>
 
-    <main class="p-5 flex-grow" id="mainContent">
+    <main class="p-5 flex-grow z-10" id="mainContent">
       <!-- SECTION AUTH -->
       <section id="sec-auth" class="glossy-monster p-5 rounded-2xl mb-6">
         <div class="text-center mb-6">
@@ -513,22 +515,22 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
          </div>
       </section>
       
-      <div class="text-center py-4 text-[10px] text-zinc-600 font-medium pb-20">
+      <div class="text-center py-4 text-[10px] text-zinc-600 font-medium pb-4">
            copyright 29-03-2026<br>Fullstack Developer By @M.ZaenSyachrullah
       </div>
     </main>
 
-    <!-- BOTTOM NAV -->
-    <nav id="bottomNav" class="fixed bottom-0 w-full max-w-md bg-[#09090b] border-t border-blue-900/40 shadow-[0_-10px_20px_rgba(0,0,0,0.8)] flex justify-between px-2 py-2 z-40 h-16 items-center rounded-t-3xl backdrop-blur-xl bg-opacity-95 hidden">
-        <button id="navDashboardBtn" onclick="nav('dashboard')" class="nav-btn flex-1 flex flex-col items-center text-blue-400"><i class="fas fa-home text-lg"></i><span class="text-[9px] font-bold mt-1">Beranda</span></button>
-        <button id="navAgendaBtn" onclick="nav('agenda')" class="nav-btn flex-1 flex flex-col items-center text-zinc-500 hover:text-blue-300"><i class="fas fa-calendar-alt text-lg"></i><span class="text-[9px] font-bold mt-1">Agenda</span></button>
+    <!-- BOTTOM NAV - Fixed and globally centered for desktop and mobile -->
+    <nav id="bottomNav" class="fixed bottom-0 w-full max-w-md left-1/2 transform -translate-x-1/2 bg-[#09090b] border-t border-blue-900/40 shadow-[0_-10px_20px_rgba(0,0,0,0.8)] flex justify-between px-2 py-2 z-[9000] h-16 items-center rounded-t-3xl backdrop-blur-xl bg-opacity-95 hidden">
+        <button id="navDashboardBtn" onclick="nav('dashboard', this)" class="nav-btn flex-1 flex flex-col items-center text-blue-400"><i class="fas fa-home text-lg"></i><span class="text-[9px] font-bold mt-1">Beranda</span></button>
+        <button id="navAgendaBtn" onclick="nav('agenda', this)" class="nav-btn flex-1 flex flex-col items-center text-zinc-500 hover:text-blue-300"><i class="fas fa-calendar-alt text-lg"></i><span class="text-[9px] font-bold mt-1">Agenda</span></button>
         <div class="relative flex-[1.2] flex justify-center">
            <button onclick="nav('generate')" class="absolute top-0 transform -translate-y-[60%] bg-gradient-to-tr from-blue-500 to-blue-300 text-white w-14 h-14 rounded-full border-4 border-[#09090b] flex items-center justify-center fab-button z-50 transition-transform active:scale-90 shadow-[0_0_15px_rgba(59,130,246,0.6)]">
               <i class="fas fa-plus text-xl drop-shadow-md"></i>
           </button>
         </div>
-        <button id="navReportBtn" onclick="nav('report')" class="nav-btn flex-1 flex flex-col items-center text-zinc-500 hover:text-blue-300"><i class="fas fa-history text-lg"></i><span class="text-[9px] font-bold mt-1">Riwayat</span></button>
-        <button id="navArsipBtn" onclick="nav('arsip')" class="nav-btn flex-1 flex flex-col items-center text-zinc-500 hover:text-blue-300"><i class="fas fa-folder-open text-lg"></i><span class="text-[9px] font-bold mt-1">Arsip</span></button>
+        <button id="navReportBtn" onclick="nav('report', this)" class="nav-btn flex-1 flex flex-col items-center text-zinc-500 hover:text-blue-300"><i class="fas fa-history text-lg"></i><span class="text-[9px] font-bold mt-1">Riwayat</span></button>
+        <button id="navArsipBtn" onclick="nav('arsip', this)" class="nav-btn flex-1 flex flex-col items-center text-zinc-500 hover:text-blue-300"><i class="fas fa-folder-open text-lg"></i><span class="text-[9px] font-bold mt-1">Arsip</span></button>
     </nav>
   </div>
 
@@ -536,7 +538,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
     // ==========================================
     // API ENDPOINT - LINK WEB APP GAS ANDA
     // ==========================================
-    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxwo7n688GbZai3f8fWERYbmOOaDl4uy-tJSbLhy0T3diyL1lkDnlGl0suKHqSx3KpA/exec";
+    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxwo7n688GbZai3f8fWERYbmOOaDl4uy-tJSbLhy0T3diyL1lkDnlGl0suKHqSx3KpA/exec;
 
     // PWA & Security
     const manifest = { "name": "E-GenLap", "display": "standalone", "background_color": "#09090b", "theme_color": "#09090b" };
@@ -665,7 +667,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
     ];
 
     // ==========================================
-    // FUNGSI KOMUNIKASI API (FETCH)
+    // FUNGSI KOMUNIKASI API (FETCH) - ANTI GAGAL
     // ==========================================
     async function apiCall(action, dataObj = {}) {
         try {
@@ -718,17 +720,6 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         const icon = document.getElementById(iconId);
         if (input.type === "password") { input.type = "text"; icon.classList.replace("fa-eye", "fa-eye-slash"); } 
         else { input.type = "password"; icon.classList.replace("fa-eye-slash", "fa-eye"); }
-    }
-
-    function formatWITA(isoStr) {
-        if (!isoStr || isoStr === '-') return { full: '-', tgl: '-', jam: '-' };
-        try {
-            const d = new Date(isoStr);
-            if (isNaN(d.getTime())) return { full: isoStr, tgl: isoStr, jam: '' };
-            let tgl = new Intl.DateTimeFormat('id-ID', { timeZone: 'Asia/Makassar', day: '2-digit', month: 'long', year: 'numeric' }).format(d);
-            let jamStr = new Intl.DateTimeFormat('id-ID', { timeZone: 'Asia/Makassar', hour: '2-digit', minute: '2-digit', hour12: false }).format(d).replace('.', ':') + ' WITA';
-            return { full: `${tgl} ${jamStr}`, tgl: tgl, jam: jamStr };
-        } catch(e) { return { full: isoStr, tgl: isoStr, jam: '' }; }
     }
 
     window.onload = async function() {
@@ -821,10 +812,9 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         let rincianSelesai = {};
         let s = 0, g = 0;
         
-        // Cek riwayat untuk mencari laporan sukses di bulan tersebut
         globalDataRiwayat.forEach(r => {
             if(bulanSelect !== 'all') {
-                const parts = r.tanggal.split('-'); // Asumsi YYYY-MM-DD
+                const parts = r.tanggal.split('-'); // YYYY-MM-DD
                 if(parts.length > 1 && parts[1] !== bulanSelect) return;
             }
             if(r.keterangan === 'Sukses') {
@@ -835,23 +825,15 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
             } else g++;
         });
 
-        // Hardcoded Target Analysis based on Prompt Requirement (28 Laporan)
-        // RHK 1: 1, RHK 2: 15, RHK 3: 2, RHK 4: 2, RHK 5: 3, RHK 6: 1, RHK 7: 1, RHK 8: 2, RHK 9: 1
-        const fixedTargets = {
-            "RHK 1": 1, "RHK 2": 15, "RHK 3": 2, "RHK 4": 2, "RHK 5": 3,
-            "RHK 6": 1, "RHK 7": 1, "RHK 8": 2, "RHK 9": 1
-        };
+        const fixedTargets = { "RHK 1": 1, "RHK 2": 15, "RHK 3": 2, "RHK 4": 2, "RHK 5": 3, "RHK 6": 1, "RHK 7": 1, "RHK 8": 2, "RHK 9": 1 };
 
-        // Jika ada jabatan yang tidak punya RHK 9, total bisa kurang dari 28.
         let totalTarget = 0;
         let htmlTr = '';
-        
-        // Ambil Unik Kategori RHK yang dimiliki jabatan ini
         const uniqueKategori = [...new Set(myRHK.map(i => i.kategori_rhk))].sort();
         
         if (uniqueKategori.length > 0) {
             uniqueKategori.forEach(k => {
-                let target = fixedTargets[k] || 0; // Ambil dari aturan fixed
+                let target = fixedTargets[k] || 0; 
                 totalTarget += target;
                 let done = rincianSelesai[k] || 0;
                 let classT = done >= target && target > 0 ? "text-lime-400" : "text-yellow-400";
@@ -861,7 +843,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
             htmlTr = `<tr><td colspan="3" class="text-center italic text-zinc-500 py-3">Tidak ada data RHK.</td></tr>`;
         }
 
-        document.getElementById('dashTotalTarget').innerText = totalTarget; // Akan menjadi 28 jika memiliki RHK 1-9
+        document.getElementById('dashTotalTarget').innerText = totalTarget; 
         document.getElementById('dashTotalSelesai').innerText = s;
         document.getElementById('countSukses').innerText = s;
         document.getElementById('countGagal').innerText = g;
@@ -954,6 +936,31 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
     function showLoadingUI(show) { const l = document.getElementById('fullscreenLoading'); if(show) { l.classList.remove('hidden'); setTimeout(()=>l.classList.remove('opacity-0'),10); } else { l.classList.add('opacity-0'); setTimeout(()=>l.classList.add('hidden'),300); } }
 
     // ==========================================
+    // NAVIGASI DENGAN KONTEKS ANTI-ERROR
+    // ==========================================
+    function nav(target, btnElement = null) {
+      document.querySelectorAll('section').forEach(sec => sec.classList.add('section-hidden'));
+      const targetSec = document.getElementById('sec-' + target);
+      if (targetSec) targetSec.classList.remove('section-hidden');
+      
+      document.querySelectorAll('.nav-btn').forEach(btn => { 
+          btn.classList.remove('text-blue-400'); 
+          btn.classList.add('text-zinc-500'); 
+      });
+      
+      if(btnElement && btnElement.classList && btnElement.classList.contains('nav-btn')){ 
+          btnElement.classList.remove('text-zinc-500'); 
+          btnElement.classList.add('text-blue-400'); 
+      }
+      
+      if(target === 'dashboard' || target === 'report' || target === 'arsip') loadDashboardData();
+      if(target === 'admin' || target === 'keuangan') { loadAdminUsers(); loadMonitoringAdmin(); }
+      if(target === 'agenda') loadAgendaData();
+      
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ==========================================
     // AGENDA BARU DENGAN ANALISA & 1 CARD PER BULAN
     // ==========================================
     async function loadAgendaData() {
@@ -966,7 +973,6 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
             if(error) throw error;
             globalAgendaData = data || [];
             
-            // GROUPING BY MONTH (1 CARD PER BULAN)
             let groupedByMonth = {};
             const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
             
@@ -1005,13 +1011,11 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
             }
             document.getElementById('containerListAgenda').innerHTML = htmlAg || `<p class="text-center text-[10px] text-zinc-500 py-4">Belum ada agenda jadwal tersimpan.</p>`;
             
-            // ANALISA KEKURANGAN (Bulan Ini)
             const jUser = currentUser.data.jabatan.trim().toLowerCase();
             const myRHK = listKegiatanGlobal.filter(i => i.jabatan.trim().toLowerCase() === jUser);
-            
             const fixedTargets = { "RHK 1": 1, "RHK 2": 15, "RHK 3": 2, "RHK 4": 2, "RHK 5": 3, "RHK 6": 1, "RHK 7": 1, "RHK 8": 2, "RHK 9": 1 };
-            let rincianSelesai = {};
             
+            let rincianSelesai = {};
             const d = new Date();
             const mStr = String(d.getMonth() + 1).padStart(2, '0');
             const yStr = String(d.getFullYear());
@@ -1026,7 +1030,6 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
 
             let analisaHTML = '';
             const uniqueKategori = [...new Set(myRHK.map(i => i.kategori_rhk))].sort();
-            
             uniqueKategori.forEach(k => {
                 let target = fixedTargets[k] || 0;
                 let sisa = target - (rincianSelesai[k] || 0);
@@ -1037,7 +1040,6 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
                     analisaHTML += `<li class="mb-1"><b>${k}:</b> Kurang <span class="text-red-400 font-bold">${sisa} Laporan</span>.<br><span class="text-[8px] text-yellow-400">Saran: Buat agenda "${saranText}"</span></li>`;
                 }
             });
-            
             if(analisaHTML === '') analisaHTML = `<li class="text-lime-400 font-bold"><i class="fas fa-check-circle"></i> Luar Biasa! Semua target laporan (28) bulan ini sudah terpenuhi.</li>`;
             document.getElementById('analisaKekurangan').innerHTML = analisaHTML;
 
@@ -1062,7 +1064,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
     }
 
     // ==========================================
-    // EXPORT EXCEL (CSV) KHUSUS EXCEL (TIDAK ADA PDF/EMAIL)
+    // EXPORT EXCEL (CSV) KHUSUS EXCEL
     // ==========================================
     function downloadCSV(filename, rows) {
         let csvContent = "data:text/csv;charset=utf-8,\uFEFF" + rows.map(e => `"${e.toString().replace(/"/g, '""')}"`).join("\n");
@@ -1210,10 +1212,9 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
             let countToday = 0; let totalRp = 0;
             const tdy = new Date().toISOString().substring(0,10);
             data.forEach(d => { if(d.tanggalAsli.includes(tdy)) { countToday++; totalRp += d.nominal; } });
-            // NOTIFIKASI POP UP ADMIN MUNCUL DI SINI JIKA ADA PEMBELIAN HARI INI
             if(countToday > 0) {
                 setTimeout(() => { 
-                    alert(`NOTIFIKASI SISTEM:\nAda ${countToday} pembelian token baru hari ini!\nTotal: Rp ${totalRp.toLocaleString('id-ID')}`); 
+                    alert(`NOTIFIKASI SISTEM:\nAda ${countToday} pesanan token baru hari ini!\nTotal: Rp ${totalRp.toLocaleString('id-ID')}`); 
                 }, 1000);
             }
         }).catch(e => console.log(e));
@@ -1237,7 +1238,6 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         apiCall('updateTokenAdmin', { emailUser: emailUser, nominalToken: parseInt(val) }).then(res => { showLoadingUI(false); showToast(`Token ${emailUser} diperbarui!`); loadAdminUsers(); }).catch(err => { showLoadingUI(false); showToast(err.message, "error"); });
     }
 
-    // PENGATURAN UBAH PROFILE & PASSWORD ADMIN
     function simpanProfileAdmin() {
         const uNama = document.getElementById('inputUbahNama').value;
         const uPass = document.getElementById('inputUbahPass').value;
@@ -1278,11 +1278,11 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         filtered.forEach(r => {
             tNominal += r.nominal; tToken += r.token; if (!rekapNama[r.nama]) rekapNama[r.nama] = { token: 0, nominal: 0 };
             rekapNama[r.nama].token += r.token; rekapNama[r.nama].nominal += r.nominal;
-            htmlRincian += `<tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30"><td class="p-2 text-[9px]">${r.tanggalTampil}</td><td class="p-2 text-[9px] font-bold text-blue-300">${r.nama}</td><td class="p-2 text-right text-blue-100 font-mono">${r.nominal.toLocaleString('id-ID')}</td></tr>`;
+            htmlRincian += `<tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30"><td class="p-2 text-[9px]">${r.tanggalTampil}</td><td class="p-2 text-[9px] font-bold text-blue-300">${r.nama}</td><td class="p-2 text-center text-yellow-400 font-bold">${r.token}</td><td class="p-2 text-right text-blue-100 font-mono">${r.nominal.toLocaleString('id-ID')}</td></tr>`;
         });
         document.getElementById('txtTotalPendapatan').innerText = "Rp " + tNominal.toLocaleString('id-ID');
         document.getElementById('txtTotalToken').innerText = tToken + " Token";
-        document.getElementById('rincianPembelianTable').innerHTML = htmlRincian || `<tr><td colspan="3" class="text-center p-4 text-zinc-500">Tidak ada data.</td></tr>`;
+        document.getElementById('rincianPembelianTable').innerHTML = htmlRincian || `<tr><td colspan="4" class="text-center p-4 text-zinc-500">Tidak ada data.</td></tr>`;
 
         let htmlRekap = '';
         Object.keys(rekapNama).sort((a,b) => rekapNama[b].nominal - rekapNama[a].nominal).forEach(nama => {
