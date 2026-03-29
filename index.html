@@ -701,37 +701,20 @@ Saya sepenuhnya bertanggung jawab atas kebenaran isian formulir. Jika laporan ga
       const keyword = document.getElementById('searchRHK').value.toLowerCase();
       const jabatanUser = currentUser.data.jabatan;
       
-      let optionsHtml = `<option value="">-- Pilih Kegiatan Prioritas --</option>`;
+      let optionsHtml = `<option value="" data-rhk="">-- Pilih Rencana Aksi Harian --</option>`;
       
-      // Filter list kegiatan berdasarkan Jabatan dan Keyword (akan aktif 100% setelah DB Supabase masuk)
       const filtered = listKegiatanGlobal.filter(item => {
-          // Asumsi item bentuknya: { kegiatan: "P2K2", jabatan: "Penata...", target: "10" }
-          // Jika item hanya string (data lama), kita terima semua
-          if(typeof item === 'string') return item.toLowerCase().includes(keyword);
-          
           return item.jabatan === jabatanUser && item.kegiatan.toLowerCase().includes(keyword);
       });
 
+      // Menampilkan RHK dan Target sebagai label yang jelas di dropdown
       filtered.forEach(item => {
-          let namaKeg = typeof item === 'string' ? item : item.kegiatan;
-          let targetKeg = typeof item === 'string' ? "" : `(Target: ${item.target})`;
-          optionsHtml += `<option value="${namaKeg}">${namaKeg} ${targetKeg}</option>`;
+          optionsHtml += `<option value="${item.kegiatan}" data-rhk="${item.kategori_rhk}">[${item.kategori_rhk} | Target: ${item.target}] - ${item.kegiatan}</option>`;
       });
       
       document.getElementById('kegiatanSelect').innerHTML = optionsHtml;
     }
-
-    function showToast(message, type = 'success') {
-        const toast = document.createElement('div');
-        const icon = type === 'success' ? '<i class="fas fa-check-circle text-lime-400 text-lg"></i>' : '<i class="fas fa-times-circle text-red-500 text-lg"></i>';
-        const bgClass = type === 'success' ? 'bg-zinc-900 border-lime-500/40' : 'bg-red-950 border-red-500/50';
-        toast.className = `flex items-center justify-center gap-3 p-3 rounded-xl backdrop-blur-md shadow-2xl border transform transition-all duration-500 translate-y-[-20px] opacity-0 ${bgClass} text-white`;
-        toast.innerHTML = `${icon} <span class="text-sm font-bold">${message}</span>`;
-        document.getElementById('toastContainer').appendChild(toast);
-        setTimeout(() => toast.classList.remove('translate-y-[-20px]', 'opacity-0'), 10);
-        setTimeout(() => { toast.classList.add('opacity-0', 'scale-95'); setTimeout(() => toast.remove(), 500); }, 3000);
-    }
-
+    
     // ==========================================
     // AUTHENTICATION LOGIC & PRIVASI HALAMAN
     // ==========================================
