@@ -1048,7 +1048,10 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
     }
 
     function renderDynamicForm() {
-       const selectedKegiatan = document.getElementById('kegiatanSelect').value;
+       const selectKegiatan = document.getElementById('kegiatanSelect');
+       const selectedRHK = selectKegiatan.options[selectKegiatan.selectedIndex].getAttribute('data-rhk');
+       const selectedKegiatan = selectKegiatan.value;
+       
        const area = document.getElementById('dynamicFormArea');
        area.innerHTML = ''; if(!selectedKegiatan) return;
        const selectedUpper = selectedKegiatan.toUpperCase();
