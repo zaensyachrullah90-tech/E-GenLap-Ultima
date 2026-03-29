@@ -549,6 +549,11 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
 
   <script>
     // ==========================================
+    // API ENDPOINT (GANTI DENGAN URL WEB APP GAS ANDA)
+    // ==========================================
+    const GAS_API_URL = "MASUKKAN_LINK_WEB_APP_ANDA_DISINI";
+
+    // ==========================================
     // SECURITY ANTI-INSPECT & FULLSCREEN PWA
     // ==========================================
     const manifest = {
@@ -591,6 +596,24 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
     let currentRiwayatPage = 1;
     const itemsPerPageRiwayat = 15;
     let tempRegData = null;
+
+    // ==========================================
+    // FUNGSI KOMUNIKASI API FETCH KE GOOGLE APPS SCRIPT
+    // ==========================================
+    async function apiCall(action, dataObj = {}) {
+        try {
+            const response = await fetch(GAS_API_URL, {
+                method: 'POST',
+                body: JSON.stringify({ action: action, data: dataObj }),
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+            });
+            const result = await response.json();
+            if (result && result.status === 'error') throw new Error(result.message);
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
 
     function showToast(message, type = 'success') {
         const toast = document.createElement('div');
@@ -642,7 +665,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         
         let html = '';
         if(filtered.length === 0) {
-            html = `<tr><td colspan="3" class="text-center italic p-4 text-zinc-500">Tidak ada target RHK ditemukan untuk jabatan ini.</td></tr>`;
+            html = `<tr><td colspan=\"3\" class=\"text-center italic p-4 text-zinc-500\">Tidak ada target RHK ditemukan untuk jabatan ini.</td></tr>`;
         } else {
             filtered.forEach(item => {
                 html += `
@@ -665,17 +688,13 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         document.getElementById('realtimeDate').innerText = new Intl.DateTimeFormat('id-ID', optionsDate).format(now);
       }, 1000);
 
-      try {
-          google.script.run.withSuccessHandler(userData => {
-             if(userData && !localStorage.getItem('egenlap_user_monster')) {
-                 localStorage.setItem('egenlap_user_monster', JSON.stringify(userData));
-                 currentUser = userData;
-                 terapkanSesi();
-             } else {
-                 cekSesiLogin();
-             }
-          }).checkAutoLogin();
-      } catch(e) { cekSesiLogin(); }
+      const stored = localStorage.getItem('egenlap_user_monster');
+      if (stored) {
+         currentUser = JSON.parse(stored);
+         terapkanSesi();
+      } else {
+         cekSesiLogin();
+      }
 
       if(db) loadMasterRHKFromSupabase();
     };
@@ -709,30 +728,35 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         const nip = document.getElementById('resetNIP').value;
         const newPass = document.getElementById('resetNewPass').value;
         if(!email || !nip || !newPass) { showToast("Lengkapi form reset password", "error"); return; }
+        
         showLoadingUI(true);
-        google.script.run.withSuccessHandler(res => {
-            showLoadingUI(false);
-            if(res.status === 'success') { showToast(res.message, "success"); tutupModalReset(); } 
-            else { showToast(res.message, "error"); }
-        }).withFailureHandler(err => { showLoadingUI(false); showToast(err.message, "error"); }).resetPasswordLogic(email, nip, newPass);
+        apiCall('resetPasswordLogic', { email, nip, newPass })
+            .then(res => {
+                showLoadingUI(false);
+                if(res.status === 'success') { showToast(res.message, "success"); tutupModalReset(); }
+            })
+            .catch(err => { showLoadingUI(false); showToast(err.message, "error"); });
     }
 
     function prosesLogin() {
         const email = document.getElementById('logEmail').value;
         const pass = document.getElementById('logPassword').value;
         if(!email || !pass) { showToast("Isi email & password!", "error"); return; }
+        
         showLoadingUI(true);
-        google.script.run.withSuccessHandler(res => {
-            showLoadingUI(false);
-            if(res.status === 'success') {
-                localStorage.setItem('egenlap_user_monster', JSON.stringify(res.userData));
-                currentUser = res.userData;
-                terapkanSesi();
-                filterRHKByJabatan();
-                renderTargetTable();
-                showToast("Login Berhasil!");
-            } else { showToast(res.message, "error"); }
-        }).withFailureHandler(err => { showLoadingUI(false); showToast(err.message, "error"); }).prosesLogin(email, pass);
+        apiCall('prosesLogin', { email, password: pass })
+            .then(res => {
+                showLoadingUI(false);
+                if(res.status === 'success') {
+                    localStorage.setItem('egenlap_user_monster', JSON.stringify(res.userData));
+                    currentUser = res.userData;
+                    terapkanSesi();
+                    filterRHKByJabatan();
+                    renderTargetTable();
+                    showToast("Login Berhasil!");
+                }
+            })
+            .catch(err => { showLoadingUI(false); showToast(err.message, "error"); });
     }
 
     function validasiRegister() {
@@ -752,18 +776,21 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
     function eksekusiRegister() {
         document.getElementById('modalConfirmReg').classList.add('hidden');
         if(!tempRegData) return;
+        
         showLoadingUI(true);
-        google.script.run.withSuccessHandler(res => {
-            showLoadingUI(false);
-            if(res.status === 'success') {
-                localStorage.setItem('egenlap_user_monster', JSON.stringify(res.userData));
-                currentUser = res.userData;
-                terapkanSesi();
-                filterRHKByJabatan();
-                renderTargetTable();
-                showToast("Pendaftaran Berhasil! Dapat 1 Token.");
-            } else { showToast(res.message, "error"); }
-        }).withFailureHandler(err => { showLoadingUI(false); showToast(err.message, "error"); }).validasiRegister(tempRegData);
+        apiCall('validasiRegister', tempRegData)
+            .then(res => {
+                showLoadingUI(false);
+                if(res.status === 'success') {
+                    localStorage.setItem('egenlap_user_monster', JSON.stringify(res.userData));
+                    currentUser = res.userData;
+                    terapkanSesi();
+                    filterRHKByJabatan();
+                    renderTargetTable();
+                    showToast("Pendaftaran Berhasil! Dapat 1 Token.");
+                }
+            })
+            .catch(err => { showLoadingUI(false); showToast(err.message, "error"); });
     }
 
     function cekSesiLogin() {
@@ -777,6 +804,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
     }
 
     function terapkanSesi() {
+        document.getElementById('sec-auth').classList.add('hidden');
         document.getElementById('bottomNav').classList.remove('hidden');
         document.getElementById('btnLogoutHeader').classList.remove('hidden');
         document.getElementById('userGreeting').innerText = "Halo, " + (currentUser.data.nama.split(' ')[0] || "Admin");
@@ -871,6 +899,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         formTtdBase64 = null;
         document.getElementById('formTtdFile').value = "";
         document.getElementById('previewTtdContainer').classList.add('hidden');
+        document.getElementById('imgTtdPreview').src = "";
     }
 
     function prosesLampiran(event) {
@@ -936,8 +965,8 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         tbody.innerHTML = `<tr><td colspan="${currentUser.role === 'admin' ? 4 : 3}" class="text-center p-6"><i class="fas fa-circle-notch fa-spin text-lime-400"></i></td></tr>`;
         tbodyArsip.innerHTML = `<tr><td colspan="3" class="text-center p-6"><i class="fas fa-circle-notch fa-spin text-lime-400"></i></td></tr>`;
         
-        google.script.run
-            .withSuccessHandler(res => {
+        apiCall('getDashboardData', { email: currentUser.data.email, role: currentUser.role, sessionToken: currentUser.data.sessionToken })
+            .then(res => {
                 globalDataRiwayat = res.riwayat;
                 if(currentUser.role !== 'admin') {
                     document.getElementById('sisaTokenDash').innerText = res.token || "0";
@@ -949,10 +978,9 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
                 currentRiwayatPage = 1;
                 renderTable();
             })
-            .withFailureHandler(err => {
+            .catch(err => {
                 tbody.innerHTML = `<tr><td colspan="${currentUser.role === 'admin' ? 4 : 3}" class="text-center p-4 text-red-400">Gagal memuat: ${err.message}</td></tr>`;
-            })
-            .getDashboardData(currentUser.data.email, currentUser.role, currentUser.data.sessionToken);
+            });
     }
 
     function updateStats(data) {
@@ -1049,12 +1077,13 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
 
     function renderDynamicForm() {
        const selectKegiatan = document.getElementById('kegiatanSelect');
+       if(!selectKegiatan.value) return;
        const selectedRHK = selectKegiatan.options[selectKegiatan.selectedIndex].getAttribute('data-rhk');
-       const selectedKegiatan = selectKegiatan.value;
+       const selectedKegiatanText = selectKegiatan.value;
        
        const area = document.getElementById('dynamicFormArea');
-       area.innerHTML = ''; if(!selectedKegiatan) return;
-       const selectedUpper = selectedKegiatan.toUpperCase();
+       area.innerHTML = ''; 
+       const selectedUpper = selectedKegiatanText.toUpperCase();
        let html = '';
        if (selectedUpper.includes("GRADUASI")) { html += `<div class="mb-3"><label class="block text-xs font-bold text-lime-300">Data Graduasi</label><input type="text" class="glossy-input w-full rounded-lg p-2"></div>`; }
        else { html += `<div class="mb-3"><label class="block text-xs font-bold text-lime-300">Sasaran Umum</label><input type="text" class="glossy-input w-full rounded-lg p-2"></div>`; }
@@ -1104,7 +1133,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
             jabatan: document.getElementById('jabatan').value,
             kabupaten: document.getElementById('kabupaten').value,
             lokasi: document.getElementById('lokasi').value,
-            kegiatan: document.getElementById('kegiatanSelect').value,
+            kegiatan: selectKegiatan.value,
             kategoriRHK: selectedRHK,
             dataSurat: dataSurat.join("\n"),
             ttd: formTtdBase64,
@@ -1115,14 +1144,16 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
             sessionToken: currentUser.data.sessionToken
         };
 
-        google.script.run
-            .withSuccessHandler(res => {
+        apiCall('prosesLaporan', payload)
+            .then(res => {
                 showLoadingUI(false); 
-                showToast("Laporan Berhasil Disimpan ke Google Drive!", "success");
+                showToast("Sukses", "success");
                 document.getElementById('reportForm').reset();
                 arrayFotoBase64 = []; arrayLampiranBase64 = [];
                 renderFotoPreviews(); renderLampiranPreviews();
                 hapusTtdForm(true);
+                document.getElementById('photoStatus').innerText = "0 / 10 Foto";
+                document.getElementById('lampiranStatus').innerText = "0 / 3 File";
                 const suratContainer = document.getElementById('containerDataSurat');
                 const itemsSurat = suratContainer.querySelectorAll('.surat-item');
                 for(let i=1; i<itemsSurat.length; i++) itemsSurat[i].remove();
@@ -1134,46 +1165,51 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
                 document.getElementById('emailTarget').value = currentUser.data.email;
                 if(currentUser.role !== 'admin') { loadDashboardData(); nav('dashboard'); }
             })
-            .withFailureHandler(err => { showLoadingUI(false); showToast("Terjadi Kesalahan: " + err.message, "error"); })
-            .prosesLaporan(payload);
+            .catch(err => { showLoadingUI(false); showToast(err.message, "error"); });
     }
 
     // ==== FUNGSI ADMIN & KEUANGAN ====
     function loadAdminUsers() {
         const tbody = document.getElementById('adminUserTable');
         tbody.innerHTML = `<tr><td colspan="3" class="text-center p-4"><i class="fas fa-spinner fa-spin text-lime-400"></i></td></tr>`;
-        google.script.run.withSuccessHandler(users => {
-            let html = '';
-            users.forEach(u => {
-                html += `<tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30">
-                    <td class="p-2 whitespace-nowrap"><div class="font-bold text-lime-300 text-[10px]">${u.nama}</div><div class="text-[9px] text-zinc-500">${u.email}</div></td>
-                    <td class="p-2 font-black text-center text-yellow-400" id="token-${u.rowIdx}">${u.token}</td>
-                    <td class="p-2 text-center">
-                        <input type="number" id="input-token-${u.rowIdx}" class="w-12 text-center p-1 text-black text-xs font-bold rounded" placeholder="+/-">
-                        <button onclick="updateToken(${u.rowIdx}, '${u.email}')" class="bg-blue-600 text-white px-2 py-1 rounded text-[9px] font-bold ml-1 active:scale-90"><i class="fas fa-check"></i></button>
-                    </td>
-                </tr>`;
-            });
-            tbody.innerHTML = html;
-        }).withFailureHandler(err => { tbody.innerHTML = `<tr><td colspan="3" class="text-center p-4 text-red-500">${err.message}</td></tr>`; }).getAllUsersAdmin();
+        apiCall('getAllUsersAdmin', {})
+            .then(users => {
+                let html = '';
+                users.forEach(u => {
+                    html += `<tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30">
+                        <td class="p-2 whitespace-nowrap"><div class="font-bold text-lime-300 text-[10px]">${u.nama}</div><div class="text-[9px] text-zinc-500">${u.email}</div></td>
+                        <td class="p-2 font-black text-center text-yellow-400" id="token-${u.rowIdx}">${u.token}</td>
+                        <td class="p-2 text-center">
+                            <input type="number" id="input-token-${u.rowIdx}" class="w-12 text-center p-1 text-black text-xs font-bold rounded" placeholder="+/-">
+                            <button onclick="updateToken(${u.rowIdx}, '${u.email}')" class="bg-blue-600 text-white px-2 py-1 rounded text-[9px] font-bold ml-1 active:scale-90"><i class="fas fa-check"></i></button>
+                        </td>
+                    </tr>`;
+                });
+                tbody.innerHTML = html;
+            })
+            .catch(err => { tbody.innerHTML = `<tr><td colspan="3" class="text-center p-4 text-red-500">${err.message}</td></tr>`; });
     }
     
     function updateToken(rowIdx, email) {
         const val = document.getElementById(`input-token-${rowIdx}`).value;
         if(!val) return;
         showLoadingUI(true);
-        google.script.run.withSuccessHandler(res => {
-            showLoadingUI(false);
-            if(res.status === 'success') { showToast(`Token ${email} diperbarui!`); loadAdminUsers(); }
-        }).withFailureHandler(err => { showLoadingUI(false); showToast(err.message, "error"); }).updateTokenAdmin(rowIdx, parseInt(val));
+        apiCall('updateTokenAdmin', { rowIdx: rowIdx, nominalToken: parseInt(val) })
+            .then(res => {
+                showLoadingUI(false);
+                if(res.status === 'success') { showToast(`Token ${email} diperbarui!`); loadAdminUsers(); }
+            })
+            .catch(err => { showLoadingUI(false); showToast(err.message, "error"); });
     }
     
     function loadMonitoringAdmin() {
          document.getElementById('rincianPembelianTable').innerHTML = `<tr><td colspan="4" class="text-center p-4"><i class="fas fa-spinner fa-spin text-lime-400"></i></td></tr>`;
-         google.script.run.withSuccessHandler(data => {
-             globalKeuanganData = data;
-             applyFilterKeuangan();
-         }).withFailureHandler(err => { showToast(err.message, "error"); }).getMonitoringAdmin();
+         apiCall('getMonitoringAdmin', {})
+            .then(data => {
+                globalKeuanganData = data;
+                applyFilterKeuangan();
+            })
+            .catch(err => { showToast(err.message, "error"); });
     }
     
     function applyFilterKeuangan() {
@@ -1230,9 +1266,9 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
     function jalankanSetupAwal() {
         if(!confirm("BAHAYA! Ini akan mereset Database Sheet E-GenLap. Lanjutkan?")) return;
         showLoadingUI(true);
-        google.script.run.withSuccessHandler(res => {
-            showLoadingUI(false); alert(res);
-        }).withFailureHandler(err => { showLoadingUI(false); alert(err.message); }).setupAwal();
+        apiCall('setupAwal', {})
+            .then(res => { showLoadingUI(false); alert(res); })
+            .catch(err => { showLoadingUI(false); alert(err.message); });
     }
     
     function konfirmasiWA(namaPaket, jmlToken, hargaNum) {
