@@ -12,36 +12,24 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
+  <!-- KONEKSI SUPABASE -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     .glossy-monster { background: linear-gradient(135deg, rgba(24, 24, 27, 0.9) 0%, rgba(9, 9, 11, 0.95) 100%);
-box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(132, 204, 22, 0.15);
-color: white; }
-    .glossy-input { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(132, 204, 22, 0.2);
-color: white; backdrop-filter: blur(5px); transition: all 0.3s ease; }
-    .glossy-input:focus { background: rgba(255, 255, 255, 0.1);
-border-color: #a3e635; outline: none; box-shadow: 0 0 15px rgba(132, 204, 22, 0.3);
-}
+box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(132, 204, 22, 0.15); color: white; }
+    .glossy-input { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(132, 204, 22, 0.2); color: white; backdrop-filter: blur(5px); transition: all 0.3s ease; }
+    .glossy-input:focus { background: rgba(255, 255, 255, 0.1); border-color: #a3e635; outline: none; box-shadow: 0 0 15px rgba(132, 204, 22, 0.3); }
     .glossy-input option { background: #09090b; color: #a3e635; }
-    html, body { width: 100%;
-min-height: 100%; margin: 0; padding: 0; }
-    input, textarea { user-select: text;
-}
+    html, body { width: 100%; min-height: 100%; margin: 0; padding: 0; }
+    input, textarea { user-select: text; }
     .app-bg { background: linear-gradient(180deg, #09090b 0%, #18181b 100%); }
-    .section-hidden { display: none;
-}
-    .fab-button { box-shadow: 0 0 20px rgba(132, 204, 22, 0.6); animation: pulse-glow 2s infinite;
-}
-    @keyframes pulse-glow { 0%, 100% { transform: translateY(-50%) scale(1);
-box-shadow: 0 0 15px rgba(132, 204, 22, 0.4); } 50% { transform: translateY(-50%) scale(1.05);
-box-shadow: 0 0 30px rgba(132, 204, 22, 0.9); } }
-    .custom-scrollbar::-webkit-scrollbar { height: 6px; width: 4px;
-}
-    .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); border-radius: 4px;
-}
-    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(132, 204, 22, 0.5); border-radius: 4px;
-}
+    .section-hidden { display: none; }
+    .fab-button { box-shadow: 0 0 20px rgba(132, 204, 22, 0.6); animation: pulse-glow 2s infinite; }
+    @keyframes pulse-glow { 0%, 100% { transform: translateY(-50%) scale(1); box-shadow: 0 0 15px rgba(132, 204, 22, 0.4); } 50% { transform: translateY(-50%) scale(1.05); box-shadow: 0 0 30px rgba(132, 204, 22, 0.9); } }
+    .custom-scrollbar::-webkit-scrollbar { height: 6px; width: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); border-radius: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(132, 204, 22, 0.5); border-radius: 4px; }
   </style>
 </head>
 <body class="app-bg font-sans antialiased text-gray-100 selection:bg-lime-500 selection:text-black">
@@ -51,16 +39,14 @@ box-shadow: 0 0 30px rgba(132, 204, 22, 0.9); } }
           <div class="absolute inset-0 border-4 border-lime-900/50 rounded-full animate-ping"></div>
           <div class="absolute inset-2 border-4 border-lime-500/30 rounded-full animate-spin shadow-[0_0_30px_rgba(132,204,22,0.4)]" style="animation-direction: reverse; animation-duration: 3s;"></div>
           <div class="absolute inset-4 border-4 border-lime-400 rounded-full border-t-transparent animate-spin shadow-[0_0_20px_rgba(132,204,22,0.8)]" style="animation-duration: 1.5s;"></div>
-    
-      <div class="relative z-10 bg-zinc-900 w-16 h-16 rounded-full flex items-center justify-center border border-lime-400 shadow-[0_0_15px_rgba(132,204,22,0.5)]">
+          <div class="relative z-10 bg-zinc-900 w-16 h-16 rounded-full flex items-center justify-center border border-lime-400 shadow-[0_0_15px_rgba(132,204,22,0.5)]">
               <i class="fas fa-bolt text-3xl text-lime-400 animate-pulse"></i>
           </div>
       </div>
       <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-lime-200 to-lime-500 tracking-[0.2em] mb-3 animate-pulse text-center">MEMPROSES DATA</h2>
       <div class="flex flex-col items-center text-center">
           <p class="text-sm text-lime-100/70 font-medium">Sistem memproses antrean permintaan...</p>
-   
-    </div>
+      </div>
   </div>
 
   <div id="toastContainer" class="fixed top-5 left-1/2 transform -translate-x-1/2 w-11/12 max-w-sm z-[600] flex flex-col gap-2"></div>
@@ -70,15 +56,12 @@ box-shadow: 0 0 30px rgba(132, 204, 22, 0.9); } }
         <i class="fas fa-key text-4xl text-lime-400 mb-3"></i>
         <h3 class="text-lg font-bold text-white mb-2">Reset Password</h3>
         <p class="text-xs text-zinc-400 mb-4">Masukkan Email dan NIP yang terdaftar untuk validasi identitas.</p>
-     
         <input type="email" id="resetEmail" class="w-full p-3 text-sm rounded-xl glossy-input mb-3" placeholder="Email Terdaftar" required>
         <input type="number" id="resetNIP" class="w-full p-3 text-sm rounded-xl glossy-input mb-3" placeholder="NIP Terdaftar" required>
         <div class="relative mb-4 text-left">
             <input type="password" id="resetNewPass" class="w-full p-3 text-sm rounded-xl glossy-input" placeholder="Password Baru" required>
             <i class="fas fa-eye absolute right-4 top-4 text-zinc-400 cursor-pointer hover:text-lime-400" id="iconResetPass" onclick="togglePasswordVisibility('resetNewPass', 'iconResetPass')"></i>
-   
-      </div>
-
+        </div>
         <div class="flex gap-3 mt-4">
             <button type="button" onclick="tutupModalReset()" class="w-1/2 p-3 rounded-xl bg-zinc-800 text-zinc-300 text-sm font-bold border border-zinc-600 hover:bg-zinc-700 transition-all">Batal</button>
             <button type="button" onclick="eksekusiResetPass()" class="w-1/2 p-3 rounded-xl bg-gradient-to-r from-lime-500 to-lime-400 text-black text-sm font-extrabold hover:shadow-[0_0_20px_rgba(132,204,22,0.6)] transition-all">Simpan</button>
@@ -86,35 +69,30 @@ box-shadow: 0 0 30px rgba(132, 204, 22, 0.9); } }
     </div>
   </div>
 
-  <div id="modalReview" class="fixed inset-0 bg-[#09090b]/90 backdrop-blur-sm z-[700] hidden flex-col items-center justify-center p-4 transition-opacity">
-      
-<div class="glossy-monster w-full max-w-sm rounded-2xl p-4 border border-lime-500/30 shadow-2xl scale-100 transition-transform relative">
-          <div class="border-b border-zinc-700 pb-2 mb-3">
-              <h3 class="text-lg font-bold text-lime-400"><i class="fas fa-clipboard-check mr-2"></i> Review Laporan</h3>
-              <p class="text-[10px] text-zinc-400">Pastikan seluruh data yang Anda isi sudah benar</p>
-          </div>
-          <div id="reviewContent" class="max-h-[60vh] overflow-y-auto custom-scrollbar pr-2 mb-4"></div>
-    
-      <div class="flex gap-3">
-              <button type="button" onclick="document.getElementById('modalReview').classList.add('hidden')" class="w-1/2 p-3 rounded-xl bg-zinc-800 text-zinc-300 text-sm font-bold border border-zinc-600 hover:bg-zinc-700 transition-all">Batal / Edit</button>
-              <button type="button" onclick="executeGenerate()" class="w-1/2 p-3 rounded-xl bg-gradient-to-r from-lime-500 to-lime-400 text-black text-sm font-extrabold shadow-[0_0_15px_rgba(132,204,22,0.4)] hover:shadow-[0_0_20px_rgba(132,204,22,0.6)] transition-all">Generate</button>
-          </div>
-      </div>
-  </div>
-
   <div id="modalConfirmReg" class="fixed inset-0 bg-[#09090b]/90 backdrop-blur-sm z-[800] hidden flex-col items-center justify-center p-4 transition-opacity">
-   
- <div class="glossy-monster w-full max-w-sm rounded-2xl p-5 border border-lime-500/30 shadow-2xl scale-100 transition-transform relative text-center">
+    <div class="glossy-monster w-full max-w-sm rounded-2xl p-5 border border-lime-500/30 shadow-2xl scale-100 transition-transform relative text-center">
         <i class="fas fa-exclamation-triangle text-4xl text-yellow-500 mb-3"></i>
         <h3 class="text-lg font-bold text-lime-400 mb-2">Konfirmasi Biodata</h3>
-        <p class="text-xs text-zinc-300 mb-4">Apakah data yang Anda masukkan (Nama, NIP, Jabatan, Email) sudah benar?
-Biodata yang sudah didaftarkan akan tersimpan otomatis dan <b>TIDAK BISA DIUBAH LAGI</b> pada form pelaporan.
-Kesalahan input adalah tanggung jawab pendaftar.</p>
+        <p class="text-xs text-zinc-300 mb-4">Apakah data yang Anda masukkan (Nama, NIP, Jabatan, Email) sudah benar? Biodata yang sudah didaftarkan akan tersimpan otomatis dan <b>TIDAK BISA DIUBAH LAGI</b> pada form pelaporan.</p>
         <div class="flex gap-3 mt-4">
             <button type="button" onclick="document.getElementById('modalConfirmReg').classList.add('hidden')" class="w-1/2 p-3 rounded-xl bg-zinc-800 text-zinc-300 text-sm font-bold border border-zinc-600 hover:bg-zinc-700 transition-all">Cek Lagi</button>
             <button type="button" onclick="eksekusiRegister()" class="w-1/2 p-3 rounded-xl bg-gradient-to-r from-lime-500 to-lime-400 text-black text-sm font-extrabold hover:shadow-[0_0_20px_rgba(132,204,22,0.6)] transition-all">Ya, Daftar</button>
         </div>
     </div>
+  </div>
+
+  <div id="modalReview" class="fixed inset-0 bg-[#09090b]/90 backdrop-blur-sm z-[700] hidden flex-col items-center justify-center p-4 transition-opacity">
+      <div class="glossy-monster w-full max-w-sm rounded-2xl p-4 border border-lime-500/30 shadow-2xl scale-100 transition-transform relative">
+          <div class="border-b border-zinc-700 pb-2 mb-3">
+              <h3 class="text-lg font-bold text-lime-400"><i class="fas fa-clipboard-check mr-2"></i> Review Laporan</h3>
+              <p class="text-[10px] text-zinc-400">Pastikan seluruh data yang Anda isi sudah benar</p>
+          </div>
+          <div id="reviewContent" class="max-h-[60vh] overflow-y-auto custom-scrollbar pr-2 mb-4 text-xs text-zinc-300"></div>
+          <div class="flex gap-3">
+              <button type="button" onclick="document.getElementById('modalReview').classList.add('hidden')" class="w-1/2 p-3 rounded-xl bg-zinc-800 text-zinc-300 text-sm font-bold border border-zinc-600 hover:bg-zinc-700 transition-all">Batal / Edit</button>
+              <button type="button" onclick="executeGenerate()" class="w-1/2 p-3 rounded-xl bg-gradient-to-r from-lime-500 to-lime-400 text-black text-sm font-extrabold shadow-[0_0_15px_rgba(132,204,22,0.4)] hover:shadow-[0_0_20px_rgba(132,204,22,0.6)] transition-all">Generate</button>
+          </div>
+      </div>
   </div>
 
   <div class="max-w-md w-full mx-auto relative min-h-screen shadow-2xl bg-black/40 flex flex-col pb-20">
@@ -132,12 +110,12 @@ Kesalahan input adalah tanggung jawab pendaftar.</p>
                         <i class="fas fa-wallet text-sm"></i>
                     </button>
                     <button onclick="nav('admin')" class="bg-blue-500/10 text-blue-500 w-8 h-8 rounded-full border border-blue-500/30 flex items-center justify-center hover:bg-blue-500/30 transition-all shadow-[0_0_10px_rgba(59,130,246,0.2)]" title="Menu Super Admin">
-                  <i class="fas fa-user-shield text-sm"></i>
+                        <i class="fas fa-user-shield text-sm"></i>
                     </button>
                 </div>
 
                 <button onclick="logout()" id="btnLogoutHeader" class="hidden bg-red-500/10 text-red-500 w-8 h-8 rounded-full border border-red-500/30 flex items-center justify-center hover:bg-red-500/30 transition-all shadow-[0_0_10px_rgba(239,68,68,0.2)]">
-        <i class="fas fa-power-off text-sm"></i>
+                    <i class="fas fa-power-off text-sm"></i>
                 </button>
             </div>
         </div>
@@ -165,12 +143,11 @@ Kesalahan input adalah tanggung jawab pendaftar.</p>
             <div class="relative mb-4">
                 <input type="password" id="logPassword" class="w-full p-3 text-sm rounded-xl glossy-input" placeholder="Password / PIN Admin">
                 <i class="fas fa-eye absolute right-4 top-4 text-zinc-400 cursor-pointer hover:text-lime-400" id="iconLogPass" onclick="togglePasswordVisibility('logPassword', 'iconLogPass')"></i>
-         </div>
+            </div>
             <button onclick="prosesLogin()" class="w-full bg-lime-500 text-black font-extrabold py-3 rounded-xl hover:bg-lime-400 transition-all text-sm mb-3 shadow-[0_0_15px_rgba(132,204,22,0.3)]"><i class="fas fa-sign-in-alt mr-2"></i> Masuk</button>
             
             <div class="flex justify-between items-center mt-2 px-1">
-                <p class="text-xs text-zinc-400">Belum punya akun?
-<span onclick="toggleAuthForm()" class="text-lime-400 cursor-pointer font-bold underline">Daftar</span></p>
+                <p class="text-xs text-zinc-400">Belum punya akun? <span onclick="toggleAuthForm()" class="text-lime-400 cursor-pointer font-bold underline">Daftar</span></p>
                 <p class="text-xs text-yellow-500 cursor-pointer font-bold underline" onclick="bukaModalReset()">Lupa Password?</p>
             </div>
         </div>
@@ -179,8 +156,11 @@ Kesalahan input adalah tanggung jawab pendaftar.</p>
             <input type="text" id="regNama" class="w-full p-3 text-sm rounded-xl glossy-input mb-3" placeholder="Nama Lengkap" required>
             <input type="number" id="regNIP" class="w-full p-3 text-sm rounded-xl glossy-input mb-3" placeholder="NIP (Kosongkan jika tidak ada)">
             <select id="regJabatan" class="w-full p-3 text-sm rounded-xl glossy-input mb-3">
-                <option value="Penata layanan operasional">Penata layanan operasional</option>
+                <option value="Operator layanan operasional">Operator layanan operasional</option>
                 <option value="Pengelola layanan operasional">Pengelola layanan operasional</option>
+                <option value="Penata layanan operasional">Penata layanan operasional</option>
+                <option value="Katim Kabupaten/Kota">Katim Kabupaten/Kota</option>
+                <option value="Katim Provinsi">Katim Provinsi</option>
             </select>
             <input type="email" id="regEmail" class="w-full p-3 text-sm rounded-xl glossy-input mb-3" placeholder="Email Valid" required>
             <div class="relative mb-4">
@@ -188,8 +168,7 @@ Kesalahan input adalah tanggung jawab pendaftar.</p>
                 <i class="fas fa-eye absolute right-4 top-4 text-zinc-400 cursor-pointer hover:text-lime-400" id="iconRegPass" onclick="togglePasswordVisibility('regPassword', 'iconRegPass')"></i>
             </div>
             <button onclick="validasiRegister()" class="w-full bg-lime-500 text-black font-extrabold py-3 rounded-xl hover:bg-lime-400 transition-all text-sm mb-3"><i class="fas fa-user-plus mr-2"></i> Daftar Akun</button>
-            <p class="text-center text-xs text-zinc-400 mt-2">Sudah punya akun?
-<span onclick="toggleAuthForm()" class="text-lime-400 cursor-pointer font-bold underline">Kembali Login</span></p>
+            <p class="text-center text-xs text-zinc-400 mt-2">Sudah punya akun? <span onclick="toggleAuthForm()" class="text-lime-400 cursor-pointer font-bold underline">Kembali Login</span></p>
         </div>
       </section>
 
@@ -232,20 +211,16 @@ Kesalahan input adalah tanggung jawab pendaftar.</p>
 
       <section id="sec-agenda" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
         <div class="flex justify-between items-center mb-4 border-b border-zinc-700 pb-2">
-            <h2 class="text-lg font-bold text-lime-400"><i class="fas fa-calendar-alt mr-2"></i> Agenda Kegiatan</h2>
-            <button onclick="loadAgendaData()" class="text-xs bg-lime-500/20 text-lime-400 hover:bg-lime-500/40 p-2 rounded-lg transition-colors"><i class="fas fa-sync-alt"></i></button>
+            <h2 class="text-lg font-bold text-lime-400"><i class="fas fa-calendar-alt mr-2"></i> Target RHK Jabatan Anda</h2>
+            <button onclick="renderTargetTable()" class="text-xs bg-lime-500/20 text-lime-400 hover:bg-lime-500/40 p-2 rounded-lg transition-colors"><i class="fas fa-sync-alt"></i></button>
         </div>
-        
-        <div class="mb-3">
-            <p class="text-[10px] text-zinc-400 mb-2">Target pencapaian RHK berdasarkan jabatan Anda.</p>
-        </div>
-
-        <div class="overflow-x-auto overflow-y-auto max-h-[65vh] custom-scrollbar rounded-lg border border-zinc-700 pb-2 relative w-full">
+        <p class="text-[10px] text-zinc-400 mb-3">Daftar Rencana Hasil Kerja sesuai dengan jabatan Anda berserta target bulanan.</p>
+        <div class="overflow-y-auto max-h-[65vh] custom-scrollbar rounded-lg border border-zinc-700 pb-2 relative w-full">
            <table class="min-w-full text-left text-[10px] text-zinc-300">
             <thead class="bg-zinc-900/80 text-lime-400 border-b border-lime-500/20 sticky top-0 z-10 backdrop-blur-md">
-              <tr><th class="p-3 whitespace-nowrap">Hari & Tanggal</th><th class="p-3 whitespace-nowrap">Nama Kegiatan (RHK)</th><th class="p-3 whitespace-nowrap">Target / Status</th></tr>
+              <tr><th class="p-3 whitespace-nowrap">Kategori RHK</th><th class="p-3">Rencana Aksi</th><th class="p-3 text-center">Target/Bulan</th></tr>
             </thead>
-            <tbody id="tableAgendaBody" class="divide-y divide-zinc-800/50">
+            <tbody id="targetTable" class="divide-y divide-zinc-800/50">
                  <tr><td colspan="3" class="text-center p-6"><i class="fas fa-spinner fa-spin text-lime-500 mb-2"></i><br>Memuat...</td></tr>
              </tbody>
            </table>
@@ -296,8 +271,7 @@ Kesalahan input adalah tanggung jawab pendaftar.</p>
         <div class="p-3 bg-red-900/20 border border-red-500/30 rounded-xl mb-2">
              <label class="flex items-start gap-2 cursor-pointer">
                 <input type="checkbox" id="cekSyaratToken" class="mt-1 w-4 h-4 accent-lime-500 shrink-0">
-                <span class="text-[10px] text-zinc-300 leading-tight"><b>PERSETUJUAN (MUTLAK):</b> Saya menyetujui bahwa <b>uang/token tidak dapat di-refund atau dikembalikan dengan alasan APAPUN</b>.
-Saya sepenuhnya bertanggung jawab atas kebenaran isian formulir. Jika laporan gagal masuk ke email/drive dikarenakan kesalahan sistem personal, token yang terpotong <b>HANGUS</b>.</span>
+                <span class="text-[10px] text-zinc-300 leading-tight"><b>PERSETUJUAN (MUTLAK):</b> Saya menyetujui bahwa <b>uang/token tidak dapat di-refund atau dikembalikan dengan alasan APAPUN</b>. Saya sepenuhnya bertanggung jawab atas kebenaran isian formulir. Jika laporan gagal masuk ke email/drive dikarenakan kesalahan sistem personal, token yang terpotong <b>HANGUS</b>.</span>
             </label>
         </div>
       </section>
@@ -332,14 +306,14 @@ Saya sepenuhnya bertanggung jawab atas kebenaran isian formulir. Jika laporan ga
 
       <section id="sec-arsip" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
         <div class="flex justify-between items-center mb-4 border-b border-zinc-700 pb-2">
-            <h2 class="text-lg font-bold text-lime-400"><i class="fas fa-folder-open mr-2"></i> URL Arsip Laporan</h2>
+            <h2 class="text-lg font-bold text-lime-400"><i class="fas fa-folder-open mr-2"></i> Arsip Laporan (Drive)</h2>
             <button onclick="loadDashboardData()" class="text-xs bg-lime-500/20 text-lime-400 hover:bg-lime-500/40 p-2 rounded-lg transition-colors"><i class="fas fa-sync-alt"></i></button>
         </div>
 
         <div class="overflow-x-auto overflow-y-auto max-h-[65vh] custom-scrollbar rounded-lg border border-zinc-700 pb-2 relative w-full">
            <table class="min-w-full text-left text-[10px] text-zinc-300">
             <thead class="bg-zinc-900/80 text-lime-400 border-b border-lime-500/20 sticky top-0 z-10 backdrop-blur-md">
-              <tr><th class="p-3 whitespace-nowrap">Tanggal</th><th class="p-3 whitespace-nowrap">Judul Laporan</th><th class="p-3 whitespace-nowrap text-center">Aksi / Link</th></tr>
+              <tr><th class="p-3 whitespace-nowrap">Tanggal</th><th class="p-3">Rencana Aksi / Kegiatan</th><th class="p-3 text-center whitespace-nowrap">Link Drive</th></tr>
             </thead>
             <tbody id="tableArsipBody" class="divide-y divide-zinc-800/50">
                  <tr><td colspan="3" class="text-center p-6"><i class="fas fa-spinner fa-spin text-lime-500 mb-2"></i><br>Memuat...</td></tr>
@@ -367,86 +341,77 @@ Saya sepenuhnya bertanggung jawab atas kebenaran isian formulir. Jika laporan ga
           </div>
 
           <div class="grid grid-cols-2 gap-3 mb-4">
-             <div><label class="block text-xs font-bold text-lime-300 mb-1">Tanggal</label><input type="date" id="tanggalLaporan" class="w-full p-3 text-sm rounded-xl glossy-input save-draft" required></div>
-                <div><label class="block text-xs font-bold text-lime-300 mb-1">Waktu Pelaksanaan</label><input type="date" id="waktu" class="w-full p-3 text-sm rounded-xl glossy-input save-draft"></div>
-          </div>
-
-          <div class="mb-4">
-              <label class="block text-xs font-bold text-lime-300 mb-1">Jam Mulai Kegiatan (Riwayat Agenda)</label>
-              <input type="time" id="jamMulai" class="w-full p-3 text-sm rounded-xl glossy-input save-draft" required>
+             <div><label class="block text-xs font-bold text-lime-300 mb-1">Tanggal Kegiatan</label><input type="date" id="tanggalLaporan" class="w-full p-3 text-sm rounded-xl glossy-input" required></div>
+             <div><label class="block text-xs font-bold text-lime-300 mb-1">Jam Pelaksanaan</label><input type="time" id="jamMulai" class="w-full p-3 text-sm rounded-xl glossy-input" required></div>
           </div>
   
-        
           <div class="grid grid-cols-2 gap-3 mb-4">
-             <div><label class="block text-xs font-bold text-lime-300 mb-1">Nama Petugas</label><input type="text" id="namaPetugas" class="w-full p-3 text-sm rounded-xl glossy-input" required></div>
-             <div><label class="block text-xs font-bold text-lime-300 mb-1">NIP (Opsional)</label><input type="text" id="nip" class="w-full p-3 text-sm rounded-xl glossy-input"></div>
+             <div><label class="block text-xs font-bold text-lime-300 mb-1">Nama Petugas</label><input type="text" id="namaPetugas" class="w-full p-3 text-sm rounded-xl glossy-input" readonly></div>
+             <div><label class="block text-xs font-bold text-lime-300 mb-1">NIP (Opsional)</label><input type="text" id="nip" class="w-full p-3 text-sm rounded-xl glossy-input" readonly></div>
           </div>
  
           <div class="grid grid-cols-2 gap-3 mb-4">
-             <div><label class="block text-xs font-bold text-lime-300 mb-1">Jabatan</label><input type="text" id="jabatan" class="w-full p-3 text-sm rounded-xl glossy-input" required></div>
-             <div><label class="block text-xs font-bold text-lime-300 mb-1">Email PDF Tujuan</label><input type="email" id="emailTarget" class="w-full p-3 text-sm rounded-xl glossy-input" required></div>
+             <div><label class="block text-xs font-bold text-lime-300 mb-1">Jabatan</label><input type="text" id="jabatan" class="w-full p-3 text-sm rounded-xl glossy-input" readonly></div>
+             <div><label class="block text-xs font-bold text-lime-300 mb-1">Email PDF Tujuan</label><input type="email" id="emailTarget" class="w-full p-3 text-sm rounded-xl glossy-input" readonly></div>
           </div>
        
           <div class="grid grid-cols-2 gap-3 mb-4">
-            <div><label class="block text-xs font-bold text-lime-300 mb-1">Kabupaten/Kota</label><input type="text" id="kabupaten" value="Tapin" class="w-full p-3 text-sm rounded-xl glossy-input save-draft" required></div>
-             <div><label class="block text-xs font-bold text-lime-300 mb-1">Lokasi Kegiatan</label><input type="text" id="lokasi" class="w-full p-3 text-sm rounded-xl glossy-input save-draft" placeholder="Kantor Desa..." required></div>
+            <div><label class="block text-xs font-bold text-lime-300 mb-1">Kabupaten/Kota</label><input type="text" id="kabupaten" value="Tapin" class="w-full p-3 text-sm rounded-xl glossy-input" required></div>
+             <div><label class="block text-xs font-bold text-lime-300 mb-1">Lokasi Kegiatan</label><input type="text" id="lokasi" class="w-full p-3 text-sm rounded-xl glossy-input" placeholder="Kantor Desa..." required></div>
           </div>
 
-           <div class="mb-4">
-            <label class="block text-xs font-bold text-lime-300 mb-1">Upload TTD</label>
-            <input type="file" id="formTtdFile" accept="image/png, image/jpeg" class="w-full text-sm rounded-xl glossy-input text-zinc-400 file:mr-3 file:py-2 file:px-4 file:rounded-l-xl file:border-0 file:text-xs file:font-bold file:bg-lime-500 file:text-black hover:file:bg-lime-400 cursor-pointer" onchange="prosesTtdForm(event)">
+          <!-- TTD UPLOAD -->
+          <div class="mb-4">
+            <label class="block text-xs font-bold text-lime-300 mb-1">Upload Tanda Tangan Anda</label>
+            <input type="file" id="formTtdFile" accept="image/png, image/jpeg" class="w-full text-sm rounded-xl glossy-input text-zinc-400 file:mr-3 file:py-2 file:px-4 file:rounded-l-xl file:border-0 file:text-xs file:font-bold file:bg-lime-500 file:text-black hover:file:bg-lime-400 cursor-pointer" onchange="prosesTtdForm(event)" required>
             <div id="previewTtdContainer" class="hidden mt-3 relative w-[100px] h-[50px] bg-white rounded-lg p-1 border border-lime-500/50 shadow-md">
                <img id="imgTtdPreview" src="" class="w-full h-full object-contain">
                <div onclick="hapusTtdForm()" class="absolute -top-2 -right-2 bg-red-600 text-white w-5 h-5 flex items-center justify-center rounded-full cursor-pointer shadow-lg hover:bg-red-500 text-[10px] z-10 transition-transform active:scale-90"><i class="fas fa-times"></i></div>
            </div>
           </div>
 
-          <div class="mb-4">
-            <label class="block text-xs font-bold text-lime-300 mb-2">Lampiran Pendukung (Maks 3, 1 Kertas 1 Lampiran)</label>
-             <div class="bg-black/40 border border-lime-500/20 p-3 rounded-xl min-h-[80px] shadow-inner mb-2">
-                  <div id="previewLampiranContainer" class="flex flex-wrap gap-3 items-center">
-                     <div id="tombolTambahLampiran" class="flex gap-2">
-                        <div onclick="document.getElementById('lampiranFile').click()" class="w-14 h-14 bg-lime-500/10 border border-dashed border-lime-500/50 flex flex-col items-center justify-center rounded-xl cursor-pointer hover:bg-lime-500/20 text-lime-400">
-                            <i class="fas fa-paperclip text-lg"></i><span class="text-[8px] font-bold mt-1">Upload</span>
-                      </div>
-                   </div>
-                </div>
-                 <input type="file" id="lampiranFile" accept="image/*" multiple class="hidden" onchange="prosesLampiran(event)">
-            </div>
-         <div class="flex justify-between items-center"><p id="lampiranStatus" class="text-[10px] font-bold text-zinc-500 bg-zinc-800 px-2 py-1 rounded-md">0 / 3 File</p></div>
-          </div>
-
+          <!-- DROPDOWN RHK SUPABASE -->
           <div class="mb-4 bg-lime-900/10 p-3 rounded-xl border border-lime-500/30">
-            <label class="block text-xs font-bold text-lime-300 mb-2"><i class="fas fa-search mr-1"></i> Cari & Pilih Kegiatan (Difilter berdasar Jabatan)</label>
-             <input type="text" id="searchRHK" class="w-full p-2 mb-3 text-sm rounded-lg glossy-input" placeholder="🔍 Ketik kata kunci RHK..." onkeyup="filterRHKByJabatan()">
-             <select id="kegiatanSelect" class="w-full p-3 text-sm rounded-xl glossy-input font-medium" onchange="renderDynamicForm()" required>
+            <label class="block text-xs font-bold text-lime-300 mb-2"><i class="fas fa-search mr-1"></i> Cari Rencana Aksi Harian (Sesuai Jabatan)</label>
+             <input type="text" id="searchRHK" class="w-full p-2 mb-3 text-sm rounded-lg glossy-input" placeholder="🔍 Ketik kata kunci rencana aksi..." onkeyup="filterRHKByJabatan()">
+             <select id="kegiatanSelect" class="w-full p-3 text-sm rounded-xl glossy-input font-medium text-[11px]" onchange="renderDynamicForm()" required>
                 <option value="">Memuat data kegiatan...</option>
              </select>
           </div>
 
           <div id="dynamicFormArea" class="space-y-4 mb-4 transition-all duration-300"></div>
 
-           <div class="mb-5">
-            <label class="block text-xs font-bold text-lime-300 mb-2">Foto Dokumentasi (Maks 10 Foto, 3 Foto/Halaman)</label>
-            <div class="bg-black/40 border border-lime-500/20 p-3 rounded-xl min-h-[80px] shadow-inner">
-                   <div id="previewContainer" class="flex flex-wrap gap-3 items-center">
-                   <div id="tombolTambahArea" class="flex gap-2">
-                        <div onclick="document.getElementById('inputKamera').click()" class="w-14 h-14 bg-lime-500/10 border border-dashed border-lime-500/50 flex flex-col items-center justify-center rounded-xl cursor-pointer text-lime-400 hover:bg-lime-500/20 transition-all">
-                        <i class="fas fa-camera text-lg"></i><span class="text-[8px] font-bold mt-1">Kamera</span>
-                      </div>
-                      <div onclick="document.getElementById('inputGaleri').click()" class="w-14 h-14 bg-lime-500/10 border border-dashed border-lime-500/50 flex flex-col items-center justify-center rounded-xl cursor-pointer text-lime-400 hover:bg-lime-500/20 transition-all">
-                         <i class="fas fa-image text-lg"></i><span class="text-[8px] font-bold mt-1">Galeri</span>
-                      </div>
-                   </div>
-                   </div>
-               <input type="file" id="inputKamera" accept="image/*" capture="environment" class="hidden" onchange="prosesFoto(event)">
-               <input type="file" id="inputGaleri" accept="image/*" multiple class="hidden" onchange="prosesFoto(event)">
+          <!-- DOKUMENTASI & LAMPIRAN -->
+          <div class="mb-4">
+            <label class="block text-xs font-bold text-lime-300 mb-2">Lampiran Berkas (Maks 3, Opsional)</label>
+            <div class="bg-black/40 border border-lime-500/20 p-3 rounded-xl min-h-[60px] shadow-inner mb-2 flex items-center gap-2 overflow-x-auto">
+               <div onclick="document.getElementById('lampiranFile').click()" class="shrink-0 w-12 h-12 bg-lime-500/10 border border-dashed border-lime-500/50 flex flex-col items-center justify-center rounded-lg cursor-pointer hover:bg-lime-500/20 text-lime-400">
+                    <i class="fas fa-paperclip"></i>
+               </div>
+               <div id="previewLampiranContainer" class="flex gap-2"></div>
+               <input type="file" id="lampiranFile" accept="image/*" multiple class="hidden" onchange="prosesLampiran(event)">
             </div>
-            <div class="flex justify-between items-center mt-2"><p id="photoStatus" class="text-[10px] font-bold text-zinc-500 bg-zinc-800 px-2 py-1 rounded-md">0 / 10 Foto</p></div>
-        </div>
+            <p id="lampiranStatus" class="text-[10px] text-zinc-500">0 / 3 File</p>
+          </div>
+
+          <div class="mb-5">
+            <label class="block text-xs font-bold text-lime-300 mb-2">Foto Kegiatan (Maks 10 Foto)</label>
+            <div class="bg-black/40 border border-lime-500/20 p-3 rounded-xl min-h-[60px] shadow-inner flex items-center gap-2 overflow-x-auto">
+                <div onclick="document.getElementById('inputKamera').click()" class="shrink-0 w-12 h-12 bg-lime-500/10 border border-dashed border-lime-500/50 flex flex-col items-center justify-center rounded-lg cursor-pointer text-lime-400 hover:bg-lime-500/20">
+                    <i class="fas fa-camera"></i>
+                </div>
+                <div onclick="document.getElementById('inputGaleri').click()" class="shrink-0 w-12 h-12 bg-lime-500/10 border border-dashed border-lime-500/50 flex flex-col items-center justify-center rounded-lg cursor-pointer text-lime-400 hover:bg-lime-500/20">
+                    <i class="fas fa-image"></i>
+                </div>
+                <div id="previewFotoContainer" class="flex gap-2"></div>
+                <input type="file" id="inputKamera" accept="image/*" capture="environment" class="hidden" onchange="prosesFoto(event)">
+                <input type="file" id="inputGaleri" accept="image/*" multiple class="hidden" onchange="prosesFoto(event)">
+            </div>
+            <p id="photoStatus" class="text-[10px] text-zinc-500">0 / 10 Foto</p>
+          </div>
 
            <button type="submit" id="btnSubmit" class="w-full bg-gradient-to-r from-lime-500 to-lime-400 text-black font-extrabold py-4 px-4 rounded-xl shadow-[0_5px_20px_rgba(132,204,22,0.4)] hover:shadow-[0_5px_25px_rgba(132,204,22,0.6)] transform transition-all text-sm tracking-wide">
-              <span id="btnText"><i class="fas fa-paper-plane mr-2"></i> Eksekusi AI & Drive (1 Token)</span>
+              <span id="btnText"><i class="fas fa-paper-plane mr-2"></i> Eksekusi AI & Simpan ke Drive (1 Token)</span>
             </button>
         </form>
       </section>
@@ -562,14 +527,13 @@ Saya sepenuhnya bertanggung jawab atas kebenaran isian formulir. Jika laporan ga
       </section>
       
       <div class="text-center py-4 text-[10px] text-zinc-600 font-medium pb-24">
-           copyright 8-3-2026<br>Fullstack Developer By @M.ZaenSyachrullah 
+           copyright 29-03-2026<br>Fullstack Developer By @M.ZaenSyachrullah
       </div>
   </main>
 
   <nav id="bottomNav" class="fixed bottom-0 w-full max-w-md bg-[#09090b] border-t border-lime-900/40 shadow-[0_-10px_20px_rgba(0,0,0,0.8)] flex justify-between px-2 py-2 z-40 h-16 items-center rounded-t-3xl backdrop-blur-xl bg-opacity-95 hidden">
       <button id="navDashboardBtn" onclick="nav('dashboard')" class="nav-btn flex-1 flex flex-col items-center text-lime-400"><i class="fas fa-home text-lg"></i><span class="text-[9px] font-bold mt-1">Beranda</span></button>
       <button id="navReportBtn" onclick="nav('report')" class="nav-btn flex-1 flex flex-col items-center text-zinc-500 hover:text-lime-300"><i class="fas fa-history text-lg"></i><span class="text-[9px] font-bold mt-1">Riwayat</span></button>
-      
       <button id="navArsipBtn" onclick="nav('arsip')" class="nav-btn flex-1 flex flex-col items-center text-zinc-500 hover:text-lime-300"><i class="fas fa-folder-open text-lg"></i><span class="text-[9px] font-bold mt-1">Arsip</span></button>
 
       <div class="relative flex-[1.2] flex justify-center">
@@ -579,7 +543,6 @@ Saya sepenuhnya bertanggung jawab atas kebenaran isian formulir. Jika laporan ga
       </div>
     
       <button id="navAgendaBtn" onclick="nav('agenda')" class="nav-btn flex-1 flex flex-col items-center text-zinc-500 hover:text-lime-300"><i class="fas fa-calendar-alt text-lg"></i><span class="text-[9px] font-bold mt-1">Agenda</span></button>
-      
       <button onclick="nav('token')" class="nav-btn flex-1 flex flex-col items-center text-zinc-500 hover:text-lime-300"><i class="fas fa-coins text-lg"></i><span class="text-[9px] font-bold mt-1">Token</span></button>
   </nav>
   </div>
@@ -608,45 +571,43 @@ Saya sepenuhnya bertanggung jawab atas kebenaran isian formulir. Jika laporan ga
       if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false;
       if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false; 
     }
+
+    // ==========================================
+    // PERSIAPAN KONEKSI SUPABASE & BASE64 STATE
+    // ==========================================
+    const SUPABASE_URL = "https://rtqfwssxwsrgttvfgerg.supabase.co"; 
+    const SUPABASE_ANON_KEY = "sb_publishable_fKkgsEIK1Z1yT4Vvy4Uu7g_nSo1fofJ"; 
     
-    // Matikan interval debug sementara agar mudah dites saat development Cloudflare
-    // setInterval(function() { let before = new Date().getTime(); debugger; let after = new Date().getTime(); if (after - before > 100) { window.location.replace("about:blank"); } }, 2000);
+    const { createClient } = supabase;
+    const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // ==========================================
-    // PERSIAPAN KONEKSI SUPABASE & GAS (UNTUK CLOUDFLARE)
-    // ==========================================
-    const SUPABASE_URL = ""; // Nanti diisi setelah Anda berikan API Key
-    const SUPABASE_ANON_KEY = ""; // Nanti diisi
-    let supabase = null; 
-    // if(SUPABASE_URL && SUPABASE_ANON_KEY) { supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); }
-
-    // ==========================================
-    // STATE & INITIALIZATION
-    // ==========================================
     let currentUser = null;
     let globalDataRiwayat = [];
-    let globalKeuanganData = []; 
+    let globalKeuanganData = [];
+    let listKegiatanGlobal = []; 
     let formTtdBase64 = null;
-    let listKegiatanGlobal = []; // Akan berisi Array of Objects untuk filter RHK dan Target
-    let listAgendaGlobal = [];
-    let tempRegData = null;
+    let arrayFotoBase64 = [];
+    let arrayLampiranBase64 = [];
     let currentRiwayatPage = 1;
     const itemsPerPageRiwayat = 15;
+    let tempRegData = null;
+
+    function showToast(message, type = 'success') {
+        const toast = document.createElement('div');
+        const icon = type === 'success' ? '<i class="fas fa-check-circle text-lime-400 text-lg"></i>' : '<i class="fas fa-times-circle text-red-500 text-lg"></i>';
+        const bgClass = type === 'success' ? 'bg-zinc-900 border-lime-500/40' : 'bg-red-950 border-red-500/50';
+        toast.className = `flex items-center justify-center gap-3 p-3 rounded-xl backdrop-blur-md shadow-2xl border transform transition-all duration-500 translate-y-[-20px] opacity-0 ${bgClass} text-white`;
+        toast.innerHTML = `${icon} <span class="text-sm font-bold">${message}</span>`;
+        document.getElementById('toastContainer').appendChild(toast);
+        setTimeout(() => toast.classList.remove('translate-y-[-20px]', 'opacity-0'), 10);
+        setTimeout(() => { toast.classList.add('opacity-0', 'scale-95'); setTimeout(() => toast.remove(), 500); }, 3000);
+    }
 
     function togglePasswordVisibility(inputId, iconId) {
         const input = document.getElementById(inputId);
         const icon = document.getElementById(iconId);
-        if (input.type === "password") {
-            input.type = "text";
-            icon.classList.remove("fa-eye");
-            icon.classList.add("fa-eye-slash");
-            icon.classList.add("text-lime-400");
-        } else {
-            input.type = "password";
-            icon.classList.remove("fa-eye-slash");
-            icon.classList.add("fa-eye");
-            icon.classList.remove("text-lime-400");
-        }
+        if (input.type === "password") { input.type = "text"; icon.classList.replace("fa-eye", "fa-eye-slash"); } 
+        else { input.type = "password"; icon.classList.replace("fa-eye-slash", "fa-eye"); }
     }
 
     function formatWITA(isoStr) {
@@ -659,9 +620,40 @@ Saya sepenuhnya bertanggung jawab atas kebenaran isian formulir. Jika laporan ga
             let tgl = new Intl.DateTimeFormat('id-ID', optionsDate).format(d);
             let jamStr = new Intl.DateTimeFormat('id-ID', optionsTime).format(d).replace('.', ':') + ' WITA';
             return { full: `${tgl} ${jamStr}`, tgl: tgl, jam: jamStr };
-        } catch(e) {
-            return { full: isoStr, tgl: isoStr, jam: '' };
+        } catch(e) { return { full: isoStr, tgl: isoStr, jam: '' }; }
+    }
+
+    async function loadMasterRHKFromSupabase() {
+        if(!db) return;
+        try {
+            const { data, error } = await db.from('master_rhk').select('*');
+            if (error) throw error;
+            listKegiatanGlobal = data; 
+            filterRHKByJabatan(); 
+            renderTargetTable();
+        } catch (e) { console.error("Gagal menarik data Master RHK:", e); }
+    }
+
+    function renderTargetTable() {
+        if(!currentUser) return;
+        const tbody = document.getElementById('targetTable');
+        const jabatanUser = currentUser.data.jabatan;
+        const filtered = listKegiatanGlobal.filter(i => i.jabatan === jabatanUser);
+        
+        let html = '';
+        if(filtered.length === 0) {
+            html = `<tr><td colspan="3" class="text-center italic p-4 text-zinc-500">Tidak ada target RHK ditemukan untuk jabatan ini.</td></tr>`;
+        } else {
+            filtered.forEach(item => {
+                html += `
+                <tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30">
+                    <td class="p-2 whitespace-nowrap"><span class="bg-lime-900/40 text-lime-300 px-2 py-0.5 rounded text-[9px] font-bold border border-lime-500/30">${item.kategori_rhk}</span></td>
+                    <td class="p-2">${item.kegiatan}</td>
+                    <td class="p-2 text-center font-bold text-yellow-400">${item.target}</td>
+                </tr>`;
+            });
         }
+        tbody.innerHTML = html;
     }
 
     window.onload = function() {
@@ -673,14 +665,7 @@ Saya sepenuhnya bertanggung jawab atas kebenaran isian formulir. Jika laporan ga
         document.getElementById('realtimeDate').innerText = new Intl.DateTimeFormat('id-ID', optionsDate).format(now);
       }, 1000);
 
-      // (Logika GAS bawaan dibiarkan agar tidak error visual saat di-preview)
       try {
-          google.script.run.withSuccessHandler(data => {
-              // Format data Master RHK disimulasikan dari backend
-              listKegiatanGlobal = data;
-              filterRHKByJabatan(); 
-          }).getMasterRHK();
-
           google.script.run.withSuccessHandler(userData => {
              if(userData && !localStorage.getItem('egenlap_user_monster')) {
                  localStorage.setItem('egenlap_user_monster', JSON.stringify(userData));
@@ -690,34 +675,27 @@ Saya sepenuhnya bertanggung jawab atas kebenaran isian formulir. Jika laporan ga
                  cekSesiLogin();
              }
           }).checkAutoLogin();
-      } catch(e) { console.log("Google Script Run tidak aktif. Siap untuk integrasi Supabase."); cekSesiLogin(); }
+      } catch(e) { cekSesiLogin(); }
+
+      if(db) loadMasterRHKFromSupabase();
     };
 
-    // ==========================================
-    // LOGIKA FILTER RHK BERDASARKAN JABATAN & KEYWORD
-    // ==========================================
- function filterRHKByJabatan() {
+    function filterRHKByJabatan() {
       if(!currentUser) return;
       const keyword = document.getElementById('searchRHK').value.toLowerCase();
       const jabatanUser = currentUser.data.jabatan;
-      
       let optionsHtml = `<option value="" data-rhk="">-- Pilih Rencana Aksi Harian --</option>`;
       
       const filtered = listKegiatanGlobal.filter(item => {
           return item.jabatan === jabatanUser && item.kegiatan.toLowerCase().includes(keyword);
       });
 
-      // Menampilkan RHK dan Target sebagai label yang jelas di dropdown
       filtered.forEach(item => {
           optionsHtml += `<option value="${item.kegiatan}" data-rhk="${item.kategori_rhk}">[${item.kategori_rhk} | Target: ${item.target}] - ${item.kegiatan}</option>`;
       });
-      
       document.getElementById('kegiatanSelect').innerHTML = optionsHtml;
-    }}
-    
-    // ==========================================
-    // AUTHENTICATION LOGIC & PRIVASI HALAMAN
-    // ==========================================
+    }
+
     function toggleAuthForm() {
         document.getElementById('formLogin').classList.toggle('hidden');
         document.getElementById('formRegister').classList.toggle('hidden');
@@ -727,8 +705,65 @@ Saya sepenuhnya bertanggung jawab atas kebenaran isian formulir. Jika laporan ga
     function tutupModalReset() { document.getElementById('modalResetPass').classList.add('hidden'); }
     
     function eksekusiResetPass() {
-        // Logika GAS
-        // Nanti diganti Supabase
+        const email = document.getElementById('resetEmail').value;
+        const nip = document.getElementById('resetNIP').value;
+        const newPass = document.getElementById('resetNewPass').value;
+        if(!email || !nip || !newPass) { showToast("Lengkapi form reset password", "error"); return; }
+        showLoadingUI(true);
+        google.script.run.withSuccessHandler(res => {
+            showLoadingUI(false);
+            if(res.status === 'success') { showToast(res.message, "success"); tutupModalReset(); } 
+            else { showToast(res.message, "error"); }
+        }).withFailureHandler(err => { showLoadingUI(false); showToast(err.message, "error"); }).resetPasswordLogic(email, nip, newPass);
+    }
+
+    function prosesLogin() {
+        const email = document.getElementById('logEmail').value;
+        const pass = document.getElementById('logPassword').value;
+        if(!email || !pass) { showToast("Isi email & password!", "error"); return; }
+        showLoadingUI(true);
+        google.script.run.withSuccessHandler(res => {
+            showLoadingUI(false);
+            if(res.status === 'success') {
+                localStorage.setItem('egenlap_user_monster', JSON.stringify(res.userData));
+                currentUser = res.userData;
+                terapkanSesi();
+                filterRHKByJabatan();
+                renderTargetTable();
+                showToast("Login Berhasil!");
+            } else { showToast(res.message, "error"); }
+        }).withFailureHandler(err => { showLoadingUI(false); showToast(err.message, "error"); }).prosesLogin(email, pass);
+    }
+
+    function validasiRegister() {
+        const regNama = document.getElementById('regNama').value;
+        const regJabatan = document.getElementById('regJabatan').value;
+        const regEmail = document.getElementById('regEmail').value;
+        const regPassword = document.getElementById('regPassword').value;
+        if(!regNama || !regJabatan || !regEmail || !regPassword) { showToast("Lengkapi form pendaftaran!", "error"); return; }
+        
+        tempRegData = {
+            nama: regNama, nip: document.getElementById('regNIP').value,
+            jabatan: regJabatan, email: regEmail, password: regPassword
+        };
+        document.getElementById('modalConfirmReg').classList.remove('hidden');
+    }
+
+    function eksekusiRegister() {
+        document.getElementById('modalConfirmReg').classList.add('hidden');
+        if(!tempRegData) return;
+        showLoadingUI(true);
+        google.script.run.withSuccessHandler(res => {
+            showLoadingUI(false);
+            if(res.status === 'success') {
+                localStorage.setItem('egenlap_user_monster', JSON.stringify(res.userData));
+                currentUser = res.userData;
+                terapkanSesi();
+                filterRHKByJabatan();
+                renderTargetTable();
+                showToast("Pendaftaran Berhasil! Dapat 1 Token.");
+            } else { showToast(res.message, "error"); }
+        }).withFailureHandler(err => { showLoadingUI(false); showToast(err.message, "error"); }).validasiRegister(tempRegData);
     }
 
     function cekSesiLogin() {
@@ -736,21 +771,15 @@ Saya sepenuhnya bertanggung jawab atas kebenaran isian formulir. Jika laporan ga
         if (stored) {
             currentUser = JSON.parse(stored);
             terapkanSesi();
-            filterRHKByJabatan(); // Terapkan filter setelah login valid
-        } else {
-            nav('auth');
-        }
+            filterRHKByJabatan(); 
+            renderTargetTable();
+        } else { nav('auth'); }
     }
 
     function terapkanSesi() {
         document.getElementById('bottomNav').classList.remove('hidden');
         document.getElementById('btnLogoutHeader').classList.remove('hidden');
         document.getElementById('userGreeting').innerText = "Halo, " + (currentUser.data.nama.split(' ')[0] || "Admin");
-        
-        document.getElementById('navDashboardBtn').classList.remove('hidden');
-        document.getElementById('navReportBtn').classList.remove('hidden');
-        document.getElementById('navArsipBtn').classList.remove('hidden'); // Munculkan arsip
-        document.getElementById('navAgendaBtn').classList.remove('hidden'); // Munculkan agenda
         
         const theadRiwayat = document.getElementById('theadRiwayat');
         if(currentUser.role === 'admin') {
@@ -779,15 +808,9 @@ Saya sepenuhnya bertanggung jawab atas kebenaran isian formulir. Jika laporan ga
         const readOnlyFields = ['namaPetugas', 'nip', 'jabatan', 'emailTarget'];
         
         if (currentUser.role === 'admin') {
-            readOnlyFields.forEach(id => {
-                const el = document.getElementById(id);
-                if (el) { el.readOnly = false; el.classList.remove('opacity-70', 'cursor-not-allowed', 'bg-zinc-900/50'); }
-            });
+            readOnlyFields.forEach(id => { const el = document.getElementById(id); if (el) { el.readOnly = false; el.classList.remove('opacity-70', 'cursor-not-allowed', 'bg-zinc-900/50'); } });
         } else {
-            readOnlyFields.forEach(id => {
-                const el = document.getElementById(id);
-                if (el) { el.readOnly = true; el.classList.add('opacity-70', 'cursor-not-allowed', 'bg-zinc-900/50'); }
-            });
+            readOnlyFields.forEach(id => { const el = document.getElementById(id); if (el) { el.readOnly = true; el.classList.add('opacity-70', 'cursor-not-allowed', 'bg-zinc-900/50'); } });
         }
     }
 
@@ -808,8 +831,7 @@ Saya sepenuhnya bertanggung jawab atas kebenaran isian formulir. Jika laporan ga
 
     function tambahSurat() {
         const container = document.getElementById('containerDataSurat');
-        const html = `
-            <div class="surat-item grid grid-cols-2 gap-3 mb-2 relative pt-4 border-t border-zinc-700/50 mt-2">
+        const html = `<div class="surat-item grid grid-cols-2 gap-3 mb-2 relative pt-4 border-t border-zinc-700/50 mt-2">
                <button type="button" onclick="this.parentElement.remove()" class="absolute top-1 right-0 text-red-500 text-[10px] font-bold"><i class="fas fa-times"></i> Hapus</button>
                <div><input type="text" class="input-dasar-surat w-full p-2 text-xs rounded-lg glossy-input" placeholder="Dasar Surat Tambahan"></div>
                <div><input type="text" class="input-perihal-surat w-full p-2 text-xs rounded-lg glossy-input" placeholder="Perihal Tambahan"></div>
@@ -817,165 +839,81 @@ Saya sepenuhnya bertanggung jawab atas kebenaran isian formulir. Jika laporan ga
         container.insertAdjacentHTML('beforeend', html);
     }
 
-    // ==========================================
-    // TTD UPLOAD FIX
-    // ==========================================
-    function prosesTtdForm(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) { 
-        let img = new Image();
-        img.onload = function() {
-            let canvas = document.createElement('canvas');
-            let ctx = canvas.getContext('2d');
-            let w = img.width; let h = img.height;
-            if(w > 400) { h *= 400/w; w = 400; }
-            canvas.width = w; canvas.height = h;
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(0, 0, w, h);
-            ctx.drawImage(img, 0, 0, w, h);
-            formTtdBase64 = canvas.toDataURL('image/png');
-            document.getElementById('imgTtdPreview').src = formTtdBase64;
-            document.getElementById('previewTtdContainer').classList.remove('hidden');
-            showToast("Sukses", "success");
+    function resizeAndConvertImage(file, maxSize, callback) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = new Image();
+            img.onload = function() {
+                let w = img.width, h = img.height;
+                if(w > maxSize) { h *= maxSize/w; w = maxSize; }
+                const canvas = document.createElement('canvas');
+                canvas.width = w; canvas.height = h;
+                const ctx = canvas.getContext('2d');
+                ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, w, h);
+                ctx.drawImage(img, 0, 0, w, h);
+                callback(canvas.toDataURL('image/jpeg', 0.6));
+            };
+            img.src = e.target.result;
         };
-        img.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
+        reader.readAsDataURL(file);
     }
-    
-    function hapusTtdForm(silent = false) {
+
+    function prosesTtdForm(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        resizeAndConvertImage(file, 400, (base64) => {
+            formTtdBase64 = base64;
+            document.getElementById('imgTtdPreview').src = base64;
+            document.getElementById('previewTtdContainer').classList.remove('hidden');
+        });
+    }
+    function hapusTtdForm(silent=false) {
         formTtdBase64 = null;
         document.getElementById('formTtdFile').value = "";
         document.getElementById('previewTtdContainer').classList.add('hidden');
-        document.getElementById('imgTtdPreview').src = "";
-        if (silent !== true) showToast("Sukses", "success");
     }
 
-    function validasiRegister() { /* ... */ }
-    function eksekusiRegister() { /* ... */ }
-    function prosesLogin() { /* ... */ }
-
-    // ==========================================
-    // FETCH DASHBOARD DATA (TERMASUK ARSIP)
-    // ==========================================
-    function loadDashboardData() {
-        if(!currentUser) return;
-        const tbody = document.getElementById('tableBody');
-        const tbodyArsip = document.getElementById('tableArsipBody');
-        
-        tbody.innerHTML = `<tr><td colspan="${currentUser.role === 'admin' ? 4 : 3}" class="text-center p-6"><i class="fas fa-circle-notch fa-spin text-lime-400"></i></td></tr>`;
-        tbodyArsip.innerHTML = `<tr><td colspan="3" class="text-center p-6"><i class="fas fa-circle-notch fa-spin text-lime-400"></i></td></tr>`;
-        
-        try {
-            google.script.run
-                .withSuccessHandler(res => {
-                    // Logika aslinya tetap aman, kita suntikkan render tabel arsip di renderTable()
-                    globalDataRiwayat = res.riwayat;
-                    updateStats(res.riwayat);
-                    currentRiwayatPage = 1;
-                    renderTable(); 
-                })
-                .getDashboardData(currentUser.data.email, currentUser.role, currentUser.data.sessionToken);
-        } catch(e) { console.log("Siap Migrasi Supabase"); }
-    }
-
-    // ==========================================
-    // RENDER AGENDA (DATA DARI DATABASE)
-    // ==========================================
-    function loadAgendaData() {
-        const tbodyAgenda = document.getElementById('tableAgendaBody');
-        tbodyAgenda.innerHTML = `<tr><td colspan="3" class="text-center p-6"><i class="fas fa-circle-notch fa-spin text-lime-400"></i></td></tr>`;
-        
-        // Simulasi logika yang akan diganti ke Supabase:
-        // Menampilkan agenda berdasarkan filter jabatan
-        setTimeout(() => {
-            let htmlAgenda = '';
-            if (listAgendaGlobal.length === 0) {
-                htmlAgenda = `<tr><td colspan="3" class="text-center p-4">Belum ada jadwal agenda</td></tr>`;
-            } else {
-                listAgendaGlobal.forEach(agenda => {
-                    htmlAgenda += `
-                    <tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors">
-                        <td class="p-2 text-[9px] whitespace-nowrap">${agenda.tanggal}<br><span class="text-zinc-500">${agenda.jam}</span></td>
-                        <td class="p-2 text-[9px] font-bold text-lime-200">${agenda.kegiatan}</td>
-                        <td class="p-2 text-[9px] whitespace-nowrap">${agenda.target}</td>
-                    </tr>`;
-                });
-            }
-            tbodyAgenda.innerHTML = htmlAgenda;
-        }, 500);
-    }
-
-    function updateStats(data) { /* ... Biarkan Sesuai Kode Asli ... */ }
-
-    // ==========================================
-    // PAGINASI, RENDER TABEL RIWAYAT & ARSIP
-    // ==========================================
-    function resetRiwayatPaginationAndRender() { currentRiwayatPage = 1; renderTable(); }
-
-    function renderTable() {
-        const tbody = document.getElementById('tableBody');
-        const tbodyArsip = document.getElementById('tableArsipBody');
-        const colspan = currentUser.role === 'admin' ? 4 : 3;
-        
-        if(globalDataRiwayat.length === 0) { 
-            tbody.innerHTML = `<tr><td colspan="${colspan}" class="text-center p-4">Belum ada riwayat</td></tr>`;
-            tbodyArsip.innerHTML = `<tr><td colspan="3" class="text-center p-4">Belum ada arsip laporan</td></tr>`;
-            document.getElementById('riwayatPageIndicator').innerText = `Hal 1 / 1`;
-            return;
+    function prosesLampiran(event) {
+        const files = event.target.files;
+        for(let file of files) {
+            if(arrayLampiranBase64.length >= 3) break;
+            resizeAndConvertImage(file, 800, (base64) => {
+                arrayLampiranBase64.push(base64);
+                renderLampiranPreviews();
+            });
         }
-        
-        let filteredData = globalDataRiwayat;
-        const startIndex = (currentRiwayatPage - 1) * itemsPerPageRiwayat;
-        const endIndex = startIndex + itemsPerPageRiwayat;
-        const pagedData = filteredData.slice(startIndex, endIndex);
-
-        let rows = '';
-        let rowsArsip = '';
-
-        pagedData.forEach(row => {
-            let st = row.keterangan === 'Sukses' ? 'text-lime-400' : 'text-red-400';
-            let namaTampil = row.nama;
-            let dt = formatWITA(row.tanggal);
-            let tglTampil = dt.tgl;
-            let htmlJam = (row.jam && row.jam !== "-") ? `<span class="text-lime-300 font-bold bg-lime-900/30 px-1 py-0.5 rounded border border-lime-500/30 inline-block mt-1"><i class="far fa-clock"></i> ${row.jam}</span>` : `<span class="text-zinc-500 font-bold bg-zinc-900/30 px-1 py-0.5 rounded border border-zinc-500/30 inline-block mt-1"><i class="far fa-clock"></i> -</span>`;
-
-            // LOGIKA LINK FOLDER ARSIP
-            let linkArsip = "-";
-            if (row.url && row.url.startsWith("http")) {
-                linkArsip = `<a href="${row.url}" target="_blank" class="bg-blue-600/20 text-blue-400 border border-blue-500/50 px-3 py-1.5 rounded-lg text-[9px] font-bold hover:bg-blue-600/40 transition-all inline-flex items-center gap-1 active:scale-95"><i class="fas fa-folder"></i> Buka Folder</a>`;
-            } else {
-                linkArsip = `<span class="text-zinc-500 italic">Belum Ada</span>`;
-            }
-
-            rowsArsip += `
-                <tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors">
-                    <td class="p-2 text-[9px] whitespace-nowrap">${tglTampil}</td>
-                    <td class="p-2 text-[9px] whitespace-nowrap font-bold text-lime-100" title="${row.kegiatan}">${row.kegiatan}</td>
-                    <td class="p-2 text-center whitespace-nowrap">${linkArsip}</td>
-                </tr>`;
-
-            rows += `<tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors">
-                <td class="p-2 text-[9px] whitespace-nowrap">${tglTampil}<br>${htmlJam}</td>
-                <td class="p-2 text-[9px] whitespace-nowrap" title="${row.kegiatan}">${row.kegiatan}</td>
-                <td class="p-2 text-[9px] ${st} font-bold whitespace-nowrap">${row.keterangan === 'Sukses' ? 'Sukses' : 'Gagal'}</td>
-            </tr>`;
+        document.getElementById('lampiranFile').value = "";
+    }
+    function renderLampiranPreviews() {
+        const container = document.getElementById('previewLampiranContainer');
+        container.innerHTML = "";
+        arrayLampiranBase64.forEach((b64, i) => {
+            container.innerHTML += `<div class="relative shrink-0 w-12 h-12 rounded-lg border border-lime-500/50 overflow-hidden"><img src="${b64}" class="w-full h-full object-cover"><div onclick="arrayLampiranBase64.splice(${i},1); renderLampiranPreviews()" class="absolute top-0 right-0 bg-red-600 text-white w-4 h-4 flex items-center justify-center cursor-pointer text-[8px]"><i class="fas fa-times"></i></div></div>`;
         });
-        
-        tbody.innerHTML = rows;
-        if(tbodyArsip) tbodyArsip.innerHTML = rowsArsip || `<tr><td colspan="3" class="text-center p-4">Data arsip tidak ditemukan</td></tr>`;
+        document.getElementById('lampiranStatus').innerText = `${arrayLampiranBase64.length} / 3 File`;
     }
 
-    function prevRiwayat() { if (currentRiwayatPage > 1) { currentRiwayatPage--; renderTable(); } }
-    function nextRiwayat() { currentRiwayatPage++; renderTable(); }
+    function prosesFoto(event) {
+        const files = event.target.files;
+        for(let file of files) {
+            if(arrayFotoBase64.length >= 10) break;
+            resizeAndConvertImage(file, 800, (base64) => {
+                arrayFotoBase64.push(base64);
+                renderFotoPreviews();
+            });
+        }
+        document.getElementById('inputKamera').value = "";
+        document.getElementById('inputGaleri').value = "";
+    }
+    function renderFotoPreviews() {
+        const container = document.getElementById('previewFotoContainer');
+        container.innerHTML = "";
+        arrayFotoBase64.forEach((b64, i) => {
+            container.innerHTML += `<div class="relative shrink-0 w-12 h-12 rounded-lg border border-lime-500/50 overflow-hidden"><img src="${b64}" class="w-full h-full object-cover"><div onclick="arrayFotoBase64.splice(${i},1); renderFotoPreviews()" class="absolute top-0 right-0 bg-red-600 text-white w-4 h-4 flex items-center justify-center cursor-pointer text-[8px]"><i class="fas fa-times"></i></div></div>`;
+        });
+        document.getElementById('photoStatus').innerText = `${arrayFotoBase64.length} / 10 Foto`;
+    }
 
-    function konfirmasiWA(namaPaket, jmlToken, hargaNum) { /* ... */ }
-
-    // ==========================================
-    // NAVIGASI MENU (DIPERBARUI)
-    // ==========================================
     function nav(target) {
       document.querySelectorAll('section').forEach(sec => sec.classList.add('section-hidden'));
       document.getElementById('sec-' + target).classList.remove('section-hidden');
@@ -985,36 +923,324 @@ Saya sepenuhnya bertanggung jawab atas kebenaran isian formulir. Jika laporan ga
           window.event.currentTarget.classList.add('text-lime-400');
       }
       
-      // Load data jika masuk menu tertentu
       if(target === 'dashboard' || target === 'report' || target === 'arsip') loadDashboardData();
-      if(target === 'agenda') loadAgendaData();
       if(target === 'admin' || target === 'keuangan') { loadAdminUsers(); loadMonitoringAdmin(); }
       
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // ==========================================
-    // FORM DINAMIS & EKSEKUSI
-    // ==========================================
-    
+    function loadDashboardData() {
+        if(!currentUser) return;
+        const tbody = document.getElementById('tableBody');
+        const tbodyArsip = document.getElementById('tableArsipBody');
+        tbody.innerHTML = `<tr><td colspan="${currentUser.role === 'admin' ? 4 : 3}" class="text-center p-6"><i class="fas fa-circle-notch fa-spin text-lime-400"></i></td></tr>`;
+        tbodyArsip.innerHTML = `<tr><td colspan="3" class="text-center p-6"><i class="fas fa-circle-notch fa-spin text-lime-400"></i></td></tr>`;
+        
+        google.script.run
+            .withSuccessHandler(res => {
+                globalDataRiwayat = res.riwayat;
+                if(currentUser.role !== 'admin') {
+                    document.getElementById('sisaTokenDash').innerText = res.token || "0";
+                    document.getElementById('formTokenCount').innerText = res.token || "0";
+                    if(res.token <= 0) { document.getElementById('btnSubmit').disabled = true; document.getElementById('btnSubmit').classList.add('opacity-50', 'cursor-not-allowed'); document.getElementById('btnText').innerHTML = "Token Habis"; } 
+                    else { document.getElementById('btnSubmit').disabled = false; document.getElementById('btnSubmit').classList.remove('opacity-50', 'cursor-not-allowed'); document.getElementById('btnText').innerHTML = "<i class='fas fa-paper-plane mr-2'></i> Eksekusi AI & Simpan ke Drive (1 Token)"; }
+                }
+                updateStats(res.riwayat);
+                currentRiwayatPage = 1;
+                renderTable();
+            })
+            .withFailureHandler(err => {
+                tbody.innerHTML = `<tr><td colspan="${currentUser.role === 'admin' ? 4 : 3}" class="text-center p-4 text-red-400">Gagal memuat: ${err.message}</td></tr>`;
+            })
+            .getDashboardData(currentUser.data.email, currentUser.role, currentUser.data.sessionToken);
+    }
+
+    function updateStats(data) {
+        if(currentUser.role === 'admin') return; 
+        let s = 0, g = 0, ringkasan = {};
+        data.forEach(r => {
+            if(r.keterangan === 'Sukses') { s++; ringkasan[r.kegiatan] = (ringkasan[r.kegiatan] || 0) + 1; } 
+            else g++;
+        });
+        document.getElementById('countSukses').innerText = s;
+        document.getElementById('countGagal').innerText = g;
+        
+        let htmlR = '';
+        for(let k in ringkasan) {
+            htmlR += `<tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors"><td class="p-2 py-3 leading-tight" title="${k}">${k}</td><td class="p-2 text-center text-lime-400 font-bold">${ringkasan[k]}</td></tr>`;
+        }
+        if(htmlR === '') htmlR = `<tr><td colspan="2" class="text-center italic text-zinc-500 py-2">Belum ada kegiatan yang sukses.</td></tr>`;
+        document.getElementById('ringkasanKegiatanTable').innerHTML = htmlR;
+    }
+
+    function resetRiwayatPaginationAndRender() { currentRiwayatPage = 1; renderTable(); }
+
+    function renderTable() {
+        const tbody = document.getElementById('tableBody');
+        const tbodyArsip = document.getElementById('tableArsipBody');
+        const colspan = currentUser.role === 'admin' ? 4 : 3;
+        
+        let filteredData = globalDataRiwayat;
+        if(currentUser.role === 'admin') {
+            const kw = document.getElementById('inputFilterRiwayat').value.toLowerCase();
+            filteredData = globalDataRiwayat.filter(r => (r.nama || "").toLowerCase().includes(kw) || (r.kegiatan || "").toLowerCase().includes(kw));
+        }
+
+        if(filteredData.length === 0) { 
+            tbody.innerHTML = `<tr><td colspan="${colspan}" class="text-center p-4">Tidak ada data ditemukan</td></tr>`;
+            tbodyArsip.innerHTML = `<tr><td colspan="3" class="text-center p-4">Data arsip tidak ditemukan</td></tr>`;
+            document.getElementById('riwayatPageIndicator').innerText = `Hal 1 / 1`;
+            return;
+        }
+
+        const totalPages = Math.ceil(filteredData.length / itemsPerPageRiwayat) || 1;
+        const startIndex = (currentRiwayatPage - 1) * itemsPerPageRiwayat;
+        const pagedData = filteredData.slice(startIndex, startIndex + itemsPerPageRiwayat);
+
+        let rows = '';
+        let rowsArsip = '';
+
+        pagedData.forEach(row => {
+            let st = row.keterangan === 'Sukses' ? 'text-lime-400' : 'text-red-400';
+            let dt = formatWITA(row.tanggal);
+            let tglTampil = dt.tgl;
+            let htmlJam = (row.jam && row.jam !== "-") ? `<span class="text-lime-300 font-bold bg-lime-900/30 px-1 py-0.5 rounded border border-lime-500/30 inline-block mt-1"><i class="far fa-clock"></i> ${row.jam}</span>` : `<span class="text-zinc-500 font-bold bg-zinc-900/30 px-1 py-0.5 rounded border border-zinc-500/30 inline-block mt-1"><i class="far fa-clock"></i> -</span>`;
+            
+            let linkArsip = "-";
+            if (row.url && row.url.startsWith("http")) {
+                linkArsip = `<a href="${row.url}" target="_blank" class="bg-blue-600/20 text-blue-400 border border-blue-500/50 px-3 py-1.5 rounded-lg text-[9px] font-bold hover:bg-blue-600/40 transition-all inline-flex items-center gap-1 active:scale-95"><i class="fas fa-folder"></i> Folder</a>`;
+            }
+
+            rowsArsip += `
+                <tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors">
+                    <td class="p-2 text-[9px] whitespace-nowrap">${tglTampil}</td>
+                    <td class="p-2 text-[9px] font-bold text-lime-100" title="${row.kegiatan}">${row.kegiatan}</td>
+                    <td class="p-2 text-center whitespace-nowrap">${linkArsip}</td>
+                </tr>`;
+
+            if(currentUser.role === 'admin') {
+                rows += `<tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors">
+                    <td class="p-2 text-[9px] font-bold text-blue-300 whitespace-nowrap">${row.nama}</td>
+                    <td class="p-2 text-[9px] whitespace-nowrap">${tglTampil}<br>${htmlJam}</td>
+                    <td class="p-2 text-[9px] whitespace-nowrap" title="${row.kegiatan}">${row.kegiatan}</td>
+                    <td class="p-2 text-[9px] ${st} font-bold whitespace-nowrap">${row.keterangan}</td>
+                </tr>`;
+            } else {
+                rows += `<tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors">
+                    <td class="p-2 text-[9px] whitespace-nowrap">${tglTampil}<br>${htmlJam}</td>
+                    <td class="p-2 text-[9px] whitespace-nowrap" title="${row.kegiatan}">${row.kegiatan}</td>
+                    <td class="p-2 text-[9px] ${st} font-bold whitespace-nowrap">${row.keterangan === 'Sukses' ? 'Sukses' : 'Gagal'}</td>
+                </tr>`;
+            }
+        });
+        
+        tbody.innerHTML = rows;
+        tbodyArsip.innerHTML = rowsArsip || `<tr><td colspan="3" class="text-center p-4">Belum ada arsip</td></tr>`;
+        document.getElementById('riwayatPageIndicator').innerText = `Hal ${currentRiwayatPage} / ${totalPages}`;
+    }
+
+    function prevRiwayat() { if (currentRiwayatPage > 1) { currentRiwayatPage--; renderTable(); } }
+    function nextRiwayat() { 
+        const kw = currentUser.role === 'admin' ? document.getElementById('inputFilterRiwayat').value.toLowerCase() : "";
+        const filtered = currentUser.role === 'admin' ? globalDataRiwayat.filter(r => (r.nama || "").toLowerCase().includes(kw) || (r.kegiatan || "").toLowerCase().includes(kw)) : globalDataRiwayat;
+        const totalPages = Math.ceil(filtered.length / itemsPerPageRiwayat) || 1;
+        if (currentRiwayatPage < totalPages) { currentRiwayatPage++; renderTable(); } 
+    }
+
     function renderDynamicForm() {
-      const selectKegiatan = document.getElementById('kegiatanSelect');
-      const selectedRHK = selectKegiatan.options[selectKegiatan.selectedIndex].getAttribute('data-rhk');
+       const selectedKegiatan = document.getElementById('kegiatanSelect').value;
+       const area = document.getElementById('dynamicFormArea');
+       area.innerHTML = ''; if(!selectedKegiatan) return;
+       const selectedUpper = selectedKegiatan.toUpperCase();
+       let html = '';
+       if (selectedUpper.includes("GRADUASI")) { html += `<div class="mb-3"><label class="block text-xs font-bold text-lime-300">Data Graduasi</label><input type="text" class="glossy-input w-full rounded-lg p-2"></div>`; }
+       else { html += `<div class="mb-3"><label class="block text-xs font-bold text-lime-300">Sasaran Umum</label><input type="text" class="glossy-input w-full rounded-lg p-2"></div>`; }
+       area.innerHTML = html;
+    }
 
-      const payload = {
-        dataSurat: dataSurat,
-        tanggalLaporan: document.getElementById('tanggalLaporan').value,
-        // ... (data lainnya biarkan sama)
-        kegiatan: document.getElementById('kegiatanSelect').value,
-        kategoriRHK: selectedRHK, // <--- TAMBAHKAN BARIS INI
-        // ...
-      };
+    function tampilkanReview(e) { 
+        e.preventDefault(); 
+        if(!formTtdBase64) { showToast("Tanda tangan wajib diisi!", "error"); return; }
+        const sel = document.getElementById('kegiatanSelect');
+        if(!sel.value) { showToast("Pilih Rencana Aksi Harian!", "error"); return; }
+        
+        const rhkStr = sel.options[sel.selectedIndex].text;
 
-    function prosesFoto(event) { /* Logika asli */ }
-    function prosesLampiran(event) { /* Logika asli */ }
-    function tampilkanReview(e) { e.preventDefault(); document.getElementById('modalReview').classList.remove('hidden'); }
-    function executeGenerate() { showLoadingUI(true); /* Eksekusi API Nanti */ }
+        let html = `
+          <p><b>Kegiatan:</b> ${rhkStr}</p>
+          <p><b>Tanggal:</b> ${document.getElementById('tanggalLaporan').value} (${document.getElementById('jamMulai').value})</p>
+          <p><b>Lokasi:</b> ${document.getElementById('lokasi').value}, ${document.getElementById('kabupaten').value}</p>
+          <p><b>Petugas:</b> ${document.getElementById('namaPetugas').value}</p>
+          <p class="mt-2 text-lime-400"><b>Lampiran:</b> ${arrayLampiranBase64.length} Berkas</p>
+          <p class="text-lime-400"><b>Dokumentasi:</b> ${arrayFotoBase64.length} Foto</p>
+        `;
+        document.getElementById('reviewContent').innerHTML = html;
+        document.getElementById('modalReview').classList.remove('hidden'); 
+    }
+    
+    function executeGenerate() { 
+        showLoadingUI(true); 
+        document.getElementById('modalReview').classList.add('hidden');
+        
+        const selectKegiatan = document.getElementById('kegiatanSelect');
+        const selectedOption = selectKegiatan.options[selectKegiatan.selectedIndex];
+        const selectedRHK = selectedOption ? selectedOption.getAttribute('data-rhk') : "RHK Lainnya";
 
+        let dataSurat = [];
+        document.querySelectorAll('.surat-item').forEach(item => {
+            const ds = item.querySelector('.input-dasar-surat').value;
+            const ph = item.querySelector('.input-perihal-surat').value;
+            if(ds || ph) dataSurat.push(`${ds} - ${ph}`);
+        });
+
+        const payload = {
+            tanggalLaporan: document.getElementById('tanggalLaporan').value,
+            jamMulai: document.getElementById('jamMulai').value,
+            namaPetugas: document.getElementById('namaPetugas').value,
+            nip: document.getElementById('nip').value,
+            jabatan: document.getElementById('jabatan').value,
+            kabupaten: document.getElementById('kabupaten').value,
+            lokasi: document.getElementById('lokasi').value,
+            kegiatan: document.getElementById('kegiatanSelect').value,
+            kategoriRHK: selectedRHK,
+            dataSurat: dataSurat.join("\n"),
+            ttd: formTtdBase64,
+            lampiran: arrayLampiranBase64,
+            foto: arrayFotoBase64,
+            currentUserEmail: currentUser.data.email,
+            currentUserRole: currentUser.role,
+            sessionToken: currentUser.data.sessionToken
+        };
+
+        google.script.run
+            .withSuccessHandler(res => {
+                showLoadingUI(false); 
+                showToast("Laporan Berhasil Disimpan ke Google Drive!", "success");
+                document.getElementById('reportForm').reset();
+                arrayFotoBase64 = []; arrayLampiranBase64 = [];
+                renderFotoPreviews(); renderLampiranPreviews();
+                hapusTtdForm(true);
+                const suratContainer = document.getElementById('containerDataSurat');
+                const itemsSurat = suratContainer.querySelectorAll('.surat-item');
+                for(let i=1; i<itemsSurat.length; i++) itemsSurat[i].remove();
+                document.getElementById('dynamicFormArea').innerHTML = '';
+                
+                document.getElementById('namaPetugas').value = currentUser.data.nama;
+                document.getElementById('nip').value = currentUser.data.nip;
+                document.getElementById('jabatan').value = currentUser.data.jabatan;
+                document.getElementById('emailTarget').value = currentUser.data.email;
+                if(currentUser.role !== 'admin') { loadDashboardData(); nav('dashboard'); }
+            })
+            .withFailureHandler(err => { showLoadingUI(false); showToast("Terjadi Kesalahan: " + err.message, "error"); })
+            .prosesLaporan(payload);
+    }
+
+    // ==== FUNGSI ADMIN & KEUANGAN ====
+    function loadAdminUsers() {
+        const tbody = document.getElementById('adminUserTable');
+        tbody.innerHTML = `<tr><td colspan="3" class="text-center p-4"><i class="fas fa-spinner fa-spin text-lime-400"></i></td></tr>`;
+        google.script.run.withSuccessHandler(users => {
+            let html = '';
+            users.forEach(u => {
+                html += `<tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30">
+                    <td class="p-2 whitespace-nowrap"><div class="font-bold text-lime-300 text-[10px]">${u.nama}</div><div class="text-[9px] text-zinc-500">${u.email}</div></td>
+                    <td class="p-2 font-black text-center text-yellow-400" id="token-${u.rowIdx}">${u.token}</td>
+                    <td class="p-2 text-center">
+                        <input type="number" id="input-token-${u.rowIdx}" class="w-12 text-center p-1 text-black text-xs font-bold rounded" placeholder="+/-">
+                        <button onclick="updateToken(${u.rowIdx}, '${u.email}')" class="bg-blue-600 text-white px-2 py-1 rounded text-[9px] font-bold ml-1 active:scale-90"><i class="fas fa-check"></i></button>
+                    </td>
+                </tr>`;
+            });
+            tbody.innerHTML = html;
+        }).withFailureHandler(err => { tbody.innerHTML = `<tr><td colspan="3" class="text-center p-4 text-red-500">${err.message}</td></tr>`; }).getAllUsersAdmin();
+    }
+    
+    function updateToken(rowIdx, email) {
+        const val = document.getElementById(`input-token-${rowIdx}`).value;
+        if(!val) return;
+        showLoadingUI(true);
+        google.script.run.withSuccessHandler(res => {
+            showLoadingUI(false);
+            if(res.status === 'success') { showToast(`Token ${email} diperbarui!`); loadAdminUsers(); }
+        }).withFailureHandler(err => { showLoadingUI(false); showToast(err.message, "error"); }).updateTokenAdmin(rowIdx, parseInt(val));
+    }
+    
+    function loadMonitoringAdmin() {
+         document.getElementById('rincianPembelianTable').innerHTML = `<tr><td colspan="4" class="text-center p-4"><i class="fas fa-spinner fa-spin text-lime-400"></i></td></tr>`;
+         google.script.run.withSuccessHandler(data => {
+             globalKeuanganData = data;
+             applyFilterKeuangan();
+         }).withFailureHandler(err => { showToast(err.message, "error"); }).getMonitoringAdmin();
+    }
+    
+    function applyFilterKeuangan() {
+        if(!globalKeuanganData) return;
+        const filterVal = document.getElementById('filterKeuangan').value;
+        const now = new Date();
+        const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const startOfWeek = new Date(startOfToday); startOfWeek.setDate(now.getDate() - now.getDay());
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+        let filtered = globalKeuanganData.filter(item => {
+            const d = new Date(item.tanggalAsli);
+            if (filterVal === 'Hari Ini') return d >= startOfToday;
+            if (filterVal === 'Minggu Ini') return d >= startOfWeek;
+            if (filterVal === 'Bulan Ini') return d >= startOfMonth;
+            return true; 
+        });
+
+        let tNominal = 0, tToken = 0;
+        let rekapNama = {};
+
+        let htmlRincian = '';
+        filtered.forEach(r => {
+            tNominal += r.nominal; tToken += r.token;
+            if (!rekapNama[r.nama]) rekapNama[r.nama] = { token: 0, nominal: 0 };
+            rekapNama[r.nama].token += r.token; rekapNama[r.nama].nominal += r.nominal;
+
+            htmlRincian += `<tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30">
+                <td class="p-2 text-[9px] whitespace-nowrap">${r.tanggalTampil}<br><span class="text-zinc-500">${r.jamTampil}</span></td>
+                <td class="p-2 text-[9px] font-bold text-lime-300">${r.nama}</td>
+                <td class="p-2 text-center text-yellow-400 font-bold">${r.token}</td>
+                <td class="p-2 text-right text-lime-100 font-mono">${r.nominal.toLocaleString('id-ID')}</td>
+            </tr>`;
+        });
+
+        document.getElementById('txtTotalPendapatan').innerText = "Rp " + tNominal.toLocaleString('id-ID');
+        document.getElementById('txtTotalToken').innerText = tToken + " Token";
+        document.getElementById('rincianPembelianTable').innerHTML = htmlRincian || `<tr><td colspan="4" class="text-center p-4 text-zinc-500">Tidak ada data di periode ini.</td></tr>`;
+
+        let htmlRekap = '';
+        const sortedNames = Object.keys(rekapNama).sort((a,b) => rekapNama[b].nominal - rekapNama[a].nominal);
+        sortedNames.forEach(nama => {
+            htmlRekap += `<tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30">
+                <td class="p-2 text-[9px] font-bold text-blue-300">${nama}</td>
+                <td class="p-2 text-center text-yellow-400 font-bold">${rekapNama[nama].token}</td>
+                <td class="p-2 text-right text-lime-100 font-mono">${rekapNama[nama].nominal.toLocaleString('id-ID')}</td>
+            </tr>`;
+        });
+        document.getElementById('rekapUserTable').innerHTML = htmlRekap || `<tr><td colspan="3" class="text-center p-4 text-zinc-500">Kosong.</td></tr>`;
+        
+        document.getElementById('monitoringSummary').classList.remove('hidden');
+    }
+
+    function jalankanSetupAwal() {
+        if(!confirm("BAHAYA! Ini akan mereset Database Sheet E-GenLap. Lanjutkan?")) return;
+        showLoadingUI(true);
+        google.script.run.withSuccessHandler(res => {
+            showLoadingUI(false); alert(res);
+        }).withFailureHandler(err => { showLoadingUI(false); alert(err.message); }).setupAwal();
+    }
+    
+    function konfirmasiWA(namaPaket, jmlToken, hargaNum) {
+        if(!currentUser) { showToast("Silakan Login terlebih dahulu!", "error"); nav('auth'); return; }
+        if(!document.getElementById('cekSyaratToken').checked) { showToast("Centang Persetujuan Mutlak di bawah paket!", "error"); return; }
+        const nama = currentUser.data.nama;
+        const hpAdmin = "6282255395627";
+        const pesan = `Halo Admin E-GenLap,%0A%0ASaya telah melakukan pembayaran QRIS untuk pembelian token AI.%0A%0A*Nama Pegawai:* ${nama}%0A*Paket:* ${namaPaket} (${jmlToken} Token)%0A*Nominal:* Rp ${hargaNum.toLocaleString('id-ID')}%0A%0ABerikut saya lampirkan bukti transfernya. Terima kasih.`;
+        window.open(`https://api.whatsapp.com/send?phone=${hpAdmin}&text=${pesan}`, '_blank');
+    }
+    function exportKeuanganKePDF() { showToast("Fitur cetak PDF laporan keuangan akan segera hadir."); }
   </script>
 </body>
 </html>
