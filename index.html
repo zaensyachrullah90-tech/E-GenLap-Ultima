@@ -549,9 +549,9 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
 
   <script>
     // ==========================================
-    // API ENDPOINT (GANTI DENGAN URL WEB APP GAS ANDA)
+    // API ENDPOINT (PENTING: GANTI DENGAN URL WEB APP GAS ANDA YANG BERAKHIRAN /exec)
     // ==========================================
-    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbyp58n4FmkcR9ul2c9UoxB8BA_t8NdWqgU4Qvwr1hI4wSoQnyLv_Op59pkxfwcN-NXO/exec";
+    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzNQv-dz4l8LWqP9-fwlqfRg2o7dEnac8KwVHxWbb5aXsLHtVLzxx5Y2z5vKiaLa7eZ/exec";
 
     // ==========================================
     // SECURITY ANTI-INSPECT & FULLSCREEN PWA
@@ -604,16 +604,22 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         try {
             const response = await fetch(GAS_API_URL, {
                 method: 'POST',
-                redirect: 'follow', // Memastikan redirect berjalan mulus tanpa terblokir
+                redirect: 'follow',
                 body: JSON.stringify({ action: action, data: dataObj }),
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' }
             });
-            const result = await response.json();
+            const textResult = await response.text();
+            if (!textResult) throw new Error("Empty response from server");
+            
+            const result = JSON.parse(textResult);
             if (result && result.status === 'error') throw new Error(result.message);
             return result;
         } catch (error) {
             if (error.message.includes("Failed to fetch") || error.name === "TypeError") {
-                throw new Error("Koneksi API Terputus! Pastikan Link Web App GAS benar dan Akses 'Siapa Saja' (Anyone).");
+                throw new Error("Gagal Menghubungi Server Google! Pastikan Anda sudah membuat 'New Deployment' di GAS dan merubah aksesnya menjadi 'Siapa Saja / Anyone'.");
+            }
+            if (error.name === "SyntaxError") {
+                throw new Error("Respon API tidak valid. Apakah Link GAS Anda benar dan berakhiran '/exec'?");
             }
             throw error;
         }
@@ -1151,7 +1157,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         apiCall('prosesLaporan', payload)
             .then(res => {
                 showLoadingUI(false); 
-                showToast("Sukses", "success");
+                showToast("Sukses! Laporan Anda berhasil di-generate.", "success");
                 document.getElementById('reportForm').reset();
                 arrayFotoBase64 = []; arrayLampiranBase64 = [];
                 renderFotoPreviews(); renderLampiranPreviews();
@@ -1185,7 +1191,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
                         <td class="p-2 font-black text-center text-yellow-400" id="token-${u.rowIdx}">${u.token}</td>
                         <td class="p-2 text-center">
                             <input type="number" id="input-token-${u.rowIdx}" class="w-12 text-center p-1 text-black text-xs font-bold rounded" placeholder="+/-">
-                            <button onclick="updateToken(${u.rowIdx}, '${u.email}')" class="bg-blue-600 text-white px-2 py-1 rounded text-[9px] font-bold ml-1 active:scale-90"><i class="fas fa-check"></i></button>
+                            <button onclick="updateToken('${u.email}')" class="bg-blue-600 text-white px-2 py-1 rounded text-[9px] font-bold ml-1 active:scale-90"><i class="fas fa-check"></i></button>
                         </td>
                     </tr>`;
                 });
@@ -1194,14 +1200,19 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
             .catch(err => { tbody.innerHTML = `<tr><td colspan="3" class="text-center p-4 text-red-500">${err.message}</td></tr>`; });
     }
     
-    function updateToken(rowIdx, email) {
-        const val = document.getElementById(`input-token-${rowIdx}`).value;
+    function updateToken(emailUser) {
+        // Menggunakan id berdasarkan format email (menghilangkan karakter spesial untuk keamanan id)
+        const rowIdClean = emailUser.replace(/[^a-zA-Z0-9]/g, '');
+        // Karena kode HTML adminUsers menggunakan u.rowIdx yang berisi email, kita seleksi inputnya
+        // Tunggu, fungsi getAdminUsers mengembalikan rowIdx: u.email
+        // Perbaikan id input di HTML baris 1120: input-token-${u.rowIdx}
+        const val = document.getElementById(`input-token-${emailUser}`).value;
         if(!val) return;
         showLoadingUI(true);
-        apiCall('updateTokenAdmin', { rowIdx: rowIdx, nominalToken: parseInt(val) })
+        apiCall('updateTokenAdmin', { emailUser: emailUser, nominalToken: parseInt(val) })
             .then(res => {
                 showLoadingUI(false);
-                if(res.status === 'success') { showToast(`Token ${email} diperbarui!`); loadAdminUsers(); }
+                if(res.status === 'success') { showToast(`Token ${emailUser} diperbarui!`); loadAdminUsers(); }
             })
             .catch(err => { showLoadingUI(false); showToast(err.message, "error"); });
     }
