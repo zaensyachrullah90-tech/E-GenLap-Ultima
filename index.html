@@ -17,91 +17,91 @@
 
   <style>
     .glossy-monster { background: linear-gradient(135deg, rgba(24, 24, 27, 0.9) 0%, rgba(9, 9, 11, 0.95) 100%);
-box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(132, 204, 22, 0.15); color: white; }
-    .glossy-input { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(132, 204, 22, 0.2); color: white; backdrop-filter: blur(5px); transition: all 0.3s ease; }
-    .glossy-input:focus { background: rgba(255, 255, 255, 0.1); border-color: #a3e635; outline: none; box-shadow: 0 0 15px rgba(132, 204, 22, 0.3); }
-    .glossy-input option { background: #09090b; color: #a3e635; }
+box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(59, 130, 246, 0.15); color: white; }
+    .glossy-input { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(59, 130, 246, 0.2); color: white; backdrop-filter: blur(5px); transition: all 0.3s ease; }
+    .glossy-input:focus { background: rgba(255, 255, 255, 0.1); border-color: #60a5fa; outline: none; box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); }
+    .glossy-input option { background: #09090b; color: #60a5fa; }
     html, body { width: 100%; min-height: 100%; margin: 0; padding: 0; }
     input, textarea { user-select: text; }
     .app-bg { background: linear-gradient(180deg, #09090b 0%, #18181b 100%); }
     .section-hidden { display: none; }
-    .fab-button { box-shadow: 0 0 20px rgba(132, 204, 22, 0.6); animation: pulse-glow 2s infinite; }
-    @keyframes pulse-glow { 0%, 100% { transform: translateY(-50%) scale(1); box-shadow: 0 0 15px rgba(132, 204, 22, 0.4); } 50% { transform: translateY(-50%) scale(1.05); box-shadow: 0 0 30px rgba(132, 204, 22, 0.9); } }
+    .fab-button { box-shadow: 0 0 20px rgba(59, 130, 246, 0.6); animation: pulse-glow 2s infinite; }
+    @keyframes pulse-glow { 0%, 100% { transform: translateY(-50%) scale(1); box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); } 50% { transform: translateY(-50%) scale(1.05); box-shadow: 0 0 30px rgba(59, 130, 246, 0.9); } }
     .custom-scrollbar::-webkit-scrollbar { height: 6px; width: 4px; }
     .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); border-radius: 4px; }
-    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(132, 204, 22, 0.5); border-radius: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(59, 130, 246, 0.5); border-radius: 4px; }
   </style>
 </head>
-<body class="app-bg font-sans antialiased text-gray-100 selection:bg-lime-500 selection:text-black">
+<body class="app-bg font-sans antialiased text-gray-100 selection:bg-blue-500 selection:text-white">
 
   <div id="fullscreenLoading" class="fixed inset-0 bg-[#09090b]/95 backdrop-blur-xl z-[500] hidden flex-col items-center justify-center transition-opacity duration-500 opacity-0 h-screen w-screen">
       <div class="relative w-32 h-32 flex items-center justify-center mb-8 mx-auto">
-          <div class="absolute inset-0 border-4 border-lime-900/50 rounded-full animate-ping"></div>
-          <div class="absolute inset-2 border-4 border-lime-500/30 rounded-full animate-spin shadow-[0_0_30px_rgba(132,204,22,0.4)]" style="animation-direction: reverse; animation-duration: 3s;"></div>
-          <div class="absolute inset-4 border-4 border-lime-400 rounded-full border-t-transparent animate-spin shadow-[0_0_20px_rgba(132,204,22,0.8)]" style="animation-duration: 1.5s;"></div>
-          <div class="relative z-10 bg-zinc-900 w-16 h-16 rounded-full flex items-center justify-center border border-lime-400 shadow-[0_0_15px_rgba(132,204,22,0.5)]">
-              <i class="fas fa-bolt text-3xl text-lime-400 animate-pulse"></i>
+          <div class="absolute inset-0 border-4 border-blue-900/50 rounded-full animate-ping"></div>
+          <div class="absolute inset-2 border-4 border-blue-500/30 rounded-full animate-spin shadow-[0_0_30px_rgba(59,130,246,0.4)]" style="animation-direction: reverse; animation-duration: 3s;"></div>
+          <div class="absolute inset-4 border-4 border-blue-400 rounded-full border-t-transparent animate-spin shadow-[0_0_20px_rgba(59,130,246,0.8)]" style="animation-duration: 1.5s;"></div>
+          <div class="relative z-10 bg-zinc-900 w-16 h-16 rounded-full flex items-center justify-center border border-blue-400 shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+              <i class="fas fa-bolt text-3xl text-blue-400 animate-pulse"></i>
           </div>
       </div>
-      <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-lime-200 to-lime-500 tracking-[0.2em] mb-3 animate-pulse text-center">MEMPROSES DATA</h2>
+      <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-blue-500 tracking-[0.2em] mb-3 animate-pulse text-center">MEMPROSES DATA</h2>
       <div class="flex flex-col items-center text-center">
-          <p class="text-sm text-lime-100/70 font-medium">Sistem memproses antrean permintaan...</p>
+          <p class="text-sm text-blue-100/70 font-medium">Sistem memproses antrean permintaan...</p>
       </div>
   </div>
 
   <div id="toastContainer" class="fixed top-5 left-1/2 transform -translate-x-1/2 w-11/12 max-w-sm z-[600] flex flex-col gap-2"></div>
 
   <div id="modalResetPass" class="fixed inset-0 bg-[#09090b]/90 backdrop-blur-sm z-[800] hidden flex-col items-center justify-center p-4 transition-opacity">
-    <div class="glossy-monster w-full max-w-sm rounded-2xl p-5 border border-lime-500/30 shadow-2xl scale-100 transition-transform relative text-center">
-        <i class="fas fa-key text-4xl text-lime-400 mb-3"></i>
+    <div class="glossy-monster w-full max-w-sm rounded-2xl p-5 border border-blue-500/30 shadow-2xl scale-100 transition-transform relative text-center">
+        <i class="fas fa-key text-4xl text-blue-400 mb-3"></i>
         <h3 class="text-lg font-bold text-white mb-2">Reset Password</h3>
         <p class="text-xs text-zinc-400 mb-4">Masukkan Email dan NIP yang terdaftar untuk validasi identitas.</p>
         <input type="email" id="resetEmail" class="w-full p-3 text-sm rounded-xl glossy-input mb-3" placeholder="Email Terdaftar" required>
         <input type="number" id="resetNIP" class="w-full p-3 text-sm rounded-xl glossy-input mb-3" placeholder="NIP Terdaftar" required>
         <div class="relative mb-4 text-left">
             <input type="password" id="resetNewPass" class="w-full p-3 text-sm rounded-xl glossy-input" placeholder="Password Baru" required>
-            <i class="fas fa-eye absolute right-4 top-4 text-zinc-400 cursor-pointer hover:text-lime-400" id="iconResetPass" onclick="togglePasswordVisibility('resetNewPass', 'iconResetPass')"></i>
+            <i class="fas fa-eye absolute right-4 top-4 text-zinc-400 cursor-pointer hover:text-blue-400" id="iconResetPass" onclick="togglePasswordVisibility('resetNewPass', 'iconResetPass')"></i>
         </div>
         <div class="flex gap-3 mt-4">
             <button type="button" onclick="tutupModalReset()" class="w-1/2 p-3 rounded-xl bg-zinc-800 text-zinc-300 text-sm font-bold border border-zinc-600 hover:bg-zinc-700 transition-all">Batal</button>
-            <button type="button" onclick="eksekusiResetPass()" class="w-1/2 p-3 rounded-xl bg-gradient-to-r from-lime-500 to-lime-400 text-black text-sm font-extrabold hover:shadow-[0_0_20px_rgba(132,204,22,0.6)] transition-all">Simpan</button>
+            <button type="button" onclick="eksekusiResetPass()" class="w-1/2 p-3 rounded-xl bg-gradient-to-r from-blue-500 to-blue-400 text-white text-sm font-extrabold hover:shadow-[0_0_20px_rgba(59,130,246,0.6)] transition-all">Simpan</button>
         </div>
     </div>
   </div>
 
   <div id="modalConfirmReg" class="fixed inset-0 bg-[#09090b]/90 backdrop-blur-sm z-[800] hidden flex-col items-center justify-center p-4 transition-opacity">
-    <div class="glossy-monster w-full max-w-sm rounded-2xl p-5 border border-lime-500/30 shadow-2xl scale-100 transition-transform relative text-center">
+    <div class="glossy-monster w-full max-w-sm rounded-2xl p-5 border border-blue-500/30 shadow-2xl scale-100 transition-transform relative text-center">
         <i class="fas fa-exclamation-triangle text-4xl text-yellow-500 mb-3"></i>
-        <h3 class="text-lg font-bold text-lime-400 mb-2">Konfirmasi Biodata</h3>
+        <h3 class="text-lg font-bold text-blue-400 mb-2">Konfirmasi Biodata</h3>
         <p class="text-xs text-zinc-300 mb-4">Apakah data yang Anda masukkan (Nama, NIP, Jabatan, Email) sudah benar? Biodata yang sudah didaftarkan akan tersimpan otomatis dan <b>TIDAK BISA DIUBAH LAGI</b> pada form pelaporan.</p>
         <div class="flex gap-3 mt-4">
             <button type="button" onclick="document.getElementById('modalConfirmReg').classList.add('hidden')" class="w-1/2 p-3 rounded-xl bg-zinc-800 text-zinc-300 text-sm font-bold border border-zinc-600 hover:bg-zinc-700 transition-all">Cek Lagi</button>
-            <button type="button" onclick="eksekusiRegister()" class="w-1/2 p-3 rounded-xl bg-gradient-to-r from-lime-500 to-lime-400 text-black text-sm font-extrabold hover:shadow-[0_0_20px_rgba(132,204,22,0.6)] transition-all">Ya, Daftar</button>
+            <button type="button" onclick="eksekusiRegister()" class="w-1/2 p-3 rounded-xl bg-gradient-to-r from-blue-500 to-blue-400 text-white text-sm font-extrabold hover:shadow-[0_0_20px_rgba(59,130,246,0.6)] transition-all">Ya, Daftar</button>
         </div>
     </div>
   </div>
 
   <div id="modalReview" class="fixed inset-0 bg-[#09090b]/90 backdrop-blur-sm z-[700] hidden flex-col items-center justify-center p-4 transition-opacity">
-      <div class="glossy-monster w-full max-w-sm rounded-2xl p-4 border border-lime-500/30 shadow-2xl scale-100 transition-transform relative">
+      <div class="glossy-monster w-full max-w-sm rounded-2xl p-4 border border-blue-500/30 shadow-2xl scale-100 transition-transform relative">
           <div class="border-b border-zinc-700 pb-2 mb-3">
-              <h3 class="text-lg font-bold text-lime-400"><i class="fas fa-clipboard-check mr-2"></i> Review Laporan</h3>
+              <h3 class="text-lg font-bold text-blue-400"><i class="fas fa-clipboard-check mr-2"></i> Review Laporan</h3>
               <p class="text-[10px] text-zinc-400">Pastikan seluruh data yang Anda isi sudah benar</p>
           </div>
           <div id="reviewContent" class="max-h-[60vh] overflow-y-auto custom-scrollbar pr-2 mb-4 text-xs text-zinc-300"></div>
           <div class="flex gap-3">
               <button type="button" onclick="document.getElementById('modalReview').classList.add('hidden')" class="w-1/2 p-3 rounded-xl bg-zinc-800 text-zinc-300 text-sm font-bold border border-zinc-600 hover:bg-zinc-700 transition-all">Batal / Edit</button>
-              <button type="button" onclick="executeGenerate()" class="w-1/2 p-3 rounded-xl bg-gradient-to-r from-lime-500 to-lime-400 text-black text-sm font-extrabold shadow-[0_0_15px_rgba(132,204,22,0.4)] hover:shadow-[0_0_20px_rgba(132,204,22,0.6)] transition-all">Generate</button>
+              <button type="button" onclick="executeGenerate()" class="w-1/2 p-3 rounded-xl bg-gradient-to-r from-blue-500 to-blue-400 text-white text-sm font-extrabold shadow-[0_0_15px_rgba(59,130,246,0.4)] hover:shadow-[0_0_20px_rgba(59,130,246,0.6)] transition-all">Generate</button>
           </div>
       </div>
   </div>
 
   <div class="max-w-md w-full mx-auto relative min-h-screen shadow-2xl bg-black/40 flex flex-col pb-20">
-    <header class="glossy-monster p-4 rounded-b-3xl shadow-lg flex-shrink-0 z-10 border-b border-lime-500/30 sticky top-0">
+    <header class="glossy-monster p-4 rounded-b-3xl shadow-lg flex-shrink-0 z-10 border-b border-blue-500/30 sticky top-0">
         <div class="flex justify-between items-center">
-            <h1 class="text-2xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-lime-300 to-lime-500"><i class="fas fa-bolt mr-1"></i> E-GenLap</h1>
+            <h1 class="text-2xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-blue-500"><i class="fas fa-bolt mr-1"></i> E-GenLap</h1>
             <div class="flex items-center gap-3">
                 <div class="text-right text-sm">
-                  <div id="realtimeClock" class="font-mono font-bold text-lime-400">00:00:00</div>
+                  <div id="realtimeClock" class="font-mono font-bold text-blue-400">00:00:00</div>
                  <div id="realtimeDate" class="text-[10px] text-zinc-400 uppercase tracking-wide">Tanggal</div>
                 </div>
                 
@@ -124,17 +124,17 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
     <main class="p-5 flex-grow" id="mainContent">
       <section id="sec-auth" class="glossy-monster p-5 rounded-2xl mb-6">
         <div class="text-center mb-6">
-            <i class="fas fa-user-circle text-5xl text-lime-400 mb-2"></i>
+            <i class="fas fa-user-circle text-5xl text-blue-400 mb-2"></i>
          <h2 class="text-xl font-bold text-white">Selamat Datang</h2>
             <p class="text-xs text-zinc-400">Silakan masuk atau daftar untuk menggunakan E-GenLap.</p>
         </div>
 
-        <div class="mt-2 mb-4 bg-lime-900/20 border border-lime-500/40 p-4 rounded-xl shadow-inner">
-            <p class="text-lime-400 font-extrabold text-xs mb-2 animate-pulse"><i class="fas fa-gift mr-1 text-yellow-400"></i> DAFTAR SEKARANG, DAPATKAN 1 TOKEN GRATIS!</p>
+        <div class="mt-2 mb-4 bg-blue-900/20 border border-blue-500/40 p-4 rounded-xl shadow-inner">
+            <p class="text-blue-400 font-extrabold text-xs mb-2 animate-pulse"><i class="fas fa-gift mr-1 text-yellow-400"></i> DAFTAR SEKARANG, DAPATKAN 1 TOKEN GRATIS!</p>
             <ul class="text-[10px] text-zinc-300 text-left space-y-2">
-                <li><i class="fas fa-check-circle text-lime-500 mr-1"></i> Generate Laporan Otomatis via AI</li>
-                <li><i class="fas fa-check-circle text-lime-500 mr-1"></i> Analisis Dasar Hukum & Aturan Kemensos</li>
-                <li><i class="fas fa-check-circle text-lime-500 mr-1"></i> Arsip Drive Otomatis & Terstruktur</li>
+                <li><i class="fas fa-check-circle text-blue-500 mr-1"></i> Generate Laporan Otomatis via AI</li>
+                <li><i class="fas fa-check-circle text-blue-500 mr-1"></i> Analisis Dasar Hukum & Aturan Kemensos</li>
+                <li><i class="fas fa-check-circle text-blue-500 mr-1"></i> Arsip Drive Otomatis & Terstruktur</li>
             </ul>
         </div>
 
@@ -142,12 +142,12 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
             <input type="email" id="logEmail" class="w-full p-3 text-sm rounded-xl glossy-input mb-3" placeholder="Email Anda" required>
             <div class="relative mb-4">
                 <input type="password" id="logPassword" class="w-full p-3 text-sm rounded-xl glossy-input" placeholder="Password / PIN Admin">
-                <i class="fas fa-eye absolute right-4 top-4 text-zinc-400 cursor-pointer hover:text-lime-400" id="iconLogPass" onclick="togglePasswordVisibility('logPassword', 'iconLogPass')"></i>
+                <i class="fas fa-eye absolute right-4 top-4 text-zinc-400 cursor-pointer hover:text-blue-400" id="iconLogPass" onclick="togglePasswordVisibility('logPassword', 'iconLogPass')"></i>
             </div>
-            <button onclick="prosesLogin()" class="w-full bg-lime-500 text-black font-extrabold py-3 rounded-xl hover:bg-lime-400 transition-all text-sm mb-3 shadow-[0_0_15px_rgba(132,204,22,0.3)]"><i class="fas fa-sign-in-alt mr-2"></i> Masuk</button>
+            <button onclick="prosesLogin()" class="w-full bg-blue-500 text-white font-extrabold py-3 rounded-xl hover:bg-blue-400 transition-all text-sm mb-3 shadow-[0_0_15px_rgba(59,130,246,0.3)]"><i class="fas fa-sign-in-alt mr-2"></i> Masuk</button>
             
             <div class="flex justify-between items-center mt-2 px-1">
-                <p class="text-xs text-zinc-400">Belum punya akun? <span onclick="toggleAuthForm()" class="text-lime-400 cursor-pointer font-bold underline">Daftar</span></p>
+                <p class="text-xs text-zinc-400">Belum punya akun? <span onclick="toggleAuthForm()" class="text-blue-400 cursor-pointer font-bold underline">Daftar</span></p>
                 <p class="text-xs text-yellow-500 cursor-pointer font-bold underline" onclick="bukaModalReset()">Lupa Password?</p>
             </div>
         </div>
@@ -165,27 +165,27 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
             <input type="email" id="regEmail" class="w-full p-3 text-sm rounded-xl glossy-input mb-3" placeholder="Email Valid" required>
             <div class="relative mb-4">
                 <input type="password" id="regPassword" class="w-full p-3 text-sm rounded-xl glossy-input" placeholder="Buat Password" required>
-                <i class="fas fa-eye absolute right-4 top-4 text-zinc-400 cursor-pointer hover:text-lime-400" id="iconRegPass" onclick="togglePasswordVisibility('regPassword', 'iconRegPass')"></i>
+                <i class="fas fa-eye absolute right-4 top-4 text-zinc-400 cursor-pointer hover:text-blue-400" id="iconRegPass" onclick="togglePasswordVisibility('regPassword', 'iconRegPass')"></i>
             </div>
-            <button onclick="validasiRegister()" class="w-full bg-lime-500 text-black font-extrabold py-3 rounded-xl hover:bg-lime-400 transition-all text-sm mb-3"><i class="fas fa-user-plus mr-2"></i> Daftar Akun</button>
-            <p class="text-center text-xs text-zinc-400 mt-2">Sudah punya akun? <span onclick="toggleAuthForm()" class="text-lime-400 cursor-pointer font-bold underline">Kembali Login</span></p>
+            <button onclick="validasiRegister()" class="w-full bg-blue-500 text-white font-extrabold py-3 rounded-xl hover:bg-blue-400 transition-all text-sm mb-3"><i class="fas fa-user-plus mr-2"></i> Daftar Akun</button>
+            <p class="text-center text-xs text-zinc-400 mt-2">Sudah punya akun? <span onclick="toggleAuthForm()" class="text-blue-400 cursor-pointer font-bold underline">Kembali Login</span></p>
         </div>
       </section>
 
       <section id="sec-dashboard" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
         <div class="flex justify-between items-center mb-4">
             <div>
-                <h2 class="text-lg font-bold text-lime-400" id="userGreeting">Halo, User</h2>
+                <h2 class="text-lg font-bold text-blue-400" id="userGreeting">Halo, User</h2>
                 <p class="text-[10px] text-zinc-400" id="userRoleBadge">Role: User</p>
           </div>
-            <div class="bg-lime-900/30 border border-lime-500/50 px-3 py-1.5 rounded-xl text-center shadow-inner">
-                <p class="text-[9px] text-lime-200" id="labelTokenDashboard">SISA TOKEN</p>
-                <p class="text-2xl font-black text-lime-400" id="sisaTokenDash">0</p>
+            <div class="bg-blue-900/30 border border-blue-500/50 px-3 py-1.5 rounded-xl text-center shadow-inner">
+                <p class="text-[9px] text-blue-200" id="labelTokenDashboard">SISA TOKEN</p>
+                <p class="text-2xl font-black text-blue-400" id="sisaTokenDash">0</p>
             </div>
         </div>
         <div class="grid grid-cols-2 gap-4 mt-5">
-          <div class="bg-gradient-to-br from-zinc-800 to-zinc-900 p-5 rounded-xl text-center border border-lime-500/30 shadow-lg flex flex-col justify-center items-center">
-            <h3 class="text-4xl font-black text-lime-400 drop-shadow-md" id="countSukses">0</h3>
+          <div class="bg-gradient-to-br from-zinc-800 to-zinc-900 p-5 rounded-xl text-center border border-blue-500/30 shadow-lg flex flex-col justify-center items-center">
+            <h3 class="text-4xl font-black text-blue-400 drop-shadow-md" id="countSukses">0</h3>
             <p class="text-xs font-bold text-zinc-400 mt-2 tracking-wide uppercase">Sukses</p>
           </div>
           <div class="bg-gradient-to-br from-zinc-800 to-zinc-900 p-5 rounded-xl text-center border border-red-500/30 shadow-lg flex flex-col justify-center items-center">
@@ -194,11 +194,11 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
           </div>
         </div>
         
-        <div class="mt-5 bg-zinc-800/50 p-4 rounded-xl border border-lime-500/20 shadow-md">
-           <h3 class="text-sm font-bold text-lime-400 mb-3 border-b border-zinc-700 pb-2"><i class="fas fa-tasks mr-2"></i> Ringkasan Kegiatan</h3>
+        <div class="mt-5 bg-zinc-800/50 p-4 rounded-xl border border-blue-500/20 shadow-md">
+           <h3 class="text-sm font-bold text-blue-400 mb-3 border-b border-zinc-700 pb-2"><i class="fas fa-tasks mr-2"></i> Ringkasan Kegiatan</h3>
            <div class="rounded-lg border border-zinc-700 w-full">
                <table class="w-full text-left text-[10px] text-zinc-300">
-                 <thead class="bg-zinc-900/80 text-lime-400">
+                 <thead class="bg-zinc-900/80 text-blue-400">
                    <tr><th class="p-2">Nama Kegiatan</th><th class="p-2 text-center">Jumlah</th></tr>
                  </thead>
                   <tbody id="ringkasanKegiatanTable" class="divide-y divide-zinc-800/50">
@@ -211,66 +211,66 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
 
       <section id="sec-agenda" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
         <div class="flex justify-between items-center mb-4 border-b border-zinc-700 pb-2">
-            <h2 class="text-lg font-bold text-lime-400"><i class="fas fa-calendar-alt mr-2"></i> Target RHK Jabatan Anda</h2>
-            <button onclick="renderTargetTable()" class="text-xs bg-lime-500/20 text-lime-400 hover:bg-lime-500/40 p-2 rounded-lg transition-colors"><i class="fas fa-sync-alt"></i></button>
+            <h2 class="text-lg font-bold text-blue-400"><i class="fas fa-calendar-alt mr-2"></i> Target RHK Jabatan Anda</h2>
+            <button onclick="renderTargetTable()" class="text-xs bg-blue-500/20 text-blue-400 hover:bg-blue-500/40 p-2 rounded-lg transition-colors"><i class="fas fa-sync-alt"></i></button>
         </div>
         <p class="text-[10px] text-zinc-400 mb-3">Daftar Rencana Hasil Kerja sesuai dengan jabatan Anda berserta target bulanan.</p>
         <div class="overflow-y-auto max-h-[65vh] custom-scrollbar rounded-lg border border-zinc-700 pb-2 relative w-full">
            <table class="min-w-full text-left text-[10px] text-zinc-300">
-            <thead class="bg-zinc-900/80 text-lime-400 border-b border-lime-500/20 sticky top-0 z-10 backdrop-blur-md">
+            <thead class="bg-zinc-900/80 text-blue-400 border-b border-blue-500/20 sticky top-0 z-10 backdrop-blur-md">
               <tr><th class="p-3 whitespace-nowrap">Kategori RHK</th><th class="p-3">Rencana Aksi</th><th class="p-3 text-center">Target/Bulan</th></tr>
             </thead>
             <tbody id="targetTable" class="divide-y divide-zinc-800/50">
-                 <tr><td colspan="3" class="text-center p-6"><i class="fas fa-spinner fa-spin text-lime-500 mb-2"></i><br>Memuat...</td></tr>
+                 <tr><td colspan="3" class="text-center p-6"><i class="fas fa-spinner fa-spin text-blue-500 mb-2"></i><br>Memuat...</td></tr>
              </tbody>
            </table>
         </div>
       </section>
 
       <section id="sec-token" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
-        <h2 class="text-lg font-bold text-lime-400 border-b border-zinc-700 pb-2"><i class="fas fa-coins mr-2"></i> Beli Token AI</h2>
-        <div class="mt-4 bg-zinc-900/50 p-3 rounded-xl border border-lime-500/20 text-xs text-zinc-300 mb-4">
-             <p class="font-bold text-lime-400 mb-1"><i class="fas fa-info-circle"></i> Fasilitas Premium:</p>
+        <h2 class="text-lg font-bold text-blue-400 border-b border-zinc-700 pb-2"><i class="fas fa-coins mr-2"></i> Beli Token AI</h2>
+        <div class="mt-4 bg-zinc-900/50 p-3 rounded-xl border border-blue-500/20 text-xs text-zinc-300 mb-4">
+             <p class="font-bold text-blue-400 mb-1"><i class="fas fa-info-circle"></i> Fasilitas Premium:</p>
             <ul class="list-disc pl-4 space-y-1">
                 <li>Otomatis Arsip Hierarki ke Google Drive</li>
                 <li>Analisis Aturan Dasar Hukum Otomatis</li>
                 <li>Tanda Tangan digital tersimpan otomatis</li>
              </ul>
         </div>
-        <div class="mb-3 bg-lime-900/20 border border-lime-500/30 p-4 rounded-xl flex justify-between items-center transition-all hover:bg-lime-900/40">
+        <div class="mb-3 bg-blue-900/20 border border-blue-500/30 p-4 rounded-xl flex justify-between items-center transition-all hover:bg-blue-900/40">
             <div>
                 <h3 class="font-bold text-white text-md">Paket Basic</h3>
                 <p class="text-xs text-zinc-300">6 Token Laporan</p>
             </div>
              <div class="text-right">
-                <p class="text-lg font-black text-lime-400 mb-1">Rp 10.000</p>
+                <p class="text-lg font-black text-blue-400 mb-1">Rp 10.000</p>
                 <button onclick="konfirmasiWA('Basic', 6, 10000)" class="bg-green-600 text-white font-bold py-1.5 px-3 rounded-lg hover:bg-green-500 text-xs shadow-lg"><i class="fab fa-whatsapp"></i> Beli</button>
             </div>
         </div>
-        <div class="mb-3 bg-lime-900/20 border border-lime-500/30 p-4 rounded-xl flex justify-between items-center transition-all hover:bg-lime-900/40">
+        <div class="mb-3 bg-blue-900/20 border border-blue-500/30 p-4 rounded-xl flex justify-between items-center transition-all hover:bg-blue-900/40">
              <div>
                 <h3 class="font-bold text-white text-md flex items-center gap-1">Paket Pro <i class="fas fa-star text-yellow-400 text-[10px]"></i></h3>
                 <p class="text-xs text-zinc-300">20 Token Laporan</p>
             </div>
             <div class="text-right">
-                <p class="text-lg font-black text-lime-400 mb-1">Rp 30.000</p>
+                <p class="text-lg font-black text-blue-400 mb-1">Rp 30.000</p>
                 <button onclick="konfirmasiWA('Pro', 20, 30000)" class="bg-green-600 text-white font-bold py-1.5 px-3 rounded-lg hover:bg-green-500 text-xs shadow-lg"><i class="fab fa-whatsapp"></i> Beli</button>
             </div>
          </div>
-        <div class="mb-4 bg-lime-900/20 border border-lime-500/30 p-4 rounded-xl flex justify-between items-center transition-all hover:bg-lime-900/40">
+        <div class="mb-4 bg-blue-900/20 border border-blue-500/30 p-4 rounded-xl flex justify-between items-center transition-all hover:bg-blue-900/40">
             <div>
                  <h3 class="font-bold text-white text-md flex items-center gap-1">Paket Ultra <i class="fas fa-crown text-yellow-400 text-[10px]"></i></h3>
                 <p class="text-xs text-zinc-300">35 Token Laporan</p>
             </div>
              <div class="text-right">
-                <p class="text-lg font-black text-lime-400 mb-1">Rp 50.000</p>
+                <p class="text-lg font-black text-blue-400 mb-1">Rp 50.000</p>
                 <button onclick="konfirmasiWA('Ultra', 35, 50000)" class="bg-green-600 text-white font-bold py-1.5 px-3 rounded-lg hover:bg-green-500 text-xs shadow-lg"><i class="fab fa-whatsapp"></i> Beli</button>
             </div>
          </div>
     
         <div class="p-3 bg-red-900/20 border border-red-500/30 rounded-xl mb-2">
              <label class="flex items-start gap-2 cursor-pointer">
-                <input type="checkbox" id="cekSyaratToken" class="mt-1 w-4 h-4 accent-lime-500 shrink-0">
+                <input type="checkbox" id="cekSyaratToken" class="mt-1 w-4 h-4 accent-blue-500 shrink-0">
                 <span class="text-[10px] text-zinc-300 leading-tight"><b>PERSETUJUAN (MUTLAK):</b> Saya menyetujui bahwa <b>uang/token tidak dapat di-refund atau dikembalikan dengan alasan APAPUN</b>. Saya sepenuhnya bertanggung jawab atas kebenaran isian formulir. Jika laporan gagal masuk ke email/drive dikarenakan kesalahan sistem personal, token yang terpotong <b>HANGUS</b>.</span>
             </label>
         </div>
@@ -278,8 +278,8 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
 
       <section id="sec-report" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
         <div class="flex justify-between items-center mb-4 border-b border-zinc-700 pb-2">
-            <h2 class="text-lg font-bold text-lime-400" id="titleRiwayat"><i class="fas fa-history mr-2"></i> Riwayat</h2>
-            <button onclick="loadDashboardData()" class="text-xs bg-lime-500/20 text-lime-400 hover:bg-lime-500/40 p-2 rounded-lg transition-colors"><i class="fas fa-sync-alt"></i></button>
+            <h2 class="text-lg font-bold text-blue-400" id="titleRiwayat"><i class="fas fa-history mr-2"></i> Riwayat</h2>
+            <button onclick="loadDashboardData()" class="text-xs bg-blue-500/20 text-blue-400 hover:bg-blue-500/40 p-2 rounded-lg transition-colors"><i class="fas fa-sync-alt"></i></button>
         </div>
 
         <div id="adminFilterContainer" class="hidden mb-3">
@@ -288,35 +288,35 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
 
         <div class="overflow-x-auto overflow-y-auto custom-scrollbar rounded-lg border border-zinc-700 pb-2 relative w-full">
              <table class="min-w-full text-left text-[10px] text-zinc-300">
-            <thead class="bg-zinc-900/80 text-lime-400 border-b border-lime-500/20 sticky top-0 z-10 backdrop-blur-md" id="theadRiwayat">
+            <thead class="bg-zinc-900/80 text-blue-400 border-b border-blue-500/20 sticky top-0 z-10 backdrop-blur-md" id="theadRiwayat">
               <tr><th class="p-3 whitespace-nowrap">Nama</th><th class="p-3 whitespace-nowrap">Tanggal & Jam</th><th class="p-3 whitespace-nowrap">Kegiatan</th><th class="p-3 whitespace-nowrap">Status</th></tr>
             </thead>
             <tbody id="tableBody" class="divide-y divide-zinc-800/50">
-                 <tr><td colspan="4" class="text-center p-6"><i class="fas fa-spinner fa-spin text-lime-500 mb-2"></i><br>Memuat...</td></tr>
+                 <tr><td colspan="4" class="text-center p-6"><i class="fas fa-spinner fa-spin text-blue-500 mb-2"></i><br>Memuat...</td></tr>
              </tbody>
            </table>
         </div>
         
         <div class="flex justify-between items-center mt-3 border-t border-zinc-700/50 pt-3">
-            <button onclick="prevRiwayat()" class="text-lime-400 bg-zinc-800 px-4 py-1.5 rounded-lg hover:bg-zinc-700 text-xs font-bold active:scale-95 transition-all"><i class="fas fa-chevron-left mr-1"></i> Prev</button>
+            <button onclick="prevRiwayat()" class="text-blue-400 bg-zinc-800 px-4 py-1.5 rounded-lg hover:bg-zinc-700 text-xs font-bold active:scale-95 transition-all"><i class="fas fa-chevron-left mr-1"></i> Prev</button>
             <span id="riwayatPageIndicator" class="text-[10px] font-bold text-zinc-400">Hal 1 / 1</span>
-             <button onclick="nextRiwayat()" class="text-lime-400 bg-zinc-800 px-4 py-1.5 rounded-lg hover:bg-zinc-700 text-xs font-bold active:scale-95 transition-all">Next <i class="fas fa-chevron-right ml-1"></i></button>
+             <button onclick="nextRiwayat()" class="text-blue-400 bg-zinc-800 px-4 py-1.5 rounded-lg hover:bg-zinc-700 text-xs font-bold active:scale-95 transition-all">Next <i class="fas fa-chevron-right ml-1"></i></button>
         </div>
       </section>
 
       <section id="sec-arsip" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
         <div class="flex justify-between items-center mb-4 border-b border-zinc-700 pb-2">
-            <h2 class="text-lg font-bold text-lime-400"><i class="fas fa-folder-open mr-2"></i> Arsip Laporan (Drive)</h2>
-            <button onclick="loadDashboardData()" class="text-xs bg-lime-500/20 text-lime-400 hover:bg-lime-500/40 p-2 rounded-lg transition-colors"><i class="fas fa-sync-alt"></i></button>
+            <h2 class="text-lg font-bold text-blue-400"><i class="fas fa-folder-open mr-2"></i> Arsip Laporan (Drive)</h2>
+            <button onclick="loadDashboardData()" class="text-xs bg-blue-500/20 text-blue-400 hover:bg-blue-500/40 p-2 rounded-lg transition-colors"><i class="fas fa-sync-alt"></i></button>
         </div>
 
         <div class="overflow-x-auto overflow-y-auto max-h-[65vh] custom-scrollbar rounded-lg border border-zinc-700 pb-2 relative w-full">
            <table class="min-w-full text-left text-[10px] text-zinc-300">
-            <thead class="bg-zinc-900/80 text-lime-400 border-b border-lime-500/20 sticky top-0 z-10 backdrop-blur-md">
+            <thead class="bg-zinc-900/80 text-blue-400 border-b border-blue-500/20 sticky top-0 z-10 backdrop-blur-md">
               <tr><th class="p-3 whitespace-nowrap">Tanggal</th><th class="p-3">Rencana Aksi / Kegiatan</th><th class="p-3 text-center whitespace-nowrap">Link Drive</th></tr>
             </thead>
             <tbody id="tableArsipBody" class="divide-y divide-zinc-800/50">
-                 <tr><td colspan="3" class="text-center p-6"><i class="fas fa-spinner fa-spin text-lime-500 mb-2"></i><br>Memuat...</td></tr>
+                 <tr><td colspan="3" class="text-center p-6"><i class="fas fa-spinner fa-spin text-blue-500 mb-2"></i><br>Memuat...</td></tr>
              </tbody>
            </table>
         </div>
@@ -324,55 +324,55 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
 
       <section id="sec-generate" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
         <div class="flex justify-between items-center border-b border-zinc-700 pb-2 mb-4">
-             <h2 class="text-lg font-bold text-lime-400"><i class="fas fa-magic mr-2"></i> Form Laporan</h2>
-             <span class="text-xs bg-lime-900/50 text-lime-300 px-2 py-1 rounded border border-lime-500/30">Token: <b id="formTokenCount">0</b></span>
+             <h2 class="text-lg font-bold text-blue-400"><i class="fas fa-magic mr-2"></i> Form Laporan</h2>
+             <span class="text-xs bg-blue-900/50 text-blue-300 px-2 py-1 rounded border border-blue-500/30">Token: <b id="formTokenCount">0</b></span>
         </div>
       
         <form id="reportForm" onsubmit="tampilkanReview(event)">
           <div class="bg-black/30 p-3 rounded-xl border border-zinc-700/50 mb-4">
-            <p class="text-[10px] text-lime-400 font-bold mb-2 uppercase tracking-wider"><i class="fas fa-envelope-open-text mr-1"></i> Data Surat (Opsional)</p>
+            <p class="text-[10px] text-blue-400 font-bold mb-2 uppercase tracking-wider"><i class="fas fa-envelope-open-text mr-1"></i> Data Surat (Opsional)</p>
              <div id="containerDataSurat">
                   <div class="surat-item grid grid-cols-2 gap-3 mb-2 relative">
                    <div><label class="block text-[10px] font-bold text-zinc-300 mb-1">Dasar Surat / No. Surat</label><input type="text" class="input-dasar-surat w-full p-2 text-xs rounded-lg glossy-input" placeholder="Contoh: ST-123/2026"></div>
                    <div><label class="block text-[10px] font-bold text-zinc-300 mb-1">Perihal Kegiatan</label><input type="text" class="input-perihal-surat w-full p-2 text-xs rounded-lg glossy-input" placeholder="Contoh: Undangan Rakor"></div>
                  </div>
             </div>
-            <button type="button" onclick="tambahSurat()" class="text-[10px] text-lime-400 hover:text-lime-300 mt-2 font-bold flex items-center gap-1"><i class="fas fa-plus-circle"></i> Tambah Surat</button>
+            <button type="button" onclick="tambahSurat()" class="text-[10px] text-blue-400 hover:text-blue-300 mt-2 font-bold flex items-center gap-1"><i class="fas fa-plus-circle"></i> Tambah Surat</button>
           </div>
 
           <div class="grid grid-cols-2 gap-3 mb-4">
-             <div><label class="block text-xs font-bold text-lime-300 mb-1">Tanggal Kegiatan</label><input type="date" id="tanggalLaporan" class="w-full p-3 text-sm rounded-xl glossy-input" required></div>
-             <div><label class="block text-xs font-bold text-lime-300 mb-1">Jam Pelaksanaan</label><input type="time" id="jamMulai" class="w-full p-3 text-sm rounded-xl glossy-input" required></div>
+             <div><label class="block text-xs font-bold text-blue-300 mb-1">Tanggal Kegiatan</label><input type="date" id="tanggalLaporan" class="w-full p-3 text-sm rounded-xl glossy-input" required></div>
+             <div><label class="block text-xs font-bold text-blue-300 mb-1">Jam Pelaksanaan</label><input type="time" id="jamMulai" class="w-full p-3 text-sm rounded-xl glossy-input" required></div>
           </div>
   
           <div class="grid grid-cols-2 gap-3 mb-4">
-             <div><label class="block text-xs font-bold text-lime-300 mb-1">Nama Petugas</label><input type="text" id="namaPetugas" class="w-full p-3 text-sm rounded-xl glossy-input" readonly></div>
-             <div><label class="block text-xs font-bold text-lime-300 mb-1">NIP (Opsional)</label><input type="text" id="nip" class="w-full p-3 text-sm rounded-xl glossy-input" readonly></div>
+             <div><label class="block text-xs font-bold text-blue-300 mb-1">Nama Petugas</label><input type="text" id="namaPetugas" class="w-full p-3 text-sm rounded-xl glossy-input" readonly></div>
+             <div><label class="block text-xs font-bold text-blue-300 mb-1">NIP (Opsional)</label><input type="text" id="nip" class="w-full p-3 text-sm rounded-xl glossy-input" readonly></div>
           </div>
  
           <div class="grid grid-cols-2 gap-3 mb-4">
-             <div><label class="block text-xs font-bold text-lime-300 mb-1">Jabatan</label><input type="text" id="jabatan" class="w-full p-3 text-sm rounded-xl glossy-input" readonly></div>
-             <div><label class="block text-xs font-bold text-lime-300 mb-1">Email PDF Tujuan</label><input type="email" id="emailTarget" class="w-full p-3 text-sm rounded-xl glossy-input" readonly></div>
+             <div><label class="block text-xs font-bold text-blue-300 mb-1">Jabatan</label><input type="text" id="jabatan" class="w-full p-3 text-sm rounded-xl glossy-input" readonly></div>
+             <div><label class="block text-xs font-bold text-blue-300 mb-1">Email PDF Tujuan</label><input type="email" id="emailTarget" class="w-full p-3 text-sm rounded-xl glossy-input" readonly></div>
           </div>
        
           <div class="grid grid-cols-2 gap-3 mb-4">
-            <div><label class="block text-xs font-bold text-lime-300 mb-1">Kabupaten/Kota</label><input type="text" id="kabupaten" value="Tapin" class="w-full p-3 text-sm rounded-xl glossy-input" required></div>
-             <div><label class="block text-xs font-bold text-lime-300 mb-1">Lokasi Kegiatan</label><input type="text" id="lokasi" class="w-full p-3 text-sm rounded-xl glossy-input" placeholder="Kantor Desa..." required></div>
+            <div><label class="block text-xs font-bold text-blue-300 mb-1">Kabupaten/Kota</label><input type="text" id="kabupaten" value="Tapin" class="w-full p-3 text-sm rounded-xl glossy-input" required></div>
+             <div><label class="block text-xs font-bold text-blue-300 mb-1">Lokasi Kegiatan</label><input type="text" id="lokasi" class="w-full p-3 text-sm rounded-xl glossy-input" placeholder="Kantor Desa..." required></div>
           </div>
 
           <!-- TTD UPLOAD -->
           <div class="mb-4">
-            <label class="block text-xs font-bold text-lime-300 mb-1">Upload Tanda Tangan Anda</label>
-            <input type="file" id="formTtdFile" accept="image/png, image/jpeg" class="w-full text-sm rounded-xl glossy-input text-zinc-400 file:mr-3 file:py-2 file:px-4 file:rounded-l-xl file:border-0 file:text-xs file:font-bold file:bg-lime-500 file:text-black hover:file:bg-lime-400 cursor-pointer" onchange="prosesTtdForm(event)" required>
-            <div id="previewTtdContainer" class="hidden mt-3 relative w-[100px] h-[50px] bg-white rounded-lg p-1 border border-lime-500/50 shadow-md">
+            <label class="block text-xs font-bold text-blue-300 mb-1">Upload Tanda Tangan Anda</label>
+            <input type="file" id="formTtdFile" accept="image/png, image/jpeg" class="w-full text-sm rounded-xl glossy-input text-zinc-400 file:mr-3 file:py-2 file:px-4 file:rounded-l-xl file:border-0 file:text-xs file:font-bold file:bg-blue-500 file:text-white hover:file:bg-blue-400 cursor-pointer" onchange="prosesTtdForm(event)" required>
+            <div id="previewTtdContainer" class="hidden mt-3 relative w-[100px] h-[50px] bg-white rounded-lg p-1 border border-blue-500/50 shadow-md">
                <img id="imgTtdPreview" src="" class="w-full h-full object-contain">
                <div onclick="hapusTtdForm()" class="absolute -top-2 -right-2 bg-red-600 text-white w-5 h-5 flex items-center justify-center rounded-full cursor-pointer shadow-lg hover:bg-red-500 text-[10px] z-10 transition-transform active:scale-90"><i class="fas fa-times"></i></div>
            </div>
           </div>
 
           <!-- DROPDOWN RHK SUPABASE -->
-          <div class="mb-4 bg-lime-900/10 p-3 rounded-xl border border-lime-500/30">
-            <label class="block text-xs font-bold text-lime-300 mb-2"><i class="fas fa-search mr-1"></i> Cari Rencana Aksi Harian (Sesuai Jabatan)</label>
+          <div class="mb-4 bg-blue-900/10 p-3 rounded-xl border border-blue-500/30">
+            <label class="block text-xs font-bold text-blue-300 mb-2"><i class="fas fa-search mr-1"></i> Cari Rencana Aksi Harian (Sesuai Jabatan)</label>
              <input type="text" id="searchRHK" class="w-full p-2 mb-3 text-sm rounded-lg glossy-input" placeholder="🔍 Ketik kata kunci rencana aksi..." onkeyup="filterRHKByJabatan()">
              <select id="kegiatanSelect" class="w-full p-3 text-sm rounded-xl glossy-input font-medium text-[11px]" onchange="renderDynamicForm()" required>
                 <option value="">Memuat data kegiatan...</option>
@@ -383,9 +383,9 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
 
           <!-- DOKUMENTASI & LAMPIRAN -->
           <div class="mb-4">
-            <label class="block text-xs font-bold text-lime-300 mb-2">Lampiran Berkas (Maks 3, Opsional)</label>
-            <div class="bg-black/40 border border-lime-500/20 p-3 rounded-xl min-h-[60px] shadow-inner mb-2 flex items-center gap-2 overflow-x-auto">
-               <div onclick="document.getElementById('lampiranFile').click()" class="shrink-0 w-12 h-12 bg-lime-500/10 border border-dashed border-lime-500/50 flex flex-col items-center justify-center rounded-lg cursor-pointer hover:bg-lime-500/20 text-lime-400">
+            <label class="block text-xs font-bold text-blue-300 mb-2">Lampiran Berkas (Maks 3, Opsional)</label>
+            <div class="bg-black/40 border border-blue-500/20 p-3 rounded-xl min-h-[60px] shadow-inner mb-2 flex items-center gap-2 overflow-x-auto">
+               <div onclick="document.getElementById('lampiranFile').click()" class="shrink-0 w-12 h-12 bg-blue-500/10 border border-dashed border-blue-500/50 flex flex-col items-center justify-center rounded-lg cursor-pointer hover:bg-blue-500/20 text-blue-400">
                     <i class="fas fa-paperclip"></i>
                </div>
                <div id="previewLampiranContainer" class="flex gap-2"></div>
@@ -395,12 +395,12 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
           </div>
 
           <div class="mb-5">
-            <label class="block text-xs font-bold text-lime-300 mb-2">Foto Kegiatan (Maks 10 Foto)</label>
-            <div class="bg-black/40 border border-lime-500/20 p-3 rounded-xl min-h-[60px] shadow-inner flex items-center gap-2 overflow-x-auto">
-                <div onclick="document.getElementById('inputKamera').click()" class="shrink-0 w-12 h-12 bg-lime-500/10 border border-dashed border-lime-500/50 flex flex-col items-center justify-center rounded-lg cursor-pointer text-lime-400 hover:bg-lime-500/20">
+            <label class="block text-xs font-bold text-blue-300 mb-2">Foto Kegiatan (Maks 10 Foto)</label>
+            <div class="bg-black/40 border border-blue-500/20 p-3 rounded-xl min-h-[60px] shadow-inner flex items-center gap-2 overflow-x-auto">
+                <div onclick="document.getElementById('inputKamera').click()" class="shrink-0 w-12 h-12 bg-blue-500/10 border border-dashed border-blue-500/50 flex flex-col items-center justify-center rounded-lg cursor-pointer text-blue-400 hover:bg-blue-500/20">
                     <i class="fas fa-camera"></i>
                 </div>
-                <div onclick="document.getElementById('inputGaleri').click()" class="shrink-0 w-12 h-12 bg-lime-500/10 border border-dashed border-lime-500/50 flex flex-col items-center justify-center rounded-lg cursor-pointer text-lime-400 hover:bg-lime-500/20">
+                <div onclick="document.getElementById('inputGaleri').click()" class="shrink-0 w-12 h-12 bg-blue-500/10 border border-dashed border-blue-500/50 flex flex-col items-center justify-center rounded-lg cursor-pointer text-blue-400 hover:bg-blue-500/20">
                     <i class="fas fa-image"></i>
                 </div>
                 <div id="previewFotoContainer" class="flex gap-2"></div>
@@ -410,14 +410,14 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
             <p id="photoStatus" class="text-[10px] text-zinc-500">0 / 10 Foto</p>
           </div>
 
-           <button type="submit" id="btnSubmit" class="w-full bg-gradient-to-r from-lime-500 to-lime-400 text-black font-extrabold py-4 px-4 rounded-xl shadow-[0_5px_20px_rgba(132,204,22,0.4)] hover:shadow-[0_5px_25px_rgba(132,204,22,0.6)] transform transition-all text-sm tracking-wide">
+           <button type="submit" id="btnSubmit" class="w-full bg-gradient-to-r from-blue-500 to-blue-400 text-white font-extrabold py-4 px-4 rounded-xl shadow-[0_5px_20px_rgba(59,130,246,0.4)] hover:shadow-[0_5px_25px_rgba(59,130,246,0.6)] transform transition-all text-sm tracking-wide">
               <span id="btnText"><i class="fas fa-paper-plane mr-2"></i> Eksekusi AI & Simpan ke Drive (1 Token)</span>
             </button>
         </form>
       </section>
 
       <section id="sec-keuangan" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
-         <h2 class="text-lg font-bold text-lime-400 border-b border-zinc-700 pb-2 mb-4"><i class="fas fa-wallet mr-2"></i> Rekapitulasi Pembelian Token</h2>
+         <h2 class="text-lg font-bold text-blue-400 border-b border-zinc-700 pb-2 mb-4"><i class="fas fa-wallet mr-2"></i> Rekapitulasi Pembelian Token</h2>
            <div class="flex items-center gap-2 mb-4">
             <select id="filterKeuangan" class="p-2 text-xs rounded-lg glossy-input flex-1 font-bold" onchange="applyFilterKeuangan()">
                 <option value="Semua">Semua Waktu</option>
@@ -428,10 +428,10 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
             <button onclick="loadMonitoringAdmin()" class="bg-blue-500/20 text-blue-400 border border-blue-500/50 px-3 py-2 rounded-lg text-xs font-bold hover:bg-blue-500/30 transition-all"><i class="fas fa-sync-alt"></i></button>
         </div>
 
-        <div id="monitoringSummary" class="bg-zinc-900/80 p-3 rounded-xl border border-lime-500/30 mb-4 hidden">
+        <div id="monitoringSummary" class="bg-zinc-900/80 p-3 rounded-xl border border-blue-500/30 mb-4 hidden">
              <div class="flex justify-between text-xs text-zinc-300 mb-1">
                    <span>Total Pendapatan:</span>
-                 <span id="txtTotalPendapatan" class="text-lime-400 font-bold text-sm">Rp 0</span>
+                 <span id="txtTotalPendapatan" class="text-blue-400 font-bold text-sm">Rp 0</span>
             </div>
             <div class="flex justify-between text-xs text-zinc-300">
                 <span>Total Token Terjual:</span>
@@ -454,17 +454,17 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         </div>
 
         <div class="flex justify-between items-center mb-2">
-            <h4 class="text-[10px] font-bold text-lime-400"><i class="fas fa-list mr-1"></i> Rincian Pembelian</h4>
+            <h4 class="text-[10px] font-bold text-blue-400"><i class="fas fa-list mr-1"></i> Rincian Pembelian</h4>
             <button onclick="exportKeuanganKePDF()" class="bg-red-600 text-white px-3 py-1.5 rounded-lg text-[10px] font-bold hover:bg-red-500 shadow-md transition-all active:scale-95"><i class="fas fa-file-pdf mr-1"></i> Export PDF</button>
          </div>
         
         <div class="overflow-x-auto overflow-y-auto max-h-60 custom-scrollbar rounded-lg border border-zinc-700 mb-4 w-full">
             <table class="min-w-full text-left text-[10px] text-zinc-300">
-                <thead class="bg-zinc-900/80 text-lime-400 sticky top-0">
+                <thead class="bg-zinc-900/80 text-blue-400 sticky top-0">
                     <tr><th class="p-2 whitespace-nowrap">Tanggal & Jam</th><th class="p-2 whitespace-nowrap">Nama Pembeli</th><th class="p-2 text-center whitespace-nowrap">Token</th><th class="p-2 text-right whitespace-nowrap">Biaya (Rp)</th></tr>
                  </thead>
                 <tbody id="rincianPembelianTable" class="divide-y divide-zinc-800/50">
-                    <tr><td colspan="4" class="text-center p-4 text-zinc-500"><i class="fas fa-spinner fa-spin text-lime-500 mb-2"></i><br>Klik Refresh Data</td></tr>
+                    <tr><td colspan="4" class="text-center p-4 text-zinc-500"><i class="fas fa-spinner fa-spin text-blue-500 mb-2"></i><br>Klik Refresh Data</td></tr>
                 </tbody>
              </table>
          </div>
@@ -484,14 +484,14 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
       </section>
 
       <section id="sec-admin" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
-         <h2 class="text-lg font-bold text-lime-400 border-b border-zinc-700 pb-2"><i class="fas fa-cogs mr-2"></i> Panel Super Admin</h2>
-        <button onclick="jalankanSetupAwal()" id="btnSetup" class="mt-4 w-full p-3 bg-lime-500/20 text-lime-400 border border-lime-500/50 rounded-xl text-sm font-bold transition-all active:scale-95"><i class="fas fa-database mr-2"></i> Setup Awal DB & Bersihkan Sheet</button>
+         <h2 class="text-lg font-bold text-blue-400 border-b border-zinc-700 pb-2"><i class="fas fa-cogs mr-2"></i> Panel Super Admin</h2>
+        <button onclick="jalankanSetupAwal()" id="btnSetup" class="mt-4 w-full p-3 bg-blue-500/20 text-blue-400 border border-blue-500/50 rounded-xl text-sm font-bold transition-all active:scale-95"><i class="fas fa-database mr-2"></i> Setup Awal DB & Bersihkan Sheet</button>
           <h3 class="text-sm font-bold text-white mt-6 mb-2">Manajemen User & Isi Token Manual</h3>
         <button onclick="loadAdminUsers()" class="w-full p-2 bg-blue-500/20 text-blue-400 border border-blue-500/50 rounded-xl text-xs font-bold mb-3"><i class="fas fa-sync"></i> Refresh User</button>
        
          <div class="overflow-x-auto rounded-lg border border-zinc-700">
             <table class="min-w-full text-left text-[10px] text-zinc-300">
-             <thead class="bg-zinc-900/80 text-lime-400 border-b border-lime-500/20">
+             <thead class="bg-zinc-900/80 text-blue-400 border-b border-blue-500/20">
                  <tr><th class="p-2 whitespace-nowrap">Email/Nama</th><th class="p-2 whitespace-nowrap">Token</th><th class="p-2 whitespace-nowrap">Aksi (Isi Token)</th></tr>
             </thead>
             <tbody id="adminUserTable" class="divide-y divide-zinc-800/50">
@@ -502,12 +502,12 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
       </section>
 
        <section id="sec-panduan" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
-         <h2 class="text-lg font-bold text-lime-400 border-b border-zinc-700 pb-2"><i class="fas fa-book mr-2"></i> Panduan & Aturan Sistem</h2>
+         <h2 class="text-lg font-bold text-blue-400 border-b border-zinc-700 pb-2"><i class="fas fa-book mr-2"></i> Panduan & Aturan Sistem</h2>
          
-         <div class="mt-4 mb-6 bg-lime-900/20 p-4 rounded-xl border border-lime-500/30 text-center flex flex-col items-center">
-             <p class="text-xs text-lime-300 mb-2 font-bold uppercase tracking-wider">Scan QRIS Untuk Top-up Token:</p>
-             <img src="https://drive.google.com/thumbnail?id=1DenWfIyBEbCrK1zaFHe_Xa9cHqfZXYCf&sz=w800" alt="QRIS DANA Pembayaran" class="w-full max-w-[200px] mx-auto rounded-xl shadow-[0_0_15px_rgba(132,204,22,0.3)] border-2 border-lime-500/50">
-             <a href="https://drive.google.com/uc?export=download&id=1DenWfIyBEbCrK1zaFHe_Xa9cHqfZXYCf" target="_blank" class="mt-3 inline-block bg-lime-500/20 text-lime-400 border border-lime-500/50 px-4 py-2 rounded-lg text-xs font-bold hover:bg-lime-500/40 transition-all active:scale-95"><i class="fas fa-download mr-1"></i> Download QRIS</a>
+         <div class="mt-4 mb-6 bg-blue-900/20 p-4 rounded-xl border border-blue-500/30 text-center flex flex-col items-center">
+             <p class="text-xs text-blue-300 mb-2 font-bold uppercase tracking-wider">Scan QRIS Untuk Top-up Token:</p>
+             <img src="https://drive.google.com/thumbnail?id=1DenWfIyBEbCrK1zaFHe_Xa9cHqfZXYCf&sz=w800" alt="QRIS DANA Pembayaran" class="w-full max-w-[200px] mx-auto rounded-xl shadow-[0_0_15px_rgba(59,130,246,0.3)] border-2 border-blue-500/50">
+             <a href="https://drive.google.com/uc?export=download&id=1DenWfIyBEbCrK1zaFHe_Xa9cHqfZXYCf" target="_blank" class="mt-3 inline-block bg-blue-500/20 text-blue-400 border border-blue-500/50 px-4 py-2 rounded-lg text-xs font-bold hover:bg-blue-500/40 transition-all active:scale-95"><i class="fas fa-download mr-1"></i> Download QRIS</a>
              <p class="text-[9px] text-zinc-400 mt-2">*Simpan struk & kirim ke WhatsApp Admin</p>
          </div>
 
@@ -519,10 +519,10 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
                 <p class="mt-1"><b>3. TOKEN HANGUS.</b> Jika laporan gagal di-generate karena kesalahan teknis Anda, maka token yang sudah terpotong <b>HANGUS</b>.</p>
             </div>
             
-            <p><span class="bg-lime-500 text-black font-bold w-6 h-6 inline-flex items-center justify-center rounded-full text-[10px] mr-2">1</span><b>Registrasi Akun & 1 Token Gratis.</b> Daftar dengan data valid. Anda otomatis mendapatkan 1 Token Trial Gratis (berlaku 24 Jam). Tanda Tangan (TTD) digital wajib dilampirkan agar masuk ke PDF secara otomatis.</p>
-            <p><span class="bg-lime-500 text-black font-bold w-6 h-6 inline-flex items-center justify-center rounded-full text-[10px] mr-2">2</span><b>Beli Token Laporan.</b> Lakukan pembayaran QRIS, klik "Beli" pada paket di Menu Token untuk mengirim konfirmasi struk via WhatsApp Admin.</p>
-            <p><span class="bg-lime-500 text-black font-bold w-6 h-6 inline-flex items-center justify-center rounded-full text-[10px] mr-2">3</span><b>Penyusunan Cerdas AI.</b> Masukkan *Dasar Surat* (jika ada), data dinamis lapangan, dan dokumentasi foto. AI kami akan secara otomatis menyusun: <b>Aturan Undang-Undang / Dasar Hukum Kemensos yang valid</b>, narasi pelaksanaan, serta menyimpulkan *Hasil Kegiatan* menjadi poin-poin terstruktur berdasarkan data yang Anda berikan.</p>
-            <p><span class="bg-lime-500 text-black font-bold w-6 h-6 inline-flex items-center justify-center rounded-full text-[10px] mr-2">4</span><b>Eksekusi & Folder Drive.</b> Setelah menekan tombol Generate, token akan berkurang (1). PDF jadi langsung otomatis masuk ke folder Arsip Google Drive yang diatur secara hierarki.</p>
+            <p><span class="bg-blue-500 text-white font-bold w-6 h-6 inline-flex items-center justify-center rounded-full text-[10px] mr-2">1</span><b>Registrasi Akun & 1 Token Gratis.</b> Daftar dengan data valid. Anda otomatis mendapatkan 1 Token Trial Gratis (berlaku 24 Jam). Tanda Tangan (TTD) digital wajib dilampirkan agar masuk ke PDF secara otomatis.</p>
+            <p><span class="bg-blue-500 text-white font-bold w-6 h-6 inline-flex items-center justify-center rounded-full text-[10px] mr-2">2</span><b>Beli Token Laporan.</b> Lakukan pembayaran QRIS, klik "Beli" pada paket di Menu Token untuk mengirim konfirmasi struk via WhatsApp Admin.</p>
+            <p><span class="bg-blue-500 text-white font-bold w-6 h-6 inline-flex items-center justify-center rounded-full text-[10px] mr-2">3</span><b>Penyusunan Cerdas AI.</b> Masukkan *Dasar Surat* (jika ada), data dinamis lapangan, dan dokumentasi foto. AI kami akan secara otomatis menyusun: <b>Aturan Undang-Undang / Dasar Hukum Kemensos yang valid</b>, narasi pelaksanaan, serta menyimpulkan *Hasil Kegiatan* menjadi poin-poin terstruktur berdasarkan data yang Anda berikan.</p>
+            <p><span class="bg-blue-500 text-white font-bold w-6 h-6 inline-flex items-center justify-center rounded-full text-[10px] mr-2">4</span><b>Eksekusi & Folder Drive.</b> Setelah menekan tombol Generate, token akan berkurang (1). PDF jadi langsung otomatis masuk ke folder Arsip Google Drive yang diatur secara hierarki.</p>
          </div>
       </section>
       
@@ -531,19 +531,19 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
       </div>
   </main>
 
-  <nav id="bottomNav" class="fixed bottom-0 w-full max-w-md bg-[#09090b] border-t border-lime-900/40 shadow-[0_-10px_20px_rgba(0,0,0,0.8)] flex justify-between px-2 py-2 z-40 h-16 items-center rounded-t-3xl backdrop-blur-xl bg-opacity-95 hidden">
-      <button id="navDashboardBtn" onclick="nav('dashboard')" class="nav-btn flex-1 flex flex-col items-center text-lime-400"><i class="fas fa-home text-lg"></i><span class="text-[9px] font-bold mt-1">Beranda</span></button>
-      <button id="navReportBtn" onclick="nav('report')" class="nav-btn flex-1 flex flex-col items-center text-zinc-500 hover:text-lime-300"><i class="fas fa-history text-lg"></i><span class="text-[9px] font-bold mt-1">Riwayat</span></button>
-      <button id="navArsipBtn" onclick="nav('arsip')" class="nav-btn flex-1 flex flex-col items-center text-zinc-500 hover:text-lime-300"><i class="fas fa-folder-open text-lg"></i><span class="text-[9px] font-bold mt-1">Arsip</span></button>
+  <nav id="bottomNav" class="fixed bottom-0 w-full max-w-md bg-[#09090b] border-t border-blue-900/40 shadow-[0_-10px_20px_rgba(0,0,0,0.8)] flex justify-between px-2 py-2 z-40 h-16 items-center rounded-t-3xl backdrop-blur-xl bg-opacity-95 hidden">
+      <button id="navDashboardBtn" onclick="nav('dashboard')" class="nav-btn flex-1 flex flex-col items-center text-blue-400"><i class="fas fa-home text-lg"></i><span class="text-[9px] font-bold mt-1">Beranda</span></button>
+      <button id="navReportBtn" onclick="nav('report')" class="nav-btn flex-1 flex flex-col items-center text-zinc-500 hover:text-blue-300"><i class="fas fa-history text-lg"></i><span class="text-[9px] font-bold mt-1">Riwayat</span></button>
+      <button id="navArsipBtn" onclick="nav('arsip')" class="nav-btn flex-1 flex flex-col items-center text-zinc-500 hover:text-blue-300"><i class="fas fa-folder-open text-lg"></i><span class="text-[9px] font-bold mt-1">Arsip</span></button>
 
       <div class="relative flex-[1.2] flex justify-center">
-         <button onclick="nav('generate')" class="absolute top-0 transform -translate-y-[60%] bg-gradient-to-tr from-lime-500 to-lime-300 text-black w-14 h-14 rounded-full border-4 border-[#09090b] flex items-center justify-center fab-button z-50 transition-transform active:scale-90 shadow-[0_0_15px_rgba(132,204,22,0.6)]">
+         <button onclick="nav('generate')" class="absolute top-0 transform -translate-y-[60%] bg-gradient-to-tr from-blue-500 to-blue-300 text-white w-14 h-14 rounded-full border-4 border-[#09090b] flex items-center justify-center fab-button z-50 transition-transform active:scale-90 shadow-[0_0_15px_rgba(59,130,246,0.6)]">
             <i class="fas fa-plus text-xl drop-shadow-md"></i>
         </button>
       </div>
     
-      <button id="navAgendaBtn" onclick="nav('agenda')" class="nav-btn flex-1 flex flex-col items-center text-zinc-500 hover:text-lime-300"><i class="fas fa-calendar-alt text-lg"></i><span class="text-[9px] font-bold mt-1">Agenda</span></button>
-      <button onclick="nav('token')" class="nav-btn flex-1 flex flex-col items-center text-zinc-500 hover:text-lime-300"><i class="fas fa-coins text-lg"></i><span class="text-[9px] font-bold mt-1">Token</span></button>
+      <button id="navAgendaBtn" onclick="nav('agenda')" class="nav-btn flex-1 flex flex-col items-center text-zinc-500 hover:text-blue-300"><i class="fas fa-calendar-alt text-lg"></i><span class="text-[9px] font-bold mt-1">Agenda</span></button>
+      <button onclick="nav('token')" class="nav-btn flex-1 flex flex-col items-center text-zinc-500 hover:text-blue-300"><i class="fas fa-coins text-lg"></i><span class="text-[9px] font-bold mt-1">Token</span></button>
   </nav>
   </div>
 
@@ -551,7 +551,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
     // ==========================================
     // API ENDPOINT (GANTI DENGAN URL WEB APP GAS ANDA)
     // ==========================================
-    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbyIuxZtYFEMQq0a_KpMo4Jy-lCQ9XUT2XALMIm3XESXZZcSQjQRDyyAEsgD2V5GFFpd/exec";
+    const GAS_API_URL = "MASUKKAN_LINK_WEB_APP_ANDA_DISINI";
 
     // ==========================================
     // SECURITY ANTI-INSPECT & FULLSCREEN PWA
@@ -617,8 +617,8 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
 
     function showToast(message, type = 'success') {
         const toast = document.createElement('div');
-        const icon = type === 'success' ? '<i class="fas fa-check-circle text-lime-400 text-lg"></i>' : '<i class="fas fa-times-circle text-red-500 text-lg"></i>';
-        const bgClass = type === 'success' ? 'bg-zinc-900 border-lime-500/40' : 'bg-red-950 border-red-500/50';
+        const icon = type === 'success' ? '<i class="fas fa-check-circle text-blue-400 text-lg"></i>' : '<i class="fas fa-times-circle text-red-500 text-lg"></i>';
+        const bgClass = type === 'success' ? 'bg-zinc-900 border-blue-500/40' : 'bg-red-950 border-red-500/50';
         toast.className = `flex items-center justify-center gap-3 p-3 rounded-xl backdrop-blur-md shadow-2xl border transform transition-all duration-500 translate-y-[-20px] opacity-0 ${bgClass} text-white`;
         toast.innerHTML = `${icon} <span class="text-sm font-bold">${message}</span>`;
         document.getElementById('toastContainer').appendChild(toast);
@@ -665,12 +665,12 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         
         let html = '';
         if(filtered.length === 0) {
-            html = `<tr><td colspan=\"3\" class=\"text-center italic p-4 text-zinc-500\">Tidak ada target RHK ditemukan untuk jabatan ini.</td></tr>`;
+            html = `<tr><td colspan="3" class="text-center italic p-4 text-zinc-500">Tidak ada target RHK ditemukan untuk jabatan ini.</td></tr>`;
         } else {
             filtered.forEach(item => {
                 html += `
                 <tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30">
-                    <td class="p-2 whitespace-nowrap"><span class="bg-lime-900/40 text-lime-300 px-2 py-0.5 rounded text-[9px] font-bold border border-lime-500/30">${item.kategori_rhk}</span></td>
+                    <td class="p-2 whitespace-nowrap"><span class="bg-blue-900/40 text-blue-300 px-2 py-0.5 rounded text-[9px] font-bold border border-blue-500/30">${item.kategori_rhk}</span></td>
                     <td class="p-2">${item.kegiatan}</td>
                     <td class="p-2 text-center font-bold text-yellow-400">${item.target}</td>
                 </tr>`;
@@ -917,7 +917,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         const container = document.getElementById('previewLampiranContainer');
         container.innerHTML = "";
         arrayLampiranBase64.forEach((b64, i) => {
-            container.innerHTML += `<div class="relative shrink-0 w-12 h-12 rounded-lg border border-lime-500/50 overflow-hidden"><img src="${b64}" class="w-full h-full object-cover"><div onclick="arrayLampiranBase64.splice(${i},1); renderLampiranPreviews()" class="absolute top-0 right-0 bg-red-600 text-white w-4 h-4 flex items-center justify-center cursor-pointer text-[8px]"><i class="fas fa-times"></i></div></div>`;
+            container.innerHTML += `<div class="relative shrink-0 w-12 h-12 rounded-lg border border-blue-500/50 overflow-hidden"><img src="${b64}" class="w-full h-full object-cover"><div onclick="arrayLampiranBase64.splice(${i},1); renderLampiranPreviews()" class="absolute top-0 right-0 bg-red-600 text-white w-4 h-4 flex items-center justify-center cursor-pointer text-[8px]"><i class="fas fa-times"></i></div></div>`;
         });
         document.getElementById('lampiranStatus').innerText = `${arrayLampiranBase64.length} / 3 File`;
     }
@@ -938,7 +938,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         const container = document.getElementById('previewFotoContainer');
         container.innerHTML = "";
         arrayFotoBase64.forEach((b64, i) => {
-            container.innerHTML += `<div class="relative shrink-0 w-12 h-12 rounded-lg border border-lime-500/50 overflow-hidden"><img src="${b64}" class="w-full h-full object-cover"><div onclick="arrayFotoBase64.splice(${i},1); renderFotoPreviews()" class="absolute top-0 right-0 bg-red-600 text-white w-4 h-4 flex items-center justify-center cursor-pointer text-[8px]"><i class="fas fa-times"></i></div></div>`;
+            container.innerHTML += `<div class="relative shrink-0 w-12 h-12 rounded-lg border border-blue-500/50 overflow-hidden"><img src="${b64}" class="w-full h-full object-cover"><div onclick="arrayFotoBase64.splice(${i},1); renderFotoPreviews()" class="absolute top-0 right-0 bg-red-600 text-white w-4 h-4 flex items-center justify-center cursor-pointer text-[8px]"><i class="fas fa-times"></i></div></div>`;
         });
         document.getElementById('photoStatus').innerText = `${arrayFotoBase64.length} / 10 Foto`;
     }
@@ -946,10 +946,10 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
     function nav(target) {
       document.querySelectorAll('section').forEach(sec => sec.classList.add('section-hidden'));
       document.getElementById('sec-' + target).classList.remove('section-hidden');
-      document.querySelectorAll('.nav-btn').forEach(btn => { btn.classList.remove('text-lime-400'); btn.classList.add('text-zinc-500'); });
+      document.querySelectorAll('.nav-btn').forEach(btn => { btn.classList.remove('text-blue-400'); btn.classList.add('text-zinc-500'); });
       if(window.event && window.event.currentTarget && window.event.currentTarget.classList.contains('nav-btn')){ 
           window.event.currentTarget.classList.remove('text-zinc-500');
-          window.event.currentTarget.classList.add('text-lime-400');
+          window.event.currentTarget.classList.add('text-blue-400');
       }
       
       if(target === 'dashboard' || target === 'report' || target === 'arsip') loadDashboardData();
@@ -962,8 +962,8 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         if(!currentUser) return;
         const tbody = document.getElementById('tableBody');
         const tbodyArsip = document.getElementById('tableArsipBody');
-        tbody.innerHTML = `<tr><td colspan="${currentUser.role === 'admin' ? 4 : 3}" class="text-center p-6"><i class="fas fa-circle-notch fa-spin text-lime-400"></i></td></tr>`;
-        tbodyArsip.innerHTML = `<tr><td colspan="3" class="text-center p-6"><i class="fas fa-circle-notch fa-spin text-lime-400"></i></td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="${currentUser.role === 'admin' ? 4 : 3}" class="text-center p-6"><i class="fas fa-circle-notch fa-spin text-blue-400"></i></td></tr>`;
+        tbodyArsip.innerHTML = `<tr><td colspan="3" class="text-center p-6"><i class="fas fa-circle-notch fa-spin text-blue-400"></i></td></tr>`;
         
         apiCall('getDashboardData', { email: currentUser.data.email, role: currentUser.role, sessionToken: currentUser.data.sessionToken })
             .then(res => {
@@ -995,7 +995,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         
         let htmlR = '';
         for(let k in ringkasan) {
-            htmlR += `<tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors"><td class="p-2 py-3 leading-tight" title="${k}">${k}</td><td class="p-2 text-center text-lime-400 font-bold">${ringkasan[k]}</td></tr>`;
+            htmlR += `<tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors"><td class="p-2 py-3 leading-tight" title="${k}">${k}</td><td class="p-2 text-center text-blue-400 font-bold">${ringkasan[k]}</td></tr>`;
         }
         if(htmlR === '') htmlR = `<tr><td colspan="2" class="text-center italic text-zinc-500 py-2">Belum ada kegiatan yang sukses.</td></tr>`;
         document.getElementById('ringkasanKegiatanTable').innerHTML = htmlR;
@@ -1029,10 +1029,10 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         let rowsArsip = '';
 
         pagedData.forEach(row => {
-            let st = row.keterangan === 'Sukses' ? 'text-lime-400' : 'text-red-400';
+            let st = row.keterangan === 'Sukses' ? 'text-blue-400' : 'text-red-400';
             let dt = formatWITA(row.tanggal);
             let tglTampil = dt.tgl;
-            let htmlJam = (row.jam && row.jam !== "-") ? `<span class="text-lime-300 font-bold bg-lime-900/30 px-1 py-0.5 rounded border border-lime-500/30 inline-block mt-1"><i class="far fa-clock"></i> ${row.jam}</span>` : `<span class="text-zinc-500 font-bold bg-zinc-900/30 px-1 py-0.5 rounded border border-zinc-500/30 inline-block mt-1"><i class="far fa-clock"></i> -</span>`;
+            let htmlJam = (row.jam && row.jam !== "-") ? `<span class="text-blue-300 font-bold bg-blue-900/30 px-1 py-0.5 rounded border border-blue-500/30 inline-block mt-1"><i class="far fa-clock"></i> ${row.jam}</span>` : `<span class="text-zinc-500 font-bold bg-zinc-900/30 px-1 py-0.5 rounded border border-zinc-500/30 inline-block mt-1"><i class="far fa-clock"></i> -</span>`;
             
             let linkArsip = "-";
             if (row.url && row.url.startsWith("http")) {
@@ -1042,7 +1042,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
             rowsArsip += `
                 <tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors">
                     <td class="p-2 text-[9px] whitespace-nowrap">${tglTampil}</td>
-                    <td class="p-2 text-[9px] font-bold text-lime-100" title="${row.kegiatan}">${row.kegiatan}</td>
+                    <td class="p-2 text-[9px] font-bold text-blue-100" title="${row.kegiatan}">${row.kegiatan}</td>
                     <td class="p-2 text-center whitespace-nowrap">${linkArsip}</td>
                 </tr>`;
 
@@ -1085,8 +1085,8 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
        area.innerHTML = ''; 
        const selectedUpper = selectedKegiatanText.toUpperCase();
        let html = '';
-       if (selectedUpper.includes("GRADUASI")) { html += `<div class="mb-3"><label class="block text-xs font-bold text-lime-300">Data Graduasi</label><input type="text" class="glossy-input w-full rounded-lg p-2"></div>`; }
-       else { html += `<div class="mb-3"><label class="block text-xs font-bold text-lime-300">Sasaran Umum</label><input type="text" class="glossy-input w-full rounded-lg p-2"></div>`; }
+       if (selectedUpper.includes("GRADUASI")) { html += `<div class="mb-3"><label class="block text-xs font-bold text-blue-300">Data Graduasi</label><input type="text" class="glossy-input w-full rounded-lg p-2"></div>`; }
+       else { html += `<div class="mb-3"><label class="block text-xs font-bold text-blue-300">Sasaran Umum</label><input type="text" class="glossy-input w-full rounded-lg p-2"></div>`; }
        area.innerHTML = html;
     }
 
@@ -1103,8 +1103,8 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
           <p><b>Tanggal:</b> ${document.getElementById('tanggalLaporan').value} (${document.getElementById('jamMulai').value})</p>
           <p><b>Lokasi:</b> ${document.getElementById('lokasi').value}, ${document.getElementById('kabupaten').value}</p>
           <p><b>Petugas:</b> ${document.getElementById('namaPetugas').value}</p>
-          <p class="mt-2 text-lime-400"><b>Lampiran:</b> ${arrayLampiranBase64.length} Berkas</p>
-          <p class="text-lime-400"><b>Dokumentasi:</b> ${arrayFotoBase64.length} Foto</p>
+          <p class="mt-2 text-blue-400"><b>Lampiran:</b> ${arrayLampiranBase64.length} Berkas</p>
+          <p class="text-blue-400"><b>Dokumentasi:</b> ${arrayFotoBase64.length} Foto</p>
         `;
         document.getElementById('reviewContent').innerHTML = html;
         document.getElementById('modalReview').classList.remove('hidden'); 
@@ -1171,13 +1171,13 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
     // ==== FUNGSI ADMIN & KEUANGAN ====
     function loadAdminUsers() {
         const tbody = document.getElementById('adminUserTable');
-        tbody.innerHTML = `<tr><td colspan="3" class="text-center p-4"><i class="fas fa-spinner fa-spin text-lime-400"></i></td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="3" class="text-center p-4"><i class="fas fa-spinner fa-spin text-blue-400"></i></td></tr>`;
         apiCall('getAllUsersAdmin', {})
             .then(users => {
                 let html = '';
                 users.forEach(u => {
                     html += `<tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30">
-                        <td class="p-2 whitespace-nowrap"><div class="font-bold text-lime-300 text-[10px]">${u.nama}</div><div class="text-[9px] text-zinc-500">${u.email}</div></td>
+                        <td class="p-2 whitespace-nowrap"><div class="font-bold text-blue-300 text-[10px]">${u.nama}</div><div class="text-[9px] text-zinc-500">${u.email}</div></td>
                         <td class="p-2 font-black text-center text-yellow-400" id="token-${u.rowIdx}">${u.token}</td>
                         <td class="p-2 text-center">
                             <input type="number" id="input-token-${u.rowIdx}" class="w-12 text-center p-1 text-black text-xs font-bold rounded" placeholder="+/-">
@@ -1203,7 +1203,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
     }
     
     function loadMonitoringAdmin() {
-         document.getElementById('rincianPembelianTable').innerHTML = `<tr><td colspan="4" class="text-center p-4"><i class="fas fa-spinner fa-spin text-lime-400"></i></td></tr>`;
+         document.getElementById('rincianPembelianTable').innerHTML = `<tr><td colspan="4" class="text-center p-4"><i class="fas fa-spinner fa-spin text-blue-400"></i></td></tr>`;
          apiCall('getMonitoringAdmin', {})
             .then(data => {
                 globalKeuanganData = data;
@@ -1239,9 +1239,9 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
 
             htmlRincian += `<tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30">
                 <td class="p-2 text-[9px] whitespace-nowrap">${r.tanggalTampil}<br><span class="text-zinc-500">${r.jamTampil}</span></td>
-                <td class="p-2 text-[9px] font-bold text-lime-300">${r.nama}</td>
+                <td class="p-2 text-[9px] font-bold text-blue-300">${r.nama}</td>
                 <td class="p-2 text-center text-yellow-400 font-bold">${r.token}</td>
-                <td class="p-2 text-right text-lime-100 font-mono">${r.nominal.toLocaleString('id-ID')}</td>
+                <td class="p-2 text-right text-blue-100 font-mono">${r.nominal.toLocaleString('id-ID')}</td>
             </tr>`;
         });
 
@@ -1255,7 +1255,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
             htmlRekap += `<tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30">
                 <td class="p-2 text-[9px] font-bold text-blue-300">${nama}</td>
                 <td class="p-2 text-center text-yellow-400 font-bold">${rekapNama[nama].token}</td>
-                <td class="p-2 text-right text-lime-100 font-mono">${rekapNama[nama].nominal.toLocaleString('id-ID')}</td>
+                <td class="p-2 text-right text-blue-100 font-mono">${rekapNama[nama].nominal.toLocaleString('id-ID')}</td>
             </tr>`;
         });
         document.getElementById('rekapUserTable').innerHTML = htmlRekap || `<tr><td colspan="3" class="text-center p-4 text-zinc-500">Kosong.</td></tr>`;
@@ -1264,7 +1264,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
     }
 
     function jalankanSetupAwal() {
-        if(!confirm("BAHAYA! Ini akan mereset Database Sheet E-GenLap. Lanjutkan?")) return;
+        if(!confirm("BAHAYA! Ini akan mereset Database E-GenLap. Lanjutkan?")) return;
         showLoadingUI(true);
         apiCall('setupAwal', {})
             .then(res => { showLoadingUI(false); alert(res); })
