@@ -6,13 +6,11 @@
   <meta name="theme-color" content="#09090b">
   <title>E-GenLap | SDM PKH Nasional</title>
   
-  <!-- Library Tailwind CSS & FontAwesome & Supabase -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-    /* Styling Dasar & Glossy UI */
     .glossy-monster { 
         background: linear-gradient(135deg, rgba(24, 24, 27, 0.95) 0%, rgba(9, 9, 11, 0.98) 100%); 
         box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); 
@@ -53,7 +51,6 @@
         display: none; 
     }
     
-    /* Animasi Floating Button */
     .fab-button { 
         box-shadow: 0 0 20px rgba(59, 130, 246, 0.6); 
         animation: pulse-glow 2s infinite; 
@@ -63,12 +60,10 @@
         50% { transform: translateY(-50%) scale(1.05); box-shadow: 0 0 25px rgba(59, 130, 246, 0.8); } 
     }
     
-    /* Custom Scrollbar */
     .custom-scrollbar::-webkit-scrollbar { height: 5px; width: 4px; }
     .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
     .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(59,130,246,0.5); border-radius: 4px; }
     
-    /* Hamburger Menu Animation */
     #sideMenu { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
     .menu-open { transform: translateX(0) !important; }
   </style>
@@ -76,17 +71,17 @@
 
 <body class="app-bg font-sans antialiased text-gray-100 selection:bg-blue-500 selection:text-white relative">
 
-  <!-- LOADING UI (Dipercepat presisi di tengah HP) -->
-  <div id="fullscreenLoading" class="fixed inset-0 bg-[#09090b]/95 backdrop-blur-xl z-[9999] hidden flex-col items-center justify-center transition-opacity duration-200 opacity-0 h-screen w-screen">
-      <div class="relative w-20 h-20 flex items-center justify-center mb-4 mx-auto">
+  <!-- LOADING UI (MURNI TENGAH HP) -->
+  <div id="fullscreenLoading" class="fixed inset-0 bg-[#09090b]/95 backdrop-blur-xl z-[9999] hidden flex flex-col items-center justify-center transition-opacity duration-200 opacity-0 h-screen w-screen">
+      <div class="relative w-24 h-24 flex items-center justify-center mb-6">
           <div class="absolute inset-0 border-4 border-blue-900/50 rounded-full animate-ping"></div>
-          <div class="absolute inset-2 border-4 border-blue-500/30 rounded-full animate-spin shadow-[0_0_30px_rgba(59,130,246,0.4)]" style="animation-direction: reverse; animation-duration: 1.5s;"></div>
-          <div class="absolute inset-4 border-4 border-blue-400 rounded-full border-t-transparent animate-spin" style="animation-duration: 0.8s;"></div>
-          <div class="relative z-10 bg-zinc-900 w-10 h-10 rounded-full flex items-center justify-center border border-blue-400">
-              <i class="fas fa-bolt text-lg text-blue-400"></i>
+          <div class="absolute inset-2 border-4 border-blue-500/30 rounded-full animate-spin shadow-[0_0_30px_rgba(59,130,246,0.4)]" style="animation-direction: reverse; animation-duration: 2s;"></div>
+          <div class="absolute inset-4 border-4 border-blue-400 rounded-full border-t-transparent animate-spin" style="animation-duration: 1s;"></div>
+          <div class="relative z-10 bg-zinc-900 w-12 h-12 rounded-full flex items-center justify-center border border-blue-400">
+              <i class="fas fa-bolt text-2xl text-blue-400 animate-pulse"></i>
           </div>
       </div>
-      <h2 class="text-sm font-black text-blue-400 tracking-[0.2em] animate-pulse text-center">MEMPROSES DATA...</h2>
+      <h2 class="text-xl font-black text-blue-400 tracking-[0.2em] animate-pulse">MEMPROSES...</h2>
   </div>
 
   <!-- TOAST NOTIFICATION CONTAINER -->
@@ -96,7 +91,6 @@
   <div id="menuOverlay" onclick="toggleMenu()" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[8000] hidden opacity-0 transition-opacity duration-300"></div>
   <div id="sideMenu" class="fixed top-0 right-0 h-full w-64 bg-[#09090b]/95 backdrop-blur-2xl z-[8100] transform translate-x-full border-l border-blue-500/30 pt-5 pb-6 flex flex-col shadow-[-10px_0_30px_rgba(0,0,0,0.9)]">
       
-      <!-- Header Menu Sidebar -->
       <div class="px-5 pb-4 border-b border-zinc-700/50 flex justify-between items-center">
           <div class="overflow-hidden">
               <h2 class="font-bold text-blue-400 text-lg tracking-wide"><i class="fas fa-bars mr-2"></i> Navigasi</h2>
@@ -107,7 +101,6 @@
           </button>
       </div>
 
-      <!-- List Menu Utama -->
       <div class="flex-grow overflow-y-auto py-4 px-4 space-y-1.5 custom-scrollbar">
           <button onclick="nav('dashboard'); toggleMenu()" class="w-full flex items-center p-3 rounded-xl hover:bg-blue-600/10 text-sm font-bold text-zinc-300 hover:text-blue-400 transition-all border border-transparent hover:border-blue-500/30">
               <i class="fas fa-home w-6 text-center mr-2 text-blue-500"></i> Dashboard
@@ -133,6 +126,10 @@
               <i class="fas fa-coins w-6 text-center mr-2 text-yellow-500"></i> Beli Token
           </button>
 
+          <button onclick="nav('panduan'); toggleMenu()" class="w-full flex items-center p-3 rounded-xl hover:bg-blue-600/10 text-sm font-bold text-zinc-300 hover:text-blue-400 transition-all border border-transparent hover:border-blue-500/30">
+              <i class="fas fa-book w-6 text-center mr-2 text-blue-500"></i> Panduan & Aturan
+          </button>
+          
           <!-- Menu Khusus Admin -->
           <div id="adminSideLinks" class="hidden mt-4 pt-4 border-t border-zinc-700/50 space-y-1.5">
               <p class="text-[10px] text-blue-500 font-black px-3 uppercase tracking-wider mb-2">Super Admin</p>
@@ -151,7 +148,6 @@
           </div>
       </div>
       
-      <!-- Tombol Keluar -->
       <div class="px-5 pt-3 border-t border-zinc-700/50">
           <button onclick="logout()" class="w-full bg-red-500/10 text-red-500 border border-red-500/30 p-3 rounded-xl font-bold hover:bg-red-500/30 transition-all text-sm flex items-center justify-center">
               <i class="fas fa-power-off mr-2"></i> Keluar Akun
@@ -160,8 +156,31 @@
   </div>
 
   <!-- ============================================== -->
-  <!-- MODAL KHUSUS PEMBELIAN TOKEN (HARGA RAKSASA)   -->
+  <!-- MODAL ADMIN TOPUP TOKEN RAKSASA                -->
   <!-- ============================================== -->
+  <div id="modalAdminTopup" class="fixed inset-0 bg-[#09090b]/90 backdrop-blur-md z-[9999] hidden flex-col items-center justify-center p-4">
+      <div class="glossy-monster w-full max-w-sm rounded-2xl p-6 text-center shadow-[0_0_40px_rgba(59,130,246,0.6)]">
+          <i class="fas fa-coins text-5xl text-yellow-400 mb-4 drop-shadow-[0_0_15px_rgba(250,204,21,0.8)]"></i>
+          <h3 class="text-xl font-black text-white mb-1 uppercase tracking-widest">Topup Token User</h3>
+          <p class="text-xs text-zinc-400 font-bold mb-4" id="txtAdminTopupEmail">email@user.com</p>
+          
+          <input type="number" id="inputAdminTopupVal" class="w-full p-4 text-center text-xl font-bold rounded-xl glossy-input mb-4" placeholder="Jumlah Token (+ / -)" onkeyup="hitungTopupAdmin()">
+          
+          <div class="bg-black/50 p-4 rounded-xl border border-yellow-500/50 mb-5">
+              <p class="text-xs text-zinc-400 font-bold uppercase mb-1">Estimasi Pembayaran:</p>
+              <p class="text-4xl font-black text-yellow-400 tracking-tighter" id="txtAdminTopupHarga">Rp 0</p>
+          </div>
+          
+          <div class="flex gap-3">
+              <button onclick="document.getElementById('modalAdminTopup').classList.add('hidden')" class="w-1/2 p-3 rounded-xl bg-zinc-800 text-sm font-bold text-zinc-300 hover:bg-zinc-700 transition-all">Batal</button>
+              <button onclick="eksekusiTopupAdmin()" class="w-1/2 p-3 rounded-xl bg-gradient-to-r from-blue-500 to-blue-400 text-white text-sm font-extrabold hover:shadow-[0_0_20px_rgba(59,130,246,0.6)] transition-all">
+                  <i class="fas fa-check mr-1"></i> Konfirmasi
+              </button>
+          </div>
+      </div>
+  </div>
+
+  <!-- MODAL USER KONFIRMASI BELI RAKSASA -->
   <div id="modalConfirmBeli" class="fixed inset-0 bg-[#09090b]/90 backdrop-blur-md z-[9999] hidden flex-col items-center justify-center p-4">
       <div class="glossy-monster w-full max-w-sm rounded-2xl p-6 text-center shadow-[0_0_40px_rgba(59,130,246,0.6)]">
           <i class="fas fa-shopping-cart text-5xl text-yellow-400 mb-4 drop-shadow-[0_0_15px_rgba(250,204,21,0.8)]"></i>
@@ -182,7 +201,7 @@
       </div>
   </div>
 
-  <!-- MODAL RESET PASSWORD -->
+  <!-- MODAL RESET & REGISTER -->
   <div id="modalResetPass" class="fixed inset-0 bg-[#09090b]/90 backdrop-blur-sm z-[7000] hidden flex-col items-center justify-center p-4">
     <div class="glossy-monster w-full max-w-sm rounded-2xl p-5 text-center">
         <i class="fas fa-key text-4xl text-blue-400 mb-3"></i>
@@ -204,7 +223,6 @@
     </div>
   </div>
 
-  <!-- MODAL KONFIRMASI REGISTRASI -->
   <div id="modalConfirmReg" class="fixed inset-0 bg-[#09090b]/90 backdrop-blur-sm z-[7000] hidden flex-col items-center justify-center p-4">
     <div class="glossy-monster w-full max-w-sm rounded-2xl p-5 text-center">
         <i class="fas fa-exclamation-triangle text-4xl text-yellow-500 mb-3"></i>
@@ -217,16 +235,16 @@
     </div>
   </div>
 
-  <!-- MODAL REVIEW LAPORAN AI -->
+  <!-- MODAL REVIEW KESELURUHAN (PREVIEW SEBELUM GENERATE) -->
   <div id="modalReview" class="fixed inset-0 bg-[#09090b]/90 backdrop-blur-sm z-[7000] hidden flex-col items-center justify-center p-4">
       <div class="glossy-monster w-full max-w-sm rounded-2xl p-4">
           <div class="border-b border-zinc-700 pb-2 mb-3">
               <h3 class="text-lg font-bold text-blue-400"><i class="fas fa-clipboard-check mr-2"></i> Review Laporan</h3>
-              <p class="text-[10px] text-zinc-400">Pastikan seluruh data sudah benar</p>
+              <p class="text-[10px] text-zinc-400">Pastikan seluruh isian sudah benar sebelum terpotong 1 Token.</p>
           </div>
           
-          <div id="reviewContent" class="max-h-[60vh] overflow-y-auto custom-scrollbar pr-2 mb-4 text-xs text-zinc-300">
-              <!-- Content Review dari JS -->
+          <div id="reviewContent" class="max-h-[50vh] overflow-y-auto custom-scrollbar pr-2 mb-4 text-xs text-zinc-300">
+              <!-- Content Review Detail dari JS -->
           </div>
           
           <div class="flex gap-3">
@@ -239,7 +257,6 @@
   <!-- CONTAINER UTAMA APLIKASI -->
   <div class="max-w-md w-full mx-auto relative min-h-screen shadow-2xl bg-black/40 flex flex-col pb-24 z-10">
     
-    <!-- HEADER ATAS -->
     <header class="glossy-monster p-4 rounded-b-3xl shadow-lg flex-shrink-0 z-20 border-b border-blue-500/30 sticky top-0 flex justify-between items-center">
         <div>
             <h1 class="text-2xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-blue-500">
@@ -265,37 +282,32 @@
             <h2 class="text-xl font-bold text-white">E-GenLap Nasional</h2>
         </div>
         
-        <!-- TEKS KEHEBATAN APLIKASI (DIKEMBALIKAN UTUH SEPERTI PERMINTAAN ANDA) -->
+        <!-- TEKS KEHEBATAN APLIKASI (UTUH) -->
         <div class="mb-5 bg-blue-900/20 border border-blue-500/40 p-4 rounded-xl shadow-inner">
             <h3 class="text-blue-400 font-extrabold text-sm mb-2"><i class="fas fa-rocket mr-1"></i> Kehebatan Aplikasi Ini</h3>
             <ul class="text-[10px] text-zinc-300 text-left space-y-2">
-                <li><i class="fas fa-robot text-blue-500 w-4"></i> <b>Generate AI Cerdas:</b> Laporan otomatis disusun sempurna dalam hitungan detik.</li>
+                <li><i class="fas fa-robot text-blue-500 w-4"></i> <b>Generate AI Cerdas:</b> Laporan otomatis disusun sempurna dalam hitungan detik berdasarkan data dinamis & arahan Anda.</li>
                 <li><i class="fas fa-balance-scale text-blue-500 w-4"></i> <b>Analisis Hukum:</b> Dasar hukum riil Kemensos dianalisa & disisipkan otomatis ke PDF.</li>
-                <li><i class="fas fa-folder-tree text-blue-500 w-4"></i> <b>Arsip Drive Terstruktur:</b> PDF tersusun rapi dalam folder berhierarki (RHK/Bulan/Kegiatan).</li>
+                <li><i class="fas fa-folder-tree text-blue-500 w-4"></i> <b>Arsip Drive Terstruktur:</b> PDF tersusun rapi dalam folder berhierarki (RHK/Bulan/Kegiatan) di Google Drive Anda.</li>
                 <li><i class="fas fa-gift text-yellow-400 w-4 animate-pulse"></i> <b class="text-yellow-400">Daftar Sekarang:</b> Dapatkan 1 Token Laporan GRATIS hari ini!</li>
             </ul>
         </div>
 
-        <!-- Form Login -->
         <div id="formLogin">
             <input type="email" id="logEmail" class="w-full p-3 text-sm rounded-xl glossy-input mb-3" placeholder="Email Anda" required>
-            
             <div class="relative mb-4">
                 <input type="password" id="logPassword" class="w-full p-3 text-sm rounded-xl glossy-input" placeholder="Password Login">
                 <i class="fas fa-eye absolute right-4 top-4 text-zinc-400 cursor-pointer" id="iconLogPass" onclick="togglePasswordVisibility('logPassword', 'iconLogPass')"></i>
             </div>
-            
             <button onclick="prosesLogin()" class="w-full bg-blue-500 text-white font-extrabold py-3 rounded-xl hover:bg-blue-400 text-sm mb-3 shadow-[0_0_15px_rgba(59,130,246,0.3)] transition-all">
                 <i class="fas fa-sign-in-alt mr-2"></i> Masuk Sistem
             </button>
-            
             <div class="flex justify-between mt-2 px-1 text-xs">
                 <span onclick="toggleAuthForm()" class="text-blue-400 cursor-pointer font-bold underline">Daftar Akun Baru</span>
                 <span onclick="bukaModalReset()" class="text-yellow-500 cursor-pointer font-bold underline">Lupa Password?</span>
             </div>
         </div>
 
-        <!-- Form Register -->
         <div id="formRegister" class="hidden">
             <input type="text" id="regNama" class="w-full p-3 text-sm rounded-xl glossy-input mb-3" placeholder="Nama Lengkap" required>
             <input type="number" id="regNIP" class="w-full p-3 text-sm rounded-xl glossy-input mb-3" placeholder="NIP (Kosongkan jika tidak ada)">
@@ -309,12 +321,10 @@
             </select>
             
             <input type="email" id="regEmail" class="w-full p-3 text-sm rounded-xl glossy-input mb-3" placeholder="Email Aktif" required>
-            
             <div class="relative mb-4">
                 <input type="password" id="regPassword" class="w-full p-3 text-sm rounded-xl glossy-input" placeholder="Buat Password" required>
                 <i class="fas fa-eye absolute right-4 top-4 text-zinc-400 cursor-pointer" id="iconRegPass" onclick="togglePasswordVisibility('regPassword', 'iconRegPass')"></i>
             </div>
-            
             <button onclick="validasiRegister()" class="w-full bg-blue-500 text-white font-extrabold py-3 rounded-xl hover:bg-blue-400 text-sm mb-3 transition-all">
                 <i class="fas fa-user-plus mr-2"></i> Daftar Akun
             </button>
@@ -344,18 +354,10 @@
                 
                 <select id="filterBulanDashboard" class="p-1 text-[10px] rounded bg-zinc-800 text-white border border-zinc-600 font-bold" onchange="hitungStatistikDashboard()">
                     <option value="all">Semua Bulan</option>
-                    <option value="01">Januari</option>
-                    <option value="02">Februari</option>
-                    <option value="03">Maret</option>
-                    <option value="04">April</option>
-                    <option value="05">Mei</option>
-                    <option value="06">Juni</option>
-                    <option value="07">Juli</option>
-                    <option value="08">Agustus</option>
-                    <option value="09">September</option>
-                    <option value="10">Oktober</option>
-                    <option value="11">November</option>
-                    <option value="12">Desember</option>
+                    <option value="01">Januari</option><option value="02">Februari</option><option value="03">Maret</option>
+                    <option value="04">April</option><option value="05">Mei</option><option value="06">Juni</option>
+                    <option value="07">Juli</option><option value="08">Agustus</option><option value="09">September</option>
+                    <option value="10">Oktober</option><option value="11">November</option><option value="12">Desember</option>
                 </select>
             </div>
             
@@ -381,9 +383,7 @@
                         </tr>
                     </thead>
                     <tbody id="dashRincianRHK" class="divide-y divide-zinc-800/50">
-                        <tr>
-                            <td colspan="3" class="text-center italic p-3 text-zinc-500">Memuat rincian...</td>
-                        </tr>
+                        <tr><td colspan="3" class="text-center italic p-3 text-zinc-500">Memuat rincian...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -451,13 +451,13 @@
             
             <h3 class="text-xs font-bold text-blue-300 mb-2 border-b border-zinc-700 pb-1">Daftar Agenda Saya</h3>
             <div id="containerListAgenda" class="space-y-3 max-h-[50vh] overflow-y-auto custom-scrollbar pr-1">
-                <!-- Data Card Agenda disuntik melalui Javascript -->
+                <!-- Data Card Agenda disuntik melalui Javascript (1 Card Per Bulan) -->
             </div>
         </div>
       </section>
 
       <!-- ============================================== -->
-      <!-- SECTION 4: FORM GENERATE LAPORAN               -->
+      <!-- SECTION 4: FORM GENERATE LAPORAN DINAMIS       -->
       <!-- ============================================== -->
       <section id="sec-generate" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
         
@@ -539,7 +539,10 @@
              </select>
           </div>
 
-          <div id="dynamicFormArea" class="space-y-4 mb-4 transition-all duration-300"></div>
+          <!-- FORM DINAMIS (Muncul Berdasarkan Kegiatan & Arahan AI) -->
+          <div id="dynamicFormArea" class="bg-black/30 p-3 rounded-xl border border-zinc-700/50 mb-4 transition-all duration-300">
+              <p class="text-[10px] text-zinc-500 text-center italic">Pilih kegiatan untuk menampilkan form dinamis dan analisa AI.</p>
+          </div>
 
           <div class="mb-4">
             <label class="block text-xs font-bold text-blue-300 mb-1">Upload TTD</label>
@@ -547,9 +550,7 @@
             
             <div id="previewTtdContainer" class="hidden mt-3 relative w-[100px] h-[50px] bg-white rounded-lg p-1 shadow-md">
                 <img id="imgTtdPreview" src="" class="w-full h-full object-contain">
-                <div onclick="hapusTtdForm()" class="absolute -top-2 -right-2 bg-red-600 text-white w-5 h-5 flex items-center justify-center rounded-full cursor-pointer">
-                    <i class="fas fa-times"></i>
-                </div>
+                <div onclick="hapusTtdForm()" class="absolute -top-2 -right-2 bg-red-600 text-white w-5 h-5 flex items-center justify-center rounded-full cursor-pointer"><i class="fas fa-times"></i></div>
             </div>
           </div>
 
@@ -772,7 +773,7 @@
          </div>
          
          <div class="bg-black/30 p-4 rounded-xl border border-zinc-700/50">
-             <h3 class="text-xs font-bold text-blue-300 mb-3 uppercase tracking-wider">Ubah Identitas Login Anda</h3>
+             <h3 class="text-xs font-bold text-blue-300 mb-3 uppercase tracking-wider">Ubah Identitas Login & ID Drive Folder</h3>
              
              <label class="block text-[10px] text-zinc-400 mb-1">Username (Nama Lengkap)</label>
              <input type="text" id="inputUbahNama" class="w-full p-2 text-xs rounded-lg glossy-input mb-3" placeholder="Nama Baru...">
@@ -782,9 +783,13 @@
                  <input type="password" id="inputUbahPass" class="w-full p-2 text-xs rounded-lg glossy-input" placeholder="Password Baru...">
                  <i class="fas fa-eye absolute right-3 top-3 text-zinc-400 cursor-pointer text-xs" id="iconUbahPass" onclick="togglePasswordVisibility('inputUbahPass', 'iconUbahPass')"></i>
              </div>
+
+             <label class="block text-[10px] text-zinc-400 mb-1">Link / ID Folder Google Drive Anda (Opsional)</label>
+             <input type="text" id="inputUbahDrive" class="w-full p-2 text-xs rounded-lg glossy-input mb-3" placeholder="Contoh: 1xaw6b... atau https://drive...">
+             <p class="text-[8px] text-yellow-400 mb-3 leading-tight">*Jika diisi, PDF akan langsung masuk ke folder Anda tersebut secara otomatis.</p>
              
              <button onclick="simpanProfileAdmin()" class="w-full bg-blue-500/20 border border-blue-500 text-blue-300 font-bold py-2 rounded-lg text-xs hover:bg-blue-500/40">
-                 <i class="fas fa-user-edit mr-1"></i> Update Akun
+                 <i class="fas fa-user-edit mr-1"></i> Update Data Akun
              </button>
          </div>
       </section>
@@ -845,6 +850,7 @@
              <p id="txtRekPanduan" class="text-[12px] font-mono text-yellow-400 font-bold bg-zinc-900 p-2 rounded-lg border border-zinc-700 inline-block mb-3">Memuat Rekening...</p>
              <p class="text-[10px] text-zinc-300 mb-2">Atau melalui QRIS:</p>
              <img id="imgQrisPanduan" src="" alt="QRIS DANA" class="w-full max-w-[200px] mx-auto rounded-xl shadow-[0_0_15px_rgba(59,130,246,0.3)] border-2 border-blue-500/50">
+             <p class="text-[9px] text-zinc-400 mt-2">*Simpan struk & kirim ke WhatsApp Admin via Menu Token</p>
          </div>
          
          <div class="text-xs text-zinc-300 space-y-4 text-justify">
@@ -852,6 +858,7 @@
                 <p class="text-red-400 font-bold mb-1"><i class="fas fa-exclamation-triangle mr-1"></i> PERATURAN MUTLAK</p>
                 <p><b>1. TIDAK ADA REFUND.</b> Token yang dibeli tidak dapat diuangkan kembali.</p>
                 <p class="mt-1"><b>2. TOKEN HANGUS.</b> Jika laporan gagal di-generate karena salah input, token terpotong <b>HANGUS</b>.</p>
+                <p class="mt-1"><b>3. ID DRIVE USER.</b> Anda bisa memasukkan Link/ID Folder Google Drive Anda sendiri di pengaturan akun. <b>PASTIKAN</b> Anda memberikan akses "Siapa Saja yang Memiliki Link" atau menambahkan email Admin ke folder tersebut agar PDF bisa masuk!</p>
             </div>
          </div>
       </section>
@@ -880,7 +887,7 @@
     // ==========================================
     // API ENDPOINT - LINK WEB APP GAS ANDA (PENTING)
     // ==========================================
-    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzhP38wQWAuvxmvyQaDLK31sDTHMR21DoEdRgC5kg4c_99Ok4ijNJAdNOMRF4wdJ_7H/exec";
+    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzk7gs2pZnouZi9iN6Hzo5TajLgD4At2jf_Y7owjQ3dPM0lOXfs04DDyDBQDVu6G1Qs/exec";
 
     const $ = id => document.getElementById(id);
     const SUPABASE_URL = "https://rtqfwssxwsrgttvfgerg.supabase.co"; 
@@ -910,7 +917,7 @@
     let tempBeliJml = 0;
     let tempBeliHarga = 0;
 
-    // HARDCODED FALLBACK RHK (AGAR TIDAK PERNAH KOSONG)
+    // HARDCODED FALLBACK RHK
     const fbRHK = [
         { j: "Penata layanan operasional", r: "RHK 1", k: "Melakukan edukasi pencairan tunai non tunai", t: "1" },
         { j: "Penata layanan operasional", r: "RHK 2", k: "Pertemuan Peningkatan Kemampuan Keluarga (P2K2)", t: "15" },
@@ -1140,7 +1147,7 @@
     }
 
     // ==========================================
-    // AUTHENTICATION LOGIC (DENGAN BYPASS ADMIN MUTLAK)
+    // AUTHENTICATION LOGIC (DENGAN BYPASS ADMIN)
     // ==========================================
     function toggleAuthForm() { 
         $('formLogin').classList.toggle('hidden'); 
@@ -1307,7 +1314,7 @@
             const { data, error } = await db.from('agenda_kegiatan').select('*').eq('email_user', currentUser.data.email).order('tanggal', { ascending: false });
             if(error) throw error; 
             globalAgendaData = data || [];
-            let grouped = {}, mths = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+            let grouped = {}, mths = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Ags","Sep","Okt","Nov","Des"];
             
             globalAgendaData.forEach(ag => { 
                 const p = ag.tanggal.split('-'); 
@@ -1433,18 +1440,8 @@
             let hj = (x.jam && x.jam !== "-") ? `<span class="text-blue-300 bg-blue-900/30 px-1 rounded">${x.jam}</span>` : "";
             let lA = x.url ? `<a href="${x.url}" target="_blank" class="text-blue-400 hover:text-white"><i class="fas fa-folder"></i></a>` : "-"; 
             
-            ra += `<tr class="border-b border-zinc-800/50">
-                      <td class="p-2 text-[9px]">${x.tanggal}</td>
-                      <td class="p-2 text-[9px] text-blue-100">${x.kegiatan}</td>
-                      <td class="p-2 text-center">${lA}</td>
-                   </tr>`; 
-                   
-            r += `<tr class="border-b border-zinc-800/50">
-                    ${currentUser.role === 'admin' ? `<td class="p-2 text-[9px] text-blue-300">${x.nama}</td>` : ''}
-                    <td class="p-2 text-[9px]">${x.tanggal}<br>${hj}</td>
-                    <td class="p-2 text-[9px]">${x.kegiatan}</td>
-                    <td class="p-2 text-[9px] ${st}">${x.keterangan}</td>
-                  </tr>`; 
+            ra += `<tr class="border-b border-zinc-800/50"><td class="p-2 text-[9px]">${x.tanggal}</td><td class="p-2 text-[9px] text-blue-100">${x.kegiatan}</td><td class="p-2 text-center">${lA}</td></tr>`; 
+            r += `<tr class="border-b border-zinc-800/50">${currentUser.role === 'admin' ? `<td class="p-2 text-[9px] text-blue-300">${x.nama}</td>` : ''}<td class="p-2 text-[9px]">${x.tanggal}<br>${hj}</td><td class="p-2 text-[9px]">${x.kegiatan}</td><td class="p-2 text-[9px] ${st}">${x.keterangan}</td></tr>`; 
         });
         
         tb.innerHTML = r; 
@@ -1456,7 +1453,7 @@
     function nextRiwayat() { let f = currentUser.role==='admin'?globalDataRiwayat.filter(r=>(r.nama||"").toLowerCase().includes($('inputFilterRiwayat').value.toLowerCase())||(r.kegiatan||"").toLowerCase().includes($('inputFilterRiwayat').value.toLowerCase())):globalDataRiwayat; if(currentRiwayatPage<Math.ceil(f.length/itemsPerPageRiwayat)) { currentRiwayatPage++; renderTable(); } }
 
     // ==========================================
-    // GENERATE LAPORAN AI
+    // GENERATE LAPORAN AI & FORM DINAMIS (CERDAS)
     // ==========================================
     function tambahSurat() { 
         $('containerDataSurat').insertAdjacentHTML('beforeend', `
@@ -1469,7 +1466,52 @@
     
     function renderDynamicForm() { 
         const s = $('kegiatanSelect'); if(!s.value) return; 
-        $('dynamicFormArea').innerHTML = s.value.toUpperCase().includes("GRADUASI") ? `<div class="mb-3"><label class="block text-xs font-bold text-blue-300">Data Graduasi</label><input type="text" class="glossy-input w-full rounded-lg p-2"></div>` : `<div class="mb-3"><label class="block text-xs font-bold text-blue-300">Sasaran Umum</label><input type="text" class="glossy-input w-full rounded-lg p-2"></div>`; 
+        const v = s.value.toLowerCase();
+        let html = '';
+        
+        if (v.includes("supervisi")) {
+            html += `<div class="mb-3"><label class="block text-[10px] font-bold text-blue-300">Pihak/Lokasi yang Disupervisi</label><input type="text" id="dynSupervisiTarget" class="w-full p-2 text-xs rounded-lg glossy-input" placeholder="Misal: KPM Desa A..."></div>`;
+            html += `<div class="mb-3"><label class="block text-[10px] font-bold text-blue-300">Hasil Supervisi Singkat</label><input type="text" id="dynSupervisiHasil" class="w-full p-2 text-xs rounded-lg glossy-input" placeholder="Misal: Terdapat 2 KPM yang..."></div>`;
+        } else if (v.includes("graduasi")) {
+            html += `<div class="mb-3"><label class="block text-[10px] font-bold text-blue-300">Nama KPM yang Digraduasi</label><input type="text" id="dynGraduasiNama" class="w-full p-2 text-xs rounded-lg glossy-input" placeholder="Misal: Ibu Siti..."></div>`;
+            html += `<div class="mb-3"><label class="block text-[10px] font-bold text-blue-300">Alasan Graduasi</label><input type="text" id="dynGraduasiAlasan" class="w-full p-2 text-xs rounded-lg glossy-input" placeholder="Misal: Sudah mandiri ekonomi..."></div>`;
+        } else if (v.includes("p2k2") || v.includes("pertemuan")) {
+            html += `<div class="flex gap-3 mb-3">
+                        <div class="w-1/2"><label class="block text-[10px] font-bold text-blue-300">Jml Hadir</label><input type="number" id="dynP2k2Hadir" class="w-full p-2 text-xs rounded-lg glossy-input" placeholder="Orang"></div>
+                        <div class="w-1/2"><label class="block text-[10px] font-bold text-blue-300">Tidak Hadir</label><input type="number" id="dynP2k2Alpha" class="w-full p-2 text-xs rounded-lg glossy-input" placeholder="Orang"></div>
+                     </div>`;
+            html += `<div class="mb-3"><label class="block text-[10px] font-bold text-blue-300">Materi / Modul Pembahasan</label><input type="text" id="dynP2k2Materi" class="w-full p-2 text-xs rounded-lg glossy-input" placeholder="Misal: Modul Ekonomi sesi 2..."></div>`;
+        } else {
+            html += `<div class="mb-3"><label class="block text-[10px] font-bold text-blue-300">Sasaran / Output Umum</label><input type="text" id="dynUmum" class="w-full p-2 text-xs rounded-lg glossy-input" placeholder="Apa yang Anda hasilkan dari kegiatan ini?"></div>`;
+        }
+        
+        // Form Analisa AI Tambahan
+        html += `<div class="mb-3">
+                    <label class="block text-[10px] font-bold text-yellow-400 mb-1"><i class="fas fa-robot"></i> Catatan Khusus untuk AI (Acuan Pembuatan)</label>
+                    <textarea id="dynAnalisaAI" rows="2" class="w-full p-2 text-xs rounded-lg glossy-input" placeholder="Tuliskan arahan agar AI membuat laporan sesuai keinginan Anda. Contoh: Fokuskan pada penyelesaian masalah X..."></textarea>
+                 </div>`;
+        
+        $('dynamicFormArea').innerHTML = html;
+    }
+
+    function getDynamicDataForReview() {
+        const s = $('kegiatanSelect'); if(!s.value) return {};
+        const v = s.value.toLowerCase();
+        let data = {};
+        if (v.includes("supervisi")) {
+            if($('dynSupervisiTarget')) data['Pihak Disupervisi'] = $('dynSupervisiTarget').value;
+            if($('dynSupervisiHasil')) data['Hasil Supervisi'] = $('dynSupervisiHasil').value;
+        } else if (v.includes("graduasi")) {
+            if($('dynGraduasiNama')) data['Nama KPM Graduasi'] = $('dynGraduasiNama').value;
+            if($('dynGraduasiAlasan')) data['Alasan'] = $('dynGraduasiAlasan').value;
+        } else if (v.includes("p2k2") || v.includes("pertemuan")) {
+            if($('dynP2k2Hadir')) data['Hadir'] = $('dynP2k2Hadir').value + " Orang";
+            if($('dynP2k2Alpha')) data['Tidak Hadir'] = $('dynP2k2Alpha').value + " Orang";
+            if($('dynP2k2Materi')) data['Materi Modul'] = $('dynP2k2Materi').value;
+        } else {
+            if($('dynUmum')) data['Sasaran Umum'] = $('dynUmum').value;
+        }
+        return data;
     }
     
     function resizeImg(f, maxS, cb) { 
@@ -1494,6 +1536,7 @@
 
     function prosesTtdForm(e) { if(e.target.files[0]) resizeImg(e.target.files[0], 400, b=>{ formTtdBase64=b; $('imgTtdPreview').src=b; $('previewTtdContainer').classList.remove('hidden'); }); }
     function hapusTtdForm() { formTtdBase64=null; $('formTtdFile').value=""; $('previewTtdContainer').classList.add('hidden'); $('imgTtdPreview').src=""; }
+    
     function prosesLampiran(e) { 
         for(let f of e.target.files) { 
             if(arrayLampiranBase64.length>=3)break; 
@@ -1540,17 +1583,37 @@
         e.preventDefault(); 
         if(!formTtdBase64) { showToast("Tanda tangan wajib!", "error"); return; }
         const sel = $('kegiatanSelect'); if(!sel.value) { showToast("Pilih RHK!", "error"); return; }
-        $('reviewContent').innerHTML = `<p><b>Kegiatan:</b> ${sel.options[sel.selectedIndex].text}</p><p><b>Waktu:</b> ${$('tanggalLaporan').value} (${$('jamMulai').value})</p><p><b>Lokasi:</b> ${$('lokasi').value}, ${$('kabupaten').value}</p><p class="mt-2 text-blue-400"><b>Lampiran:</b> ${arrayLampiranBase64.length} Berkas</p><p class="text-blue-400"><b>Dokumentasi:</b> ${arrayFotoBase64.length} Foto</p>`; 
+        
+        let dynData = getDynamicDataForReview();
+        let dynHtml = '';
+        for(let k in dynData) {
+            if(dynData[k]) dynHtml += `<li><b>${k}:</b> <span class="text-white">${dynData[k]}</span></li>`;
+        }
+        
+        let arahanAI = $('dynAnalisaAI') ? $('dynAnalisaAI').value : '';
+        
+        $('reviewContent').innerHTML = `
+            <p class="mb-1"><b>Kegiatan:</b> <span class="text-white">${sel.options[sel.selectedIndex].text}</span></p>
+            <p class="mb-1"><b>Waktu:</b> <span class="text-white">${$('tanggalLaporan').value} (${$('jamMulai').value})</span></p>
+            <p class="mb-1"><b>Lokasi:</b> <span class="text-white">${$('lokasi').value}, ${$('kabupaten').value}</span></p>
+            ${dynHtml ? `<div class="mt-2 bg-blue-900/30 p-2 rounded border border-blue-500/20"><p class="text-[10px] text-blue-300 font-bold mb-1">Data Lapangan Khusus:</p><ul class="list-disc pl-4 space-y-1">${dynHtml}</ul></div>` : ''}
+            ${arahanAI ? `<p class="mt-2 text-yellow-400"><b>Arahan AI:</b> "${arahanAI}"</p>` : ''}
+            <p class="mt-2 text-blue-400"><b>Lampiran:</b> ${arrayLampiranBase64.length} Berkas | <b>Foto:</b> ${arrayFotoBase64.length}</p>
+        `; 
         $('modalReview').classList.remove('hidden'); 
     }
     
     function executeGenerate() { 
         showLoadingUI(true); $('modalReview').classList.add('hidden');
-        const sel = $('kegiatanSelect'); let dsArr = []; 
+        const sel = $('kegiatanSelect'); 
+        let dsArr = []; 
         document.querySelectorAll('.surat-item').forEach(i => { let ds=i.querySelector('.input-dasar-surat').value, ph=i.querySelector('.input-perihal-surat').value; if(ds||ph) dsArr.push(`${ds} - ${ph}`); });
         
+        const dynamicPayload = getDynamicDataForReview();
+        const catatanAI = $('dynAnalisaAI') ? $('dynAnalisaAI').value : '';
+        
         apiCall('prosesLaporan', {
-            tanggalLaporan: $('tanggalLaporan').value, jamMulai: $('jamMulai').value, namaPetugas: $('namaPetugas').value, nip: $('nip').value, jabatan: $('jabatan').value, kabupaten: $('kabupaten').value, lokasi: $('lokasi').value, kegiatan: sel.value, kategoriRHK: sel.options[sel.selectedIndex].getAttribute('data-rhk'), dataSurat: dsArr.join("\n"), ttd: formTtdBase64, lampiran: arrayLampiranBase64, foto: arrayFotoBase64, currentUserEmail: currentUser.data.email, currentUserRole: currentUser.role, sessionToken: currentUser.data.sessionToken
+            tanggalLaporan: $('tanggalLaporan').value, jamMulai: $('jamMulai').value, namaPetugas: $('namaPetugas').value, nip: $('nip').value, jabatan: $('jabatan').value, kabupaten: $('kabupaten').value, lokasi: $('lokasi').value, kegiatan: sel.value, kategoriRHK: sel.options[sel.selectedIndex].getAttribute('data-rhk'), dataSurat: dsArr.join("\n"), ttd: formTtdBase64, lampiran: arrayLampiranBase64, foto: arrayFotoBase64, dynamicData: dynamicPayload, analisaAI: catatanAI, currentUserEmail: currentUser.data.email, currentUserRole: currentUser.role, sessionToken: currentUser.data.sessionToken, driveId: currentUser.data.driveId
         }).then(res => {
             showLoadingUI(false); showToast("Sukses Generate!", "success"); $('reportForm').reset(); arrayFotoBase64=[]; arrayLampiranBase64=[]; hapusTtdForm(); $('photoStatus').innerText="0 / 10 Foto"; $('lampiranStatus').innerText="0 / 3 File";
             const sItem = $('containerDataSurat').querySelectorAll('.surat-item'); for(let i=1; i<sItem.length; i++) sItem[i].remove(); $('dynamicFormArea').innerHTML = '';
@@ -1579,9 +1642,11 @@
                         <td class="p-2"><div class="font-bold text-blue-300 text-[10px]">${u.nama}</div><div class="text-[9px] text-zinc-500">${u.email}</div></td>
                         <td class="p-2 font-black text-center text-yellow-400">${u.token}</td>
                         <td class="p-2 text-center">
-                            <input type="number" id="in-tok-${u.rowIdx.replace(/[^a-zA-Z0-9]/g, '')}" class="w-10 text-center p-1 text-black text-[9px] font-bold rounded" placeholder="+/-">
-                            <button onclick="updateToken('${u.email}')" class="bg-blue-600 text-white px-1.5 py-1 rounded text-[8px] font-bold"><i class="fas fa-coins"></i></button>
-                            <button onclick="hapusUserByAdmin('${u.email}')" class="bg-red-600 text-white px-1.5 py-1 rounded text-[8px] font-bold ml-1"><i class="fas fa-trash"></i></button>
+                            <div class="flex gap-1 justify-center">
+                                <input type="number" id="in-tok-${u.rowIdx.replace(/[^a-zA-Z0-9]/g, '')}" class="w-10 text-center p-1 text-black text-[9px] font-bold rounded" placeholder="+/-">
+                                <button onclick="bukaModalTopupAdmin('${u.email}')" class="bg-blue-600 text-white px-1.5 py-1 rounded text-[8px] font-bold"><i class="fas fa-coins"></i></button>
+                                <button onclick="hapusUserByAdmin('${u.email}')" class="bg-red-600 text-white px-1.5 py-1 rounded text-[8px] font-bold ml-1"><i class="fas fa-trash"></i></button>
+                            </div>
                         </td>
                       </tr>`; 
             }); 
@@ -1589,9 +1654,35 @@
         }).catch(e => { tb.innerHTML = `<tr><td colspan="3" class="text-center p-4 text-red-500">${e.message}</td></tr>`; });
     }
     
-    function updateToken(email) {
-        const v = $(`in-tok-${email.replace(/[^a-zA-Z0-9]/g, '')}`).value; if(!v) return; showLoadingUI(true);
-        apiCall('updateTokenAdmin', { emailUser: email, nominalToken: parseInt(v) }).then(res => { showLoadingUI(false); showToast("Sukses"); loadAdminUsers(); }).catch(e => { showLoadingUI(false); showToast(e.message, "error"); });
+    // Modal Konfirmasi Raksasa untuk Admin Topup
+    function bukaModalTopupAdmin(email) {
+        $('txtAdminTopupEmail').innerText = email;
+        $('inputAdminTopupVal').value = '';
+        $('txtAdminTopupHarga').innerText = 'Rp 0';
+        $('modalAdminTopup').classList.remove('hidden');
+    }
+    
+    function hitungTopupAdmin() {
+        const val = parseInt($('inputAdminTopupVal').value) || 0;
+        let est = 0;
+        if(val > 0) {
+            if (val <= 10) { est = Math.round((val/6)*10000); }
+            else if (val <= 25) { est = Math.round((val/20)*30000); }
+            else { est = Math.round((val/35)*50000); }
+        }
+        $('txtAdminTopupHarga').innerText = `Rp ${est.toLocaleString('id-ID')}`;
+    }
+    
+    function eksekusiTopupAdmin() {
+        const email = $('txtAdminTopupEmail').innerText;
+        const val = parseInt($('inputAdminTopupVal').value);
+        if(!val) { showToast("Masukkan jumlah token!", "error"); return; }
+        
+        $('modalAdminTopup').classList.add('hidden');
+        showLoadingUI(true);
+        apiCall('updateTokenAdmin', { emailUser: email, nominalToken: val }).then(res => { 
+            showLoadingUI(false); showToast("Token berhasil di-update!"); loadAdminUsers(); 
+        }).catch(e => { showLoadingUI(false); showToast(e.message, "error"); });
     }
     
     function hapusUserByAdmin(emailUser) {
@@ -1603,11 +1694,17 @@
     }
 
     function simpanProfileAdmin() {
-        const u = $('inputUbahNama').value, p = $('inputUbahPass').value; if(!u && !p) return; showLoadingUI(true);
-        apiCall('adminUpdateProfile', { email: currentUser.data.email, newNama: u, newPass: p }).then(res => { 
+        const u = $('inputUbahNama').value, p = $('inputUbahPass').value, d = $('inputUbahDrive') ? $('inputUbahDrive').value : '';
+        if(!u && !p && !d) { showToast("Tidak ada yang diubah!", "error"); return; }
+        
+        showLoadingUI(true);
+        apiCall('adminUpdateProfile', { email: currentUser.data.email, newNama: u, newPass: p, newDriveId: d }).then(res => { 
             showLoadingUI(false); 
-            if(u){currentUser.data.nama=u; localStorage.setItem('egenlap_user', JSON.stringify(currentUser)); terapkanSesi();} 
-            showToast("Berhasil update profile"); 
+            if(u){ currentUser.data.nama=u; }
+            currentUser.data.driveId = d;
+            localStorage.setItem('egenlap_user', JSON.stringify(currentUser)); 
+            terapkanSesi(); 
+            showToast("Berhasil update data akun"); 
         }).catch(e => { showLoadingUI(false); showToast(e.message, "error"); });
     }
 
@@ -1619,7 +1716,10 @@
                 adminWA = data[0].no_wa || adminWA; adminRek = data[0].no_rek || adminRek; adminQRIS = data[0].qris_url || adminQRIS;
                 if($('inputSetWA')) $('inputSetWA').value = adminWA.replace('62', ''); if($('inputSetRek')) $('inputSetRek').value = adminRek; if($('inputSetQRIS')) $('inputSetQRIS').value = adminQRIS;
                 if($('txtRekDisplay')) $('txtRekDisplay').innerText = adminRek; if($('imgQrisDisplay')) $('imgQrisDisplay').src = adminQRIS; if($('txtRekPanduan')) $('txtRekPanduan').innerText = adminRek; if($('imgQrisPanduan')) $('imgQrisPanduan').src = adminQRIS;
-            } 
+            }
+            if($('inputUbahDrive') && currentUser) {
+               $('inputUbahDrive').value = currentUser.data.driveId || '';
+            }
         } catch(e) {}
     }
 
@@ -1629,7 +1729,7 @@
         showLoadingUI(true); 
         try { 
             await db.from('pengaturan_admin').upsert([{ id: 1, no_wa: wa, no_rek: r, qris_url: q }]); 
-            showLoadingUI(false); showToast("Disimpan!"); loadPengaturanAdmin(); 
+            showLoadingUI(false); showToast("Pengaturan Disimpan!"); loadPengaturanAdmin(); 
         } catch(e) { showLoadingUI(false); showToast("Gagal", "error"); }
     }
     
