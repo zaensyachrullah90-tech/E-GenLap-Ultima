@@ -604,6 +604,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         try {
             const response = await fetch(GAS_API_URL, {
                 method: 'POST',
+                redirect: 'follow', // Memastikan redirect berjalan mulus tanpa terblokir
                 body: JSON.stringify({ action: action, data: dataObj }),
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' }
             });
@@ -611,6 +612,9 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
             if (result && result.status === 'error') throw new Error(result.message);
             return result;
         } catch (error) {
+            if (error.message.includes("Failed to fetch") || error.name === "TypeError") {
+                throw new Error("Koneksi API Terputus! Pastikan Link Web App GAS benar dan Akses 'Siapa Saja' (Anyone).");
+            }
             throw error;
         }
     }
