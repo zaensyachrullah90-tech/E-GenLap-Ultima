@@ -696,7 +696,7 @@ Saya sepenuhnya bertanggung jawab atas kebenaran isian formulir. Jika laporan ga
     // ==========================================
     // LOGIKA FILTER RHK BERDASARKAN JABATAN & KEYWORD
     // ==========================================
-    function filterRHKByJabatan() {
+ function filterRHKByJabatan() {
       if(!currentUser) return;
       const keyword = document.getElementById('searchRHK').value.toLowerCase();
       const jabatanUser = currentUser.data.jabatan;
@@ -713,7 +713,7 @@ Saya sepenuhnya bertanggung jawab atas kebenaran isian formulir. Jika laporan ga
       });
       
       document.getElementById('kegiatanSelect').innerHTML = optionsHtml;
-    }
+    }}
     
     // ==========================================
     // AUTHENTICATION LOGIC & PRIVASI HALAMAN
@@ -996,17 +996,19 @@ Saya sepenuhnya bertanggung jawab atas kebenaran isian formulir. Jika laporan ga
     // ==========================================
     // FORM DINAMIS & EKSEKUSI
     // ==========================================
+    
     function renderDynamicForm() {
-       const selectedKegiatan = document.getElementById('kegiatanSelect').value;
-       const area = document.getElementById('dynamicFormArea');
-       area.innerHTML = ''; if(!selectedKegiatan) return;
-       const selectedUpper = selectedKegiatan.toUpperCase();
-       let html = '';
-       // Logika dinamis RHK 
-       if (selectedUpper.includes("GRADUASI")) { html += `<div class="mb-3"><label class="block text-xs font-bold text-lime-300">Data Graduasi</label><input type="text" class="glossy-input w-full rounded-lg p-2"></div>`; }
-       else { html += `<div class="mb-3"><label class="block text-xs font-bold text-lime-300">Sasaran Umum</label><input type="text" class="glossy-input w-full rounded-lg p-2"></div>`; }
-       area.innerHTML = html;
-    }
+      const selectKegiatan = document.getElementById('kegiatanSelect');
+      const selectedRHK = selectKegiatan.options[selectKegiatan.selectedIndex].getAttribute('data-rhk');
+
+      const payload = {
+        dataSurat: dataSurat,
+        tanggalLaporan: document.getElementById('tanggalLaporan').value,
+        // ... (data lainnya biarkan sama)
+        kegiatan: document.getElementById('kegiatanSelect').value,
+        kategoriRHK: selectedRHK, // <--- TAMBAHKAN BARIS INI
+        // ...
+      };
 
     function prosesFoto(event) { /* Logika asli */ }
     function prosesLampiran(event) { /* Logika asli */ }
