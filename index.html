@@ -12,7 +12,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
-  <!-- KONEKSI SUPABASE -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -30,15 +29,12 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
     .custom-scrollbar::-webkit-scrollbar { height: 6px; width: 4px; }
     .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); border-radius: 4px; }
     .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(59, 130, 246, 0.5); border-radius: 4px; }
-    
-    /* Hamburger Menu Transition - Dirapikan Super Presisi */
     #sideMenu { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
     .menu-open { transform: translateX(0) !important; }
   </style>
 </head>
 <body class="app-bg font-sans antialiased text-gray-100 selection:bg-blue-500 selection:text-white relative">
 
-  <!-- FULLSCREEN LOADING -->
   <div id="fullscreenLoading" class="fixed inset-0 bg-[#09090b]/95 backdrop-blur-xl z-[9999] hidden flex-col items-center justify-center transition-opacity duration-300 opacity-0 h-screen w-screen">
       <div class="relative w-24 h-24 flex items-center justify-center mb-6 mx-auto">
           <div class="absolute inset-0 border-4 border-blue-900/50 rounded-full animate-ping"></div>
@@ -51,10 +47,8 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
       <h2 class="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-blue-500 tracking-[0.2em] mb-2 animate-pulse text-center">MEMPROSES...</h2>
   </div>
 
-  <!-- TOAST NOTIFICATION -->
   <div id="toastContainer" class="fixed top-5 left-1/2 transform -translate-x-1/2 w-11/12 max-w-sm z-[9999] flex flex-col gap-2 pointer-events-none"></div>
 
-  <!-- HAMBURGER SIDEBAR MENU -->
   <div id="menuOverlay" onclick="toggleMenu()" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[8000] hidden opacity-0 transition-opacity duration-300"></div>
   <div id="sideMenu" class="fixed top-0 right-0 h-full w-64 bg-[#09090b]/95 backdrop-blur-2xl z-[8100] transform translate-x-full border-l border-blue-500/30 pt-5 pb-6 flex flex-col shadow-[-10px_0_30px_rgba(0,0,0,0.9)]">
       <div class="px-5 pb-4 border-b border-zinc-700/50 flex justify-between items-center">
@@ -85,7 +79,6 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
       </div>
   </div>
 
-  <!-- MODAL RESET & REGISTER & REVIEW -->
   <div id="modalResetPass" class="fixed inset-0 bg-[#09090b]/90 backdrop-blur-sm z-[7000] hidden flex-col items-center justify-center p-4">
     <div class="glossy-monster w-full max-w-sm rounded-2xl p-5 border border-blue-500/30 shadow-2xl relative text-center">
         <i class="fas fa-key text-4xl text-blue-400 mb-3"></i>
@@ -130,10 +123,8 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
       </div>
   </div>
 
-  <!-- KONTANER UTAMA APLIKASI -->
   <div class="max-w-md w-full mx-auto relative min-h-screen shadow-2xl bg-black/40 flex flex-col pb-24 z-10">
     
-    <!-- HEADER UTAMA -->
     <header class="glossy-monster p-4 rounded-b-3xl shadow-lg flex-shrink-0 z-20 border-b border-blue-500/30 sticky top-0 flex justify-between items-center">
         <div>
             <h1 class="text-2xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-blue-500"><i class="fas fa-bolt mr-1"></i> E-GenLap</h1>
@@ -147,16 +138,23 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
     </header>
 
     <main class="p-5 flex-grow z-10" id="mainContent">
-      <!-- SECTION AUTH -->
       <section id="sec-auth" class="glossy-monster p-5 rounded-2xl mb-6">
         <div class="text-center mb-6">
             <i class="fas fa-user-circle text-5xl text-blue-400 mb-2"></i>
             <h2 class="text-xl font-bold text-white">Selamat Datang</h2>
             <p class="text-xs text-zinc-400">Silakan masuk atau daftar untuk menggunakan E-GenLap.</p>
         </div>
+
         <div class="mt-2 mb-4 bg-blue-900/20 border border-blue-500/40 p-4 rounded-xl shadow-inner">
-            <p class="text-blue-400 font-extrabold text-xs mb-2 animate-pulse"><i class="fas fa-gift mr-1 text-yellow-400"></i> DAFTAR SEKARANG, DAPATKAN 1 TOKEN GRATIS!</p>
+            <h3 class="text-blue-400 font-extrabold text-sm mb-2"><i class="fas fa-rocket mr-1"></i> Kehebatan E-GenLap</h3>
+            <ul class="text-[10px] text-zinc-300 text-left space-y-2">
+                <li><i class="fas fa-robot text-blue-500 mr-1"></i> <b>Generate AI Cerdas:</b> Laporan otomatis disusun sempurna dalam hitungan detik.</li>
+                <li><i class="fas fa-balance-scale text-blue-500 mr-1"></i> <b>Analisis Hukum:</b> Dasar hukum Kemensos dianalisa & disisipkan otomatis.</li>
+                <li><i class="fas fa-folder-tree text-blue-500 mr-1"></i> <b>Arsip Drive Otomatis:</b> Tersusun rapi dalam folder berhierarki (Tahun/Bulan/RHK).</li>
+                <li><i class="fas fa-gift text-yellow-400 mr-1 animate-pulse"></i> <b>Daftar Sekarang:</b> Dapatkan 1 Token Laporan GRATIS!</li>
+            </ul>
         </div>
+
         <div id="formLogin">
             <input type="email" id="logEmail" class="w-full p-3 text-sm rounded-xl glossy-input mb-3" placeholder="Email Anda" required>
             <div class="relative mb-4">
@@ -189,7 +187,6 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         </div>
       </section>
 
-      <!-- SECTION DASHBOARD -->
       <section id="sec-dashboard" class="section-hidden">
         <div class="glossy-monster p-5 rounded-2xl mb-4 flex justify-between items-center">
             <div>
@@ -202,7 +199,6 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
             </div>
         </div>
 
-        <!-- Filter Bulan & Statistik Laporan Sesuai Permintaan (Target 28) -->
         <div class="glossy-monster p-4 rounded-2xl mb-4">
             <div class="flex justify-between items-center border-b border-zinc-700 pb-2 mb-3">
                 <h3 class="text-sm font-bold text-blue-400"><i class="fas fa-chart-pie mr-2"></i> Statistik Laporan</h3>
@@ -240,7 +236,6 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         </div>
       </section>
 
-      <!-- SECTION AGENDA BARU DENGAN ANALISA & EXPORT (Dalam 1 Card) -->
       <section id="sec-agenda" class="section-hidden">
         <div class="glossy-monster p-5 rounded-2xl mb-4">
             <div class="flex justify-between items-center border-b border-zinc-700 pb-2 mb-4">
@@ -248,7 +243,6 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
                 <button onclick="exportAgendaCSV()" class="bg-green-600 text-white px-3 py-1.5 rounded-lg text-[10px] font-bold hover:bg-green-500 shadow-md transition-all active:scale-95"><i class="fas fa-file-excel mr-1"></i> Export Excel</button>
             </div>
 
-            <!-- Form Tambah Agenda -->
             <div class="bg-black/30 p-4 rounded-xl border border-zinc-700/50 mb-5">
                 <h3 class="text-xs font-bold text-blue-300 mb-3 uppercase tracking-wider">Tambah Jadwal Baru</h3>
                 <div class="grid grid-cols-2 gap-3 mb-3">
@@ -268,23 +262,16 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
                 <button onclick="simpanAgenda()" class="w-full bg-blue-500/20 border border-blue-500 text-blue-300 font-bold py-2 rounded-lg text-xs hover:bg-blue-500/40 transition-all"><i class="fas fa-plus mr-1"></i> Tambah Agenda</button>
             </div>
 
-            <!-- Analisa Kekurangan Laporan -->
             <div class="bg-red-900/20 border border-red-500/30 p-3 rounded-xl mb-4">
                 <h3 class="text-[10px] font-bold text-red-400 mb-2"><i class="fas fa-search-chart mr-1"></i> Analisis Kekurangan Laporan Bulan Ini</h3>
-                <ul id="analisaKekurangan" class="text-[9px] text-zinc-300 space-y-1 list-disc pl-4">
-                    <li>Memuat analisa...</li>
-                </ul>
+                <ul id="analisaKekurangan" class="text-[9px] text-zinc-300 space-y-1 list-disc pl-4"><li>Memuat analisa...</li></ul>
             </div>
 
-            <!-- Daftar Agenda -->
             <h3 class="text-xs font-bold text-blue-300 mb-2 border-b border-zinc-700 pb-1">Daftar Agenda Saya</h3>
-            <div id="containerListAgenda" class="space-y-3 max-h-[50vh] overflow-y-auto custom-scrollbar pr-1">
-                <!-- Card Agenda (1 Card per Bulan) disuntik via JS -->
-            </div>
+            <div id="containerListAgenda" class="space-y-3 max-h-[50vh] overflow-y-auto custom-scrollbar pr-1"></div>
         </div>
       </section>
 
-      <!-- SECTION GENERATE -->
       <section id="sec-generate" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
         <div class="flex justify-between items-center border-b border-zinc-700 pb-2 mb-4">
              <h2 class="text-lg font-bold text-blue-400"><i class="fas fa-magic mr-2"></i> Form Laporan</h2>
@@ -356,7 +343,6 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         </form>
       </section>
 
-      <!-- SECTION RIWAYAT -->
       <section id="sec-report" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
         <div class="flex justify-between items-center mb-4 border-b border-zinc-700 pb-2">
             <h2 class="text-lg font-bold text-blue-400" id="titleRiwayat"><i class="fas fa-history mr-2"></i> Riwayat</h2>
@@ -388,7 +374,6 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         </div>
       </section>
 
-      <!-- SECTION ARSIP DRIVE -->
       <section id="sec-arsip" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
         <div class="flex justify-between items-center mb-4 border-b border-zinc-700 pb-2">
             <h2 class="text-lg font-bold text-blue-400"><i class="fas fa-folder-open mr-2"></i> Arsip Laporan (Drive)</h2>
@@ -406,20 +391,27 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         </div>
       </section>
 
-      <!-- SECTION TOKEN -->
       <section id="sec-token" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
         <h2 class="text-lg font-bold text-blue-400 border-b border-zinc-700 pb-2"><i class="fas fa-coins mr-2"></i> Beli Token AI</h2>
+        
+        <div class="mt-4 mb-4 bg-black/40 p-4 rounded-xl border border-blue-500/30 text-center">
+            <p class="text-xs text-blue-300 mb-2 font-bold uppercase">Pembayaran / Transfer ke:</p>
+            <p id="txtRekDisplay" class="text-[12px] font-mono text-yellow-400 font-bold bg-zinc-900 p-2 rounded-lg border border-zinc-700 inline-block mb-3 tracking-wider">Memuat Rekening...</p>
+            <p class="text-[10px] text-zinc-400 mb-2">Atau Scan QRIS di bawah ini:</p>
+            <img id="imgQrisDisplay" src="https://drive.google.com/thumbnail?id=1DenWfIyBEbCrK1zaFHe_Xa9cHqfZXYCf&sz=w800" alt="QRIS" class="w-full max-w-[200px] mx-auto rounded-xl shadow-[0_0_15px_rgba(59,130,246,0.3)] border-2 border-blue-500/50">
+        </div>
+
         <div class="mb-3 bg-blue-900/20 border border-blue-500/30 p-4 rounded-xl flex justify-between items-center">
             <div><h3 class="font-bold text-white text-md">Paket Basic</h3><p class="text-xs text-zinc-300">6 Token</p></div>
-             <div class="text-right"><p class="text-lg font-black text-blue-400 mb-1">Rp 10.000</p><button onclick="konfirmasiWA('Basic', 6, 10000)" class="bg-green-600 text-white font-bold py-1.5 px-3 rounded-lg text-xs"><i class="fab fa-whatsapp"></i> Beli</button></div>
+             <div class="text-right"><p class="text-lg font-black text-blue-400 mb-1">Rp 10.000</p><button onclick="konfirmasiWA('Basic', 6, 10000)" class="bg-green-600 text-white font-bold py-1.5 px-3 rounded-lg text-xs hover:scale-95 transition-transform"><i class="fab fa-whatsapp"></i> Konfirmasi</button></div>
         </div>
         <div class="mb-3 bg-blue-900/20 border border-blue-500/30 p-4 rounded-xl flex justify-between items-center">
-             <div><h3 class="font-bold text-white text-md">Paket Pro</h3><p class="text-xs text-zinc-300">20 Token</p></div>
-            <div class="text-right"><p class="text-lg font-black text-blue-400 mb-1">Rp 30.000</p><button onclick="konfirmasiWA('Pro', 20, 30000)" class="bg-green-600 text-white font-bold py-1.5 px-3 rounded-lg text-xs"><i class="fab fa-whatsapp"></i> Beli</button></div>
+             <div><h3 class="font-bold text-white text-md flex items-center gap-1">Paket Pro <i class="fas fa-star text-yellow-400 text-[10px]"></i></h3><p class="text-xs text-zinc-300">20 Token</p></div>
+            <div class="text-right"><p class="text-lg font-black text-blue-400 mb-1">Rp 30.000</p><button onclick="konfirmasiWA('Pro', 20, 30000)" class="bg-green-600 text-white font-bold py-1.5 px-3 rounded-lg text-xs hover:scale-95 transition-transform"><i class="fab fa-whatsapp"></i> Konfirmasi</button></div>
          </div>
         <div class="mb-4 bg-blue-900/20 border border-blue-500/30 p-4 rounded-xl flex justify-between items-center">
-            <div><h3 class="font-bold text-white text-md">Paket Ultra</h3><p class="text-xs text-zinc-300">35 Token</p></div>
-             <div class="text-right"><p class="text-lg font-black text-blue-400 mb-1">Rp 50.000</p><button onclick="konfirmasiWA('Ultra', 35, 50000)" class="bg-green-600 text-white font-bold py-1.5 px-3 rounded-lg text-xs"><i class="fab fa-whatsapp"></i> Beli</button></div>
+            <div><h3 class="font-bold text-white text-md flex items-center gap-1">Paket Ultra <i class="fas fa-crown text-yellow-400 text-[10px]"></i></h3><p class="text-xs text-zinc-300">35 Token</p></div>
+             <div class="text-right"><p class="text-lg font-black text-blue-400 mb-1">Rp 50.000</p><button onclick="konfirmasiWA('Ultra', 35, 50000)" class="bg-green-600 text-white font-bold py-1.5 px-3 rounded-lg text-xs hover:scale-95 transition-transform"><i class="fab fa-whatsapp"></i> Konfirmasi</button></div>
          </div>
         <div class="p-3 bg-red-900/20 border border-red-500/30 rounded-xl mb-2">
              <label class="flex items-start gap-2 cursor-pointer">
@@ -429,7 +421,6 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         </div>
       </section>
 
-      <!-- SECTION ADMIN KELOLA USER -->
       <section id="sec-admin" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
          <h2 class="text-lg font-bold text-blue-400 border-b border-zinc-700 pb-2"><i class="fas fa-user-shield mr-2"></i> Manajemen User & Token</h2>
         <button onclick="loadAdminUsers()" class="w-full mt-4 p-2 bg-blue-500/20 text-blue-400 border border-blue-500/50 rounded-xl text-xs font-bold mb-3"><i class="fas fa-sync"></i> Refresh User</button>
@@ -445,34 +436,41 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
          </div>
       </section>
 
-      <!-- SECTION PENGATURAN ADMIN (Ganti WA, Username, Password) -->
       <section id="sec-pengaturan" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
          <h2 class="text-lg font-bold text-blue-400 border-b border-zinc-700 pb-2"><i class="fas fa-cog mr-2"></i> Pengaturan Akun & Admin</h2>
+         
          <div class="mt-4 mb-4 bg-black/30 p-4 rounded-xl border border-zinc-700/50">
-             <h3 class="text-xs font-bold text-blue-300 mb-3 uppercase tracking-wider">Ubah Identitas Anda</h3>
-             <label class="block text-[10px] text-zinc-400 mb-1">Ubah Username (Nama Lengkap)</label>
-             <input type="text" id="inputUbahNama" class="w-full p-2 text-xs rounded-lg glossy-input mb-3" placeholder="Nama Baru Anda...">
+             <h3 class="text-xs font-bold text-blue-300 mb-3 uppercase tracking-wider">Pengaturan Pembayaran & Kontak</h3>
              
-             <label class="block text-[10px] text-zinc-400 mb-1">Ubah Password Login</label>
+             <label class="block text-[10px] text-zinc-400 mb-1">Nomor WhatsApp Admin</label>
+             <div class="flex gap-2 mb-3">
+                 <span class="p-2 bg-zinc-800 rounded-lg text-xs font-bold text-zinc-400 border border-zinc-600">+62</span>
+                 <input type="number" id="inputSetWA" class="w-full p-2 text-xs rounded-lg glossy-input" placeholder="89504686529">
+             </div>
+
+             <label class="block text-[10px] text-zinc-400 mb-1">Nomor Rekening</label>
+             <input type="text" id="inputSetRek" class="w-full p-2 text-xs rounded-lg glossy-input mb-3" placeholder="Misal: BSI 123456 a.n Zaen">
+
+             <label class="block text-[10px] text-zinc-400 mb-1">Link Gambar QRIS (Drive/Imgur)</label>
+             <input type="text" id="inputSetQRIS" class="w-full p-2 text-xs rounded-lg glossy-input mb-4" placeholder="https://...">
+
+             <button onclick="simpanPengaturanAdmin()" class="w-full bg-blue-500/20 border border-blue-500 text-blue-300 font-bold py-2 rounded-lg text-xs hover:bg-blue-500/40 transition-all"><i class="fas fa-save mr-1"></i> Update Pengaturan Sistem</button>
+         </div>
+
+         <div class="bg-black/30 p-4 rounded-xl border border-zinc-700/50">
+             <h3 class="text-xs font-bold text-blue-300 mb-3 uppercase tracking-wider">Ubah Identitas Login Anda</h3>
+             <label class="block text-[10px] text-zinc-400 mb-1">Username (Nama Lengkap)</label>
+             <input type="text" id="inputUbahNama" class="w-full p-2 text-xs rounded-lg glossy-input mb-3" placeholder="Nama Baru...">
+             
+             <label class="block text-[10px] text-zinc-400 mb-1">Password Login</label>
              <div class="relative mb-3">
                 <input type="password" id="inputUbahPass" class="w-full p-2 text-xs rounded-lg glossy-input" placeholder="Password Baru...">
                 <i class="fas fa-eye absolute right-3 top-3 text-zinc-400 cursor-pointer text-xs" id="iconUbahPass" onclick="togglePasswordVisibility('inputUbahPass', 'iconUbahPass')"></i>
              </div>
-             <button onclick="simpanProfileAdmin()" class="w-full bg-blue-500/20 border border-blue-500 text-blue-300 font-bold py-2 rounded-lg text-xs hover:bg-blue-500/40 transition-all"><i class="fas fa-save mr-1"></i> Update Akun</button>
-         </div>
-
-         <div class="mt-4 mb-4 bg-black/30 p-4 rounded-xl border border-zinc-700/50">
-             <h3 class="text-xs font-bold text-blue-300 mb-3 uppercase tracking-wider">Pengaturan Kontak (Untuk User)</h3>
-             <label class="block text-[10px] text-zinc-400 mb-1">Nomor WhatsApp Admin (Otomatis isi form Token)</label>
-             <div class="flex gap-2">
-                 <span class="p-2 bg-zinc-800 rounded-lg text-xs font-bold text-zinc-400 border border-zinc-600">+62</span>
-                 <input type="number" id="inputSetWA" class="w-full p-2 text-xs rounded-lg glossy-input" placeholder="89504686529">
-             </div>
-             <button onclick="simpanPengaturanAdmin()" class="mt-3 w-full bg-blue-500/20 border border-blue-500 text-blue-300 font-bold py-2 rounded-lg text-xs hover:bg-blue-500/40 transition-all"><i class="fas fa-save mr-1"></i> Update Nomor WA</button>
+             <button onclick="simpanProfileAdmin()" class="w-full bg-blue-500/20 border border-blue-500 text-blue-300 font-bold py-2 rounded-lg text-xs hover:bg-blue-500/40 transition-all"><i class="fas fa-user-edit mr-1"></i> Update Akun</button>
          </div>
       </section>
 
-      <!-- SECTION KEUANGAN -->
       <section id="sec-keuangan" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
          <h2 class="text-lg font-bold text-blue-400 border-b border-zinc-700 pb-2 mb-4"><i class="fas fa-wallet mr-2"></i> Laporan Keuangan</h2>
            <div class="flex items-center gap-2 mb-4">
@@ -497,12 +495,14 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         </div>
       </section>
 
-      <!-- SECTION PANDUAN -->
-       <section id="sec-panduan" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
+      <section id="sec-panduan" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
          <h2 class="text-lg font-bold text-blue-400 border-b border-zinc-700 pb-2"><i class="fas fa-book mr-2"></i> Panduan & Aturan</h2>
          <div class="mt-4 mb-6 bg-blue-900/20 p-4 rounded-xl border border-blue-500/30 text-center flex flex-col items-center">
-             <p class="text-xs text-blue-300 mb-2 font-bold uppercase">Scan QRIS Top-up Token:</p>
-             <img src="https://drive.google.com/thumbnail?id=1DenWfIyBEbCrK1zaFHe_Xa9cHqfZXYCf&sz=w800" alt="QRIS DANA" class="w-full max-w-[200px] mx-auto rounded-xl shadow-[0_0_15px_rgba(59,130,246,0.3)] border-2 border-blue-500/50">
+             <p class="text-xs text-blue-300 mb-2 font-bold uppercase">Panduan Pembayaran</p>
+             <p class="text-[10px] text-zinc-300 mb-2">Silakan Transfer ke:</p>
+             <p id="txtRekPanduan" class="text-[12px] font-mono text-yellow-400 font-bold bg-zinc-900 p-2 rounded-lg border border-zinc-700 inline-block mb-3">Memuat Rekening...</p>
+             <p class="text-[10px] text-zinc-300 mb-2">Atau melalui QRIS:</p>
+             <img id="imgQrisPanduan" src="https://drive.google.com/thumbnail?id=1DenWfIyBEbCrK1zaFHe_Xa9cHqfZXYCf&sz=w800" alt="QRIS DANA" class="w-full max-w-[200px] mx-auto rounded-xl shadow-[0_0_15px_rgba(59,130,246,0.3)] border-2 border-blue-500/50">
              <p class="text-[9px] text-zinc-400 mt-2">*Simpan struk & kirim ke WhatsApp Admin via Menu Token</p>
          </div>
          <div class="text-xs text-zinc-300 space-y-4 text-justify">
@@ -515,12 +515,11 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
          </div>
       </section>
       
-      <div class="text-center py-4 text-[10px] text-zinc-600 font-medium pb-4">
+      <div class="text-center py-4 text-[10px] text-zinc-600 font-medium pb-20">
            copyright 29-03-2026<br>Fullstack Developer By @M.ZaenSyachrullah
       </div>
     </main>
 
-    <!-- BOTTOM NAV - Fixed and globally centered for desktop and mobile -->
     <nav id="bottomNav" class="fixed bottom-0 w-full max-w-md left-1/2 transform -translate-x-1/2 bg-[#09090b] border-t border-blue-900/40 shadow-[0_-10px_20px_rgba(0,0,0,0.8)] flex justify-between px-2 py-2 z-[9000] h-16 items-center rounded-t-3xl backdrop-blur-xl bg-opacity-95 hidden">
         <button id="navDashboardBtn" onclick="nav('dashboard', this)" class="nav-btn flex-1 flex flex-col items-center text-blue-400"><i class="fas fa-home text-lg"></i><span class="text-[9px] font-bold mt-1">Beranda</span></button>
         <button id="navAgendaBtn" onclick="nav('agenda', this)" class="nav-btn flex-1 flex flex-col items-center text-zinc-500 hover:text-blue-300"><i class="fas fa-calendar-alt text-lg"></i><span class="text-[9px] font-bold mt-1">Agenda</span></button>
@@ -538,7 +537,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
     // ==========================================
     // API ENDPOINT - LINK WEB APP GAS ANDA
     // ==========================================
-    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbyIiCXIqowOFRdbDAjSFtwrDhxV453djMQQ8v7asvXVypH8cGl969v2W-JP1nR1xm_n/exec";
+    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxRs14KPza91QPdqxSzv5wdFMAELoe0xxAbbhfhdx2VEPqNtd2xQxRKnpuaZEOHVvWU/exec";
 
     // PWA & Security
     const manifest = { "name": "E-GenLap", "display": "standalone", "background_color": "#09090b", "theme_color": "#09090b" };
@@ -565,9 +564,11 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
     let currentRiwayatPage = 1;
     const itemsPerPageRiwayat = 15;
     let tempRegData = null;
-    let adminWA = "6289504686529"; // Default WA Admin
+    let adminWA = "6289504686529"; 
+    let adminRek = "BSI: 1234567890 a.n Admin";
+    let adminQRIS = "https://drive.google.com/thumbnail?id=1DenWfIyBEbCrK1zaFHe_Xa9cHqfZXYCf&sz=w800";
 
-    // FALLBACK DATA RHK HARDCODED (KUNCI MATI AGAR RENCANA AKSI TIDAK PERNAH KOSONG MESKI SUPABASE ERROR)
+    // HARDCODED FALLBACK RHK
     const fallbackRHK = [
         { jabatan: "Penata layanan operasional", kategori_rhk: "RHK 1", kegiatan: "Melakukan edukasi dan sosialisasi pencairan secara tunai dan non tunai", target: "1 Laporan/Bulan" },
         { jabatan: "Penata layanan operasional", kategori_rhk: "RHK 1", kegiatan: "Melaksanakan Supervisi Permasalahan Bantuan Sosial", target: "1 Laporan/Bulan" },
@@ -667,7 +668,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
     ];
 
     // ==========================================
-    // FUNGSI KOMUNIKASI API (FETCH) - ANTI GAGAL
+    // FUNGSI KOMUNIKASI API (FETCH) - ANTI STUCK
     // ==========================================
     async function apiCall(action, dataObj = {}) {
         try {
@@ -729,9 +730,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         document.getElementById('realtimeDate').innerText = new Intl.DateTimeFormat('id-ID', { timeZone: 'Asia/Makassar', weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }).format(now);
       }, 1000);
 
-      // Memastikan List RHK Selalu Terisi (Menggunakan Fallback Dulu)
       listKegiatanGlobal = fallbackRHK;
-
       const stored = localStorage.getItem('egenlap_user_monster');
       if (stored) { currentUser = JSON.parse(stored); terapkanSesi(); } 
       else { cekSesiLogin(); }
@@ -739,9 +738,9 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
       if(db) {
          try {
             const { data, error } = await db.from('master_rhk').select('*');
-            if (!error && data && data.length > 0) { listKegiatanGlobal = data; } // Timpa dengan Supabase jika berhasil
+            if (!error && data && data.length > 0) { listKegiatanGlobal = data; }
             if(currentUser) { filterRHKByJabatan(); renderTargetTable(); }
-         } catch (e) { console.error("Fallback ke data RHK lokal karena Supabase error:", e); }
+         } catch (e) { console.error("Fallback RHK lokal jalan:", e); }
       }
     };
 
@@ -763,12 +762,13 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
       
       let optAg = `<option value="">-- Pilih Kegiatan dari RHK --</option>`;
       filtered.forEach(i => { optAg += `<option value="${i.kegiatan}">${i.kegiatan}</option>`; });
-      document.getElementById('agKegiatan').innerHTML = optAg;
+      const agK = document.getElementById('agKegiatan'); if(agK) agK.innerHTML = optAg;
     }
 
     function renderTargetTable() {
         if(!currentUser) return;
         const tbody = document.getElementById('targetTable');
+        if(!tbody) return;
         const jabatanUser = currentUser.data.jabatan.trim().toLowerCase();
         const filtered = listKegiatanGlobal.filter(i => i.jabatan.trim().toLowerCase() === jabatanUser);
         
@@ -796,7 +796,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
                 document.getElementById('sisaTokenDash').innerText = res.token || "0";
                 document.getElementById('formTokenCount').innerText = res.token || "0";
                 if(res.token <= 0) { document.getElementById('btnSubmit').disabled = true; document.getElementById('btnSubmit').classList.add('opacity-50', 'cursor-not-allowed'); document.getElementById('btnText').innerHTML = "Token Habis"; } 
-                else { document.getElementById('btnSubmit').disabled = false; document.getElementById('btnSubmit').classList.remove('opacity-50', 'cursor-not-allowed'); document.getElementById('btnText').innerHTML = "<i class='fas fa-paper-plane mr-2'></i> Eksekusi AI & Simpan ke Drive (1 Token)"; }
+                else { document.getElementById('btnSubmit').disabled = false; document.getElementById('btnSubmit').classList.remove('opacity-50', 'cursor-not-allowed'); document.getElementById('btnText').innerHTML = "<i class='fas fa-paper-plane mr-2'></i> Eksekusi AI & Drive (1 Token)"; }
             }
             hitungStatistikDashboard(); 
             resetRiwayatPaginationAndRender();
@@ -876,7 +876,6 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
             localStorage.setItem('egenlap_user_monster', JSON.stringify(res.userData));
             currentUser = res.userData;
             terapkanSesi(); filterRHKByJabatan(); renderTargetTable(); showToast("Login Berhasil!");
-            if(currentUser.role === 'admin') cekNotifAdmin();
         }).catch(err => { showLoadingUI(false); showToast(err.message, "error"); });
     }
 
@@ -917,6 +916,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
             document.getElementById('adminSideLinks').classList.remove('hidden');
             document.getElementById('adminFilterContainer').classList.remove('hidden');
             nav('admin');
+            cekNotifAdmin(); // Cek Notif Pembelian
         } else {
             document.getElementById('userRoleBadge').innerText = "Role: " + currentUser.data.jabatan;
             document.getElementById('labelTokenDashboard').innerText = "SISA TOKEN";
@@ -929,14 +929,14 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         document.getElementById('jabatan').value = currentUser.data.jabatan;
         document.getElementById('emailTarget').value = currentUser.data.email;
         
-        loadPengaturanAdmin(); // Ambil No WA
+        loadPengaturanAdmin(); // Muat Dinamis QRIS, Norek, WA Admin
     }
 
     function logout() { localStorage.removeItem('egenlap_user_monster'); currentUser = null; window.location.reload(); }
     function showLoadingUI(show) { const l = document.getElementById('fullscreenLoading'); if(show) { l.classList.remove('hidden'); setTimeout(()=>l.classList.remove('opacity-0'),10); } else { l.classList.add('opacity-0'); setTimeout(()=>l.classList.add('hidden'),300); } }
 
     // ==========================================
-    // NAVIGASI DENGAN KONTEKS ANTI-ERROR
+    // NAVIGASI MENU (ANTI-ERROR)
     // ==========================================
     function nav(target, btnElement = null) {
       document.querySelectorAll('section').forEach(sec => sec.classList.add('section-hidden'));
@@ -944,13 +944,11 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
       if (targetSec) targetSec.classList.remove('section-hidden');
       
       document.querySelectorAll('.nav-btn').forEach(btn => { 
-          btn.classList.remove('text-blue-400'); 
-          btn.classList.add('text-zinc-500'); 
+          btn.classList.remove('text-blue-400'); btn.classList.add('text-zinc-500'); 
       });
       
       if(btnElement && btnElement.classList && btnElement.classList.contains('nav-btn')){ 
-          btnElement.classList.remove('text-zinc-500'); 
-          btnElement.classList.add('text-blue-400'); 
+          btnElement.classList.remove('text-zinc-500'); btnElement.classList.add('text-blue-400'); 
       }
       
       if(target === 'dashboard' || target === 'report' || target === 'arsip') loadDashboardData();
@@ -1082,7 +1080,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         let rows = [ ["Hari/Tanggal", "Jam", "Kegiatan", "Lokasi", "Keterangan"] ];
         globalAgendaData.forEach(a => rows.push([a.tanggal, a.jam, a.kegiatan, a.lokasi, a.keterangan || ""]));
         downloadCSV(`Data_Agenda_${currentUser.data.nama.replace(/\s+/g,'_')}.csv`, rows);
-        showToast("Berhasil Export ke Excel (CSV)", "success");
+        showToast("Berhasil Export ke Excel", "success");
     }
 
     function exportRiwayatCSV() {
@@ -1095,7 +1093,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         }
         dataToExport.forEach(r => rows.push([r.nama, r.tanggal, r.jam, r.kegiatan, r.keterangan, r.url || ""]));
         downloadCSV(`Riwayat_Laporan_${currentUser.data.nama.replace(/\s+/g,'_')}.csv`, rows);
-        showToast("Berhasil Export ke Excel (CSV)", "success");
+        showToast("Berhasil Export ke Excel", "success");
     }
 
     // ==========================================
@@ -1208,16 +1206,15 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
     // FUNGSI ADMIN PENGATURAN & KEUANGAN
     // ==========================================
     function cekNotifAdmin() {
-        apiCall('getMonitoringAdmin', {}).then(data => {
-            let countToday = 0; let totalRp = 0;
-            const tdy = new Date().toISOString().substring(0,10);
-            data.forEach(d => { if(d.tanggalAsli.includes(tdy)) { countToday++; totalRp += d.nominal; } });
-            if(countToday > 0) {
+        if(!db) return;
+        const hariIni = new Date().toISOString().substring(0, 10); // YYYY-MM-DD
+        db.from('notifikasi_admin').select('*').gte('created_at', hariIni).order('created_at', {ascending: false}).then(({data}) => {
+            if(data && data.length > 0) {
                 setTimeout(() => { 
-                    alert(`NOTIFIKASI SISTEM:\nAda ${countToday} pesanan token baru hari ini!\nTotal: Rp ${totalRp.toLocaleString('id-ID')}`); 
-                }, 1000);
+                    alert(`NOTIFIKASI SISTEM E-GENLAP:\nAda ${data.length} transaksi pembelian token hari ini!\n\nRiwayat Terbaru:\n- ` + data.map(d => d.pesan).join('\n- ')); 
+                }, 1500);
             }
-        }).catch(e => console.log(e));
+        });
     }
 
     function loadAdminUsers() {
@@ -1253,14 +1250,35 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
 
     async function loadPengaturanAdmin() {
         if(!db) return;
-        try { const { data } = await db.from('pengaturan_admin').select('no_wa').eq('id', 1); if(data && data.length > 0) { adminWA = data[0].no_wa; document.getElementById('inputSetWA').value = adminWA.replace('62', ''); } } catch(e) { console.log(e); }
+        try { 
+            const { data } = await db.from('pengaturan_admin').select('*').eq('id', 1); 
+            if(data && data.length > 0) { 
+                adminWA = data[0].no_wa || adminWA; 
+                adminRek = data[0].no_rek || adminRek;
+                adminQRIS = data[0].qris_url || adminQRIS;
+
+                const eWA = document.getElementById('inputSetWA'); if(eWA) eWA.value = adminWA.replace('62', '');
+                const eRek = document.getElementById('inputSetRek'); if(eRek) eRek.value = adminRek;
+                const eQRIS = document.getElementById('inputSetQRIS'); if(eQRIS) eQRIS.value = adminQRIS;
+
+                const dRek = document.getElementById('txtRekDisplay'); if(dRek) dRek.innerText = adminRek;
+                const dQRIS = document.getElementById('imgQrisDisplay'); if(dQRIS) dQRIS.src = adminQRIS;
+                const pRek = document.getElementById('txtRekPanduan'); if(pRek) pRek.innerText = adminRek;
+                const pQRIS = document.getElementById('imgQrisPanduan'); if(pQRIS) pQRIS.src = adminQRIS;
+            } 
+        } catch(e) { console.log(e); }
     }
 
     async function simpanPengaturanAdmin() {
         let wa = document.getElementById('inputSetWA').value;
-        if(!wa) return; if(wa.startsWith('0')) wa = wa.substring(1); wa = "62" + wa;
+        let rek = document.getElementById('inputSetRek').value;
+        let qris = document.getElementById('inputSetQRIS').value;
+        if(!wa) return; if(wa.startsWith('0')) wa = wa.substring(1); if(!wa.startsWith('62')) wa = "62" + wa;
         showLoadingUI(true);
-        try { await db.from('pengaturan_admin').upsert([{ id: 1, no_wa: wa }]); adminWA = wa; showLoadingUI(false); showToast("Nomor WA disimpan!"); } catch(e) { showLoadingUI(false); showToast("Gagal menyimpan WA.", "error"); }
+        try { 
+            await db.from('pengaturan_admin').upsert([{ id: 1, no_wa: wa, no_rek: rek, qris_url: qris }]); 
+            showLoadingUI(false); showToast("Pengaturan sistem berhasil disimpan!", "success"); loadPengaturanAdmin();
+        } catch(e) { showLoadingUI(false); showToast("Gagal menyimpan pengaturan.", "error"); }
     }
     
     function loadMonitoringAdmin() {
@@ -1282,22 +1300,28 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webki
         });
         document.getElementById('txtTotalPendapatan').innerText = "Rp " + tNominal.toLocaleString('id-ID');
         document.getElementById('txtTotalToken').innerText = tToken + " Token";
-        document.getElementById('rincianPembelianTable').innerHTML = htmlRincian || `<tr><td colspan="4" class="text-center p-4 text-zinc-500">Tidak ada data.</td></tr>`;
+        document.getElementById('rincianPembelianTable').innerHTML = htmlRincian || `<tr><td colspan="4" class="text-center p-4 text-zinc-500">Tidak ada data di periode ini.</td></tr>`;
 
         let htmlRekap = '';
         Object.keys(rekapNama).sort((a,b) => rekapNama[b].nominal - rekapNama[a].nominal).forEach(nama => {
             htmlRekap += `<tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30"><td class="p-2 text-[9px] font-bold text-blue-300">${nama}</td><td class="p-2 text-center font-bold text-yellow-400">${rekapNama[nama].token}</td><td class="p-2 text-right text-blue-100 font-mono">${rekapNama[nama].nominal.toLocaleString('id-ID')}</td></tr>`;
         });
         document.getElementById('rekapUserTable').innerHTML = htmlRekap || `<tr><td colspan="3" class="text-center p-4 text-zinc-500">Kosong.</td></tr>`;
-        document.getElementById('monitoringSummary').classList.remove('hidden');
+        document.getElementById('monitoringSummary'd).classList.remove('hidden');
     }
 
     function jalankanSetupAwal() { if(!confirm("BAHAYA! Reset Database?")) return; showLoadingUI(true); apiCall('setupAwal', {}).then(res => { showLoadingUI(false); alert(res); }).catch(err => { showLoadingUI(false); alert(err.message); }); }
     
-    function konfirmasiWA(namaPaket, jmlToken, hargaNum) {
+    async function konfirmasiWA(namaPaket, jmlToken, hargaNum) {
         if(!currentUser) { showToast("Login terlebih dahulu!", "error"); nav('auth'); return; }
         if(!document.getElementById('cekSyaratToken').checked) { showToast("Centang Persetujuan Mutlak!", "error"); return; }
-        const pesan = `Halo Admin E-GenLap,%0A%0ASaya telah melakukan pembayaran QRIS untuk token AI.%0A%0A*Nama:* ${currentUser.data.nama}%0A*Paket:* ${namaPaket} (${jmlToken} Token)%0A*Nominal:* Rp ${hargaNum.toLocaleString('id-ID')}%0A%0ABerikut saya lampirkan struknya. Terima kasih.`;
+        
+        // Push Notif ke Admin
+        if(db) {
+            try { await db.from('notifikasi_admin').insert([{ pesan: `User ${currentUser.data.nama} klik BELI Paket ${namaPaket} (${jmlToken} Token) seharga Rp ${hargaNum.toLocaleString('id-ID')}` }]); } catch(e) {}
+        }
+
+        const pesan = `Halo Admin E-GenLap,%0A%0ASaya telah melakukan pembayaran QRIS/Transfer untuk token AI.%0A%0A*Nama:* ${currentUser.data.nama}%0A*Paket:* ${namaPaket} (${jmlToken} Token)%0A*Nominal:* Rp ${hargaNum.toLocaleString('id-ID')}%0A%0ABerikut saya lampirkan struknya. Terima kasih.`;
         window.open(`https://api.whatsapp.com/send?phone=${adminWA}&text=${pesan}`, '_blank');
     }
   </script>
