@@ -6,9 +6,11 @@
   <meta name="theme-color" content="#09090b">
   <title>E-GenLap | SDM PKH Nasional</title>
   
-  <!-- Library Tailwind CSS & FontAwesome & Supabase -->
+  <!-- CSS Framework dan Icons -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Koneksi Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -20,22 +22,26 @@
         border: 1px solid rgba(59, 130, 246, 0.2); 
         color: white; 
     }
+    
     .glossy-input { 
         background: rgba(255, 255, 255, 0.05); 
         border: 1px solid rgba(59, 130, 246, 0.3); 
         color: white; 
-        transition: all 0.3s ease; 
+        transition: all 0.2s ease; 
     }
+    
     .glossy-input:focus { 
         background: rgba(255, 255, 255, 0.1); 
         border-color: #60a5fa; 
         outline: none; 
         box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); 
     }
+    
     .glossy-input option { 
         background: #09090b; 
         color: #60a5fa; 
     }
+    
     html, body { 
         width: 100%; 
         min-height: 100vh; 
@@ -43,12 +49,15 @@
         padding: 0; 
         overflow-x: hidden; 
     }
+    
     input, textarea { 
         user-select: text; 
     }
+    
     .app-bg { 
         background: linear-gradient(180deg, #09090b 0%, #171720 100%); 
     }
+    
     .section-hidden { 
         display: none; 
     }
@@ -58,32 +67,52 @@
         box-shadow: 0 0 20px rgba(59, 130, 246, 0.6); 
         animation: pulse-glow 2s infinite; 
     }
+    
     @keyframes pulse-glow { 
-        0%, 100% { transform: translateY(-50%) scale(1); box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); } 
-        50% { transform: translateY(-50%) scale(1.05); box-shadow: 0 0 25px rgba(59, 130, 246, 0.8); } 
+        0%, 100% { 
+            transform: translateY(-50%) scale(1); 
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); 
+        } 
+        50% { 
+            transform: translateY(-50%) scale(1.05); 
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.8); 
+        } 
     }
     
     /* Custom Scrollbar */
-    .custom-scrollbar::-webkit-scrollbar { height: 5px; width: 4px; }
-    .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
-    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(59,130,246,0.5); border-radius: 4px; }
+    .custom-scrollbar::-webkit-scrollbar { 
+        height: 5px; 
+        width: 4px; 
+    }
+    .custom-scrollbar::-webkit-scrollbar-track { 
+        background: rgba(255,255,255,0.02); 
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb { 
+        background: rgba(59,130,246,0.5); 
+        border-radius: 4px; 
+    }
     
     /* Hamburger Menu Animation */
-    #sideMenu { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-    .menu-open { transform: translateX(0) !important; }
+    #sideMenu { 
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+    }
+    
+    .menu-open { 
+        transform: translateX(0) !important; 
+    }
   </style>
 </head>
 
 <body class="app-bg font-sans antialiased text-gray-100 selection:bg-blue-500 selection:text-white relative">
 
   <!-- ============================================== -->
-  <!-- LOADING UI (PRESISI DI TENGAH HP)              -->
+  <!-- LOADING UI (PRESISI TENGAH HP DENGAN FLEXBOX)  -->
   <!-- ============================================== -->
   <div id="fullscreenLoading" class="fixed inset-0 bg-[#09090b]/95 backdrop-blur-xl z-[9999] hidden flex-col items-center justify-center transition-opacity duration-200 opacity-0 h-screen w-screen">
       <div class="relative w-24 h-24 flex items-center justify-center mb-6">
           <div class="absolute inset-0 border-4 border-blue-900/50 rounded-full animate-ping"></div>
-          <div class="absolute inset-2 border-4 border-blue-500/30 rounded-full animate-spin shadow-[0_0_30px_rgba(59,130,246,0.4)]" style="animation-direction: reverse; animation-duration: 1.5s;"></div>
-          <div class="absolute inset-4 border-4 border-blue-400 rounded-full border-t-transparent animate-spin" style="animation-duration: 0.8s;"></div>
+          <div class="absolute inset-2 border-4 border-blue-500/30 rounded-full animate-spin shadow-[0_0_30px_rgba(59,130,246,0.4)]" style="animation-direction: reverse; animation-duration: 2s;"></div>
+          <div class="absolute inset-4 border-4 border-blue-400 rounded-full border-t-transparent animate-spin" style="animation-duration: 1s;"></div>
           <div class="relative z-10 bg-zinc-900 w-12 h-12 rounded-full flex items-center justify-center border border-blue-400">
               <i class="fas fa-bolt text-2xl text-blue-400 animate-pulse"></i>
           </div>
@@ -91,15 +120,17 @@
       <h2 class="text-xl font-black text-blue-400 tracking-[0.2em] animate-pulse text-center">MEMPROSES...</h2>
   </div>
 
+  <!-- TOAST NOTIFICATION CONTAINER -->
   <div id="toastContainer" class="fixed top-5 left-1/2 transform -translate-x-1/2 w-11/12 max-w-sm z-[9999] flex flex-col gap-2 pointer-events-none"></div>
 
   <!-- ============================================== -->
   <!-- HAMBURGER SIDEBAR MENU                         -->
   <!-- ============================================== -->
   <div id="menuOverlay" onclick="toggleMenu()" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[8000] hidden opacity-0 transition-opacity duration-300"></div>
+  
   <div id="sideMenu" class="fixed top-0 right-0 h-full w-64 bg-[#09090b]/95 backdrop-blur-2xl z-[8100] transform translate-x-full border-l border-blue-500/30 pt-5 pb-6 flex flex-col shadow-[-10px_0_30px_rgba(0,0,0,0.9)]">
       
-      <!-- Header Sidebar -->
+      <!-- Header Menu Navigasi -->
       <div class="px-5 pb-4 border-b border-zinc-700/50 flex justify-between items-center">
           <div class="overflow-hidden">
               <h2 class="font-bold text-blue-400 text-lg tracking-wide"><i class="fas fa-bars mr-2"></i> Navigasi</h2>
@@ -110,7 +141,7 @@
           </button>
       </div>
 
-      <!-- List Menu Utama -->
+      <!-- Menu Utama -->
       <div class="flex-grow overflow-y-auto py-4 px-4 space-y-1.5 custom-scrollbar">
           <button onclick="nav('dashboard'); toggleMenu()" class="w-full flex items-center p-3 rounded-xl hover:bg-blue-600/10 text-sm font-bold text-zinc-300 hover:text-blue-400 transition-all border border-transparent hover:border-blue-500/30">
               <i class="fas fa-home w-6 text-center mr-2 text-blue-500"></i> Dashboard
@@ -224,7 +255,7 @@
       <div class="glossy-monster w-full max-w-sm rounded-2xl p-4 border border-blue-500/50 shadow-2xl">
           <div class="border-b border-zinc-700 pb-2 mb-3">
               <h3 class="text-lg font-bold text-blue-400"><i class="fas fa-clipboard-check mr-2"></i> Review Laporan</h3>
-              <p class="text-[10px] text-zinc-400">Pastikan seluruh isian sudah benar sebelum terpotong 1 Token.</p>
+              <p class="text-[10px] text-zinc-400">Pastikan isian form dinamis sudah tepat sebelum terpotong 1 Token.</p>
           </div>
           
           <div id="reviewContent" class="max-h-[50vh] overflow-y-auto custom-scrollbar pr-2 mb-4 text-xs text-zinc-300 space-y-2">
@@ -232,14 +263,14 @@
           </div>
           
           <div class="flex gap-3">
-              <button onclick="document.getElementById('modalReview').classList.add('hidden')" class="w-1/2 p-3 rounded-xl bg-zinc-800 text-sm font-bold hover:bg-zinc-700 transition-all">Edit Kembali</button>
+              <button onclick="document.getElementById('modalReview').classList.add('hidden')" class="w-1/2 p-3 rounded-xl bg-zinc-800 text-sm font-bold text-white hover:bg-zinc-700 transition-all">Edit Kembali</button>
               <button onclick="executeGenerate()" class="w-1/2 p-3 rounded-xl bg-blue-500 text-white text-sm font-extrabold hover:bg-blue-400 transition-all">Generate AI</button>
           </div>
       </div>
   </div>
 
   <!-- ============================================== -->
-  <!-- MODAL AUTHENTIKASI                             -->
+  <!-- MODAL AUTHENTIKASI & RESET PASSWORD            -->
   <!-- ============================================== -->
   <div id="modalResetPass" class="fixed inset-0 bg-[#09090b]/90 backdrop-blur-sm z-[7000] hidden flex-col items-center justify-center p-4">
     <div class="glossy-monster w-full max-w-sm rounded-2xl p-5 text-center border border-blue-500/50">
@@ -256,8 +287,8 @@
         </div>
         
         <div class="flex gap-3 mt-4">
-            <button onclick="document.getElementById('modalResetPass').classList.add('hidden')" class="w-1/2 p-3 rounded-xl bg-zinc-800 text-sm font-bold hover:bg-zinc-700">Batal</button>
-            <button onclick="eksekusiResetPass()" class="w-1/2 p-3 rounded-xl bg-blue-500 text-white font-extrabold hover:bg-blue-400">Simpan</button>
+            <button onclick="document.getElementById('modalResetPass').classList.add('hidden')" class="w-1/2 p-3 rounded-xl bg-zinc-800 text-sm font-bold hover:bg-zinc-700 transition-all">Batal</button>
+            <button onclick="eksekusiResetPass()" class="w-1/2 p-3 rounded-xl bg-blue-500 text-white font-extrabold hover:bg-blue-400 transition-all">Simpan</button>
         </div>
     </div>
   </div>
@@ -268,16 +299,17 @@
         <h3 class="text-lg font-bold text-blue-400 mb-2">Konfirmasi Biodata</h3>
         <p class="text-xs text-zinc-300 mb-4">Data identitas ini akan tercetak permanen dan <b>TIDAK BISA DIUBAH LAGI</b>. Apakah Anda yakin?</p>
         <div class="flex gap-3 mt-4">
-            <button onclick="document.getElementById('modalConfirmReg').classList.add('hidden')" class="w-1/2 p-3 rounded-xl bg-zinc-800 text-sm font-bold hover:bg-zinc-700">Periksa Lagi</button>
-            <button onclick="eksekusiRegister()" class="w-1/2 p-3 rounded-xl bg-blue-500 text-white font-extrabold hover:bg-blue-400">Ya, Daftar</button>
+            <button onclick="document.getElementById('modalConfirmReg').classList.add('hidden')" class="w-1/2 p-3 rounded-xl bg-zinc-800 text-sm font-bold hover:bg-zinc-700 transition-all">Periksa Lagi</button>
+            <button onclick="eksekusiRegister()" class="w-1/2 p-3 rounded-xl bg-blue-500 text-white font-extrabold hover:bg-blue-400 transition-all">Ya, Daftar</button>
         </div>
     </div>
   </div>
 
-  <!-- CONTAINER UTAMA APLIKASI -->
+  <!-- ============================================== -->
+  <!-- CONTAINER UTAMA APLIKASI                       -->
+  <!-- ============================================== -->
   <div class="max-w-md w-full mx-auto relative min-h-screen shadow-2xl bg-black/40 flex flex-col pb-24 z-10">
     
-    <!-- HEADER ATAS -->
     <header class="glossy-monster p-4 rounded-b-3xl shadow-lg flex-shrink-0 z-20 border-b border-blue-500/30 sticky top-0 flex justify-between items-center">
         <div>
             <h1 class="text-2xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-blue-500">
@@ -303,29 +335,26 @@
             <h2 class="text-xl font-bold text-white">E-GenLap Nasional</h2>
         </div>
         
-        <!-- TEKS KEHEBATAN APLIKASI -->
+        <!-- TEKS KEHEBATAN APLIKASI UTUH -->
         <div class="mb-5 bg-blue-900/20 border border-blue-500/40 p-4 rounded-xl shadow-inner">
             <h3 class="text-blue-400 font-extrabold text-sm mb-2"><i class="fas fa-rocket mr-1"></i> Kehebatan Aplikasi Ini</h3>
             <ul class="text-[10px] text-zinc-300 text-left space-y-2">
                 <li><i class="fas fa-robot text-blue-500 w-4"></i> <b>Generate AI Cerdas:</b> Laporan otomatis disusun sempurna berdasarkan data dinamis & arahan AI.</li>
                 <li><i class="fas fa-balance-scale text-blue-500 w-4"></i> <b>Analisis Hukum:</b> Dasar hukum riil Kemensos dianalisa & disisipkan otomatis ke PDF.</li>
-                <li><i class="fas fa-folder-tree text-blue-500 w-4"></i> <b>Arsip Drive Terstruktur:</b> PDF tersusun rapi dalam folder berhierarki (RHK/Bulan/Kegiatan).</li>
+                <li><i class="fas fa-folder-tree text-blue-500 w-4"></i> <b>Arsip Drive Terstruktur:</b> PDF tersusun rapi dalam folder berhierarki (Tahun/RHK/Bulan/Kegiatan).</li>
                 <li><i class="fas fa-gift text-yellow-400 w-4 animate-pulse"></i> <b class="text-yellow-400">Daftar Sekarang:</b> Dapatkan 1 Token Laporan GRATIS hari ini!</li>
             </ul>
         </div>
 
         <div id="formLogin">
             <input type="email" id="logEmail" class="w-full p-3 text-sm rounded-xl glossy-input mb-3" placeholder="Email Anda" required>
-            
             <div class="relative mb-4">
                 <input type="password" id="logPassword" class="w-full p-3 text-sm rounded-xl glossy-input" placeholder="Password Login">
                 <i class="fas fa-eye absolute right-4 top-4 text-zinc-400 cursor-pointer" id="iconLogPass" onclick="togglePasswordVisibility('logPassword', 'iconLogPass')"></i>
             </div>
-            
             <button onclick="prosesLogin()" class="w-full bg-blue-500 text-white font-extrabold py-3 rounded-xl hover:bg-blue-400 text-sm mb-3 shadow-[0_0_15px_rgba(59,130,246,0.3)] transition-all">
                 <i class="fas fa-sign-in-alt mr-2"></i> Masuk Sistem
             </button>
-            
             <div class="flex justify-between mt-2 px-1 text-xs">
                 <span onclick="toggleAuthForm()" class="text-blue-400 cursor-pointer font-bold underline">Daftar Akun Baru</span>
                 <span onclick="bukaModalReset()" class="text-yellow-500 cursor-pointer font-bold underline">Lupa Password?</span>
@@ -335,7 +364,6 @@
         <div id="formRegister" class="hidden">
             <input type="text" id="regNama" class="w-full p-3 text-sm rounded-xl glossy-input mb-3" placeholder="Nama Lengkap" required>
             <input type="number" id="regNIP" class="w-full p-3 text-sm rounded-xl glossy-input mb-3" placeholder="NIP (Kosongkan jika tidak ada)">
-            
             <select id="regJabatan" class="w-full p-3 text-sm rounded-xl glossy-input mb-3">
                 <option value="Operator layanan operasional">Operator layanan operasional</option>
                 <option value="Pengelola layanan operasional">Pengelola layanan operasional</option>
@@ -343,14 +371,11 @@
                 <option value="Katim Kabupaten/Kota">Katim Kabupaten/Kota</option>
                 <option value="Katim Provinsi">Katim Provinsi</option>
             </select>
-            
             <input type="email" id="regEmail" class="w-full p-3 text-sm rounded-xl glossy-input mb-3" placeholder="Email Aktif" required>
-            
             <div class="relative mb-4">
                 <input type="password" id="regPassword" class="w-full p-3 text-sm rounded-xl glossy-input" placeholder="Buat Password" required>
                 <i class="fas fa-eye absolute right-4 top-4 text-zinc-400 cursor-pointer" id="iconRegPass" onclick="togglePasswordVisibility('regPassword', 'iconRegPass')"></i>
             </div>
-            
             <button onclick="validasiRegister()" class="w-full bg-blue-500 text-white font-extrabold py-3 rounded-xl hover:bg-blue-400 text-sm mb-3 transition-all">
                 <i class="fas fa-user-plus mr-2"></i> Daftar Akun
             </button>
@@ -362,7 +387,6 @@
       <!-- SECTION 2: DASHBOARD (TARGET 28 & FILTER)      -->
       <!-- ============================================== -->
       <section id="sec-dashboard" class="section-hidden">
-        
         <div class="glossy-monster p-4 rounded-2xl mb-4 flex justify-between items-center">
             <div>
                 <h2 class="text-lg font-bold text-blue-400" id="userGreeting">Halo, User</h2>
@@ -377,13 +401,20 @@
         <div class="glossy-monster p-4 rounded-2xl mb-4">
             <div class="flex justify-between items-center border-b border-zinc-700 pb-2 mb-3">
                 <h3 class="text-sm font-bold text-blue-400"><i class="fas fa-chart-pie mr-2"></i> Statistik Laporan</h3>
-                
                 <select id="filterBulanDashboard" class="p-1 text-[10px] rounded bg-zinc-800 text-white border border-zinc-600 font-bold" onchange="hitungStatistikDashboard()">
                     <option value="all">Semua Bulan</option>
-                    <option value="01">Januari</option><option value="02">Februari</option><option value="03">Maret</option>
-                    <option value="04">April</option><option value="05">Mei</option><option value="06">Juni</option>
-                    <option value="07">Juli</option><option value="08">Agustus</option><option value="09">September</option>
-                    <option value="10">Oktober</option><option value="11">November</option><option value="12">Desember</option>
+                    <option value="01">Januari</option>
+                    <option value="02">Februari</option>
+                    <option value="03">Maret</option>
+                    <option value="04">April</option>
+                    <option value="05">Mei</option>
+                    <option value="06">Juni</option>
+                    <option value="07">Juli</option>
+                    <option value="08">Agustus</option>
+                    <option value="09">September</option>
+                    <option value="10">Oktober</option>
+                    <option value="11">November</option>
+                    <option value="12">Desember</option>
                 </select>
             </div>
             
@@ -409,7 +440,9 @@
                         </tr>
                     </thead>
                     <tbody id="dashRincianRHK" class="divide-y divide-zinc-800/50">
-                        <tr><td colspan="3" class="text-center italic p-3 text-zinc-500">Memuat rincian...</td></tr>
+                        <tr>
+                            <td colspan="3" class="text-center italic p-3 text-zinc-500">Memuat rincian...</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -417,23 +450,19 @@
       </section>
 
       <!-- ============================================== -->
-      <!-- SECTION 3: AGENDA (ANALISA & EXPORT)           -->
+      <!-- SECTION 3: AGENDA (ANALISA KEKURANGAN & EXCEL) -->
       <!-- ============================================== -->
       <section id="sec-agenda" class="section-hidden">
         <div class="glossy-monster p-5 rounded-2xl mb-4">
-            
             <div class="flex justify-between items-center border-b border-zinc-700 pb-2 mb-4">
                 <h2 class="text-lg font-bold text-blue-400"><i class="fas fa-calendar-check mr-2"></i> Manajemen Agenda</h2>
-                <div class="flex gap-2">
-                    <button onclick="exportAgendaCSV()" class="bg-green-600 text-white px-3 py-1.5 rounded-lg text-[10px] font-bold hover:bg-green-500 transition-all shadow-md">
-                        <i class="fas fa-file-excel mr-1"></i> Excel
-                    </button>
-                </div>
+                <button onclick="exportAgendaCSV()" class="bg-green-600 text-white px-3 py-1.5 rounded-lg text-[10px] font-bold hover:bg-green-500 transition-all shadow-md">
+                    <i class="fas fa-file-excel mr-1"></i> Excel
+                </button>
             </div>
             
             <div class="bg-black/30 p-4 rounded-xl border border-zinc-700/50 mb-5">
                 <h3 class="text-xs font-bold text-blue-300 mb-3 uppercase tracking-wider">Tambah Jadwal Baru</h3>
-                
                 <div class="grid grid-cols-2 gap-3 mb-3">
                     <div>
                         <label class="block text-[10px] text-zinc-400 mb-1">Tanggal Hari</label>
@@ -444,29 +473,26 @@
                         <input type="time" id="agJam" class="w-full p-2 text-xs rounded-lg glossy-input">
                     </div>
                 </div>
-                
                 <div class="mb-3">
                     <label class="block text-[10px] text-zinc-400 mb-1">Pilih Rencana Aksi Harian (RHK)</label>
                     <select id="agKegiatan" class="w-full p-2 text-xs rounded-lg glossy-input">
                         <option value="">-- Pilih Kegiatan --</option>
                     </select>
                 </div>
-                
                 <div class="mb-3">
                     <label class="block text-[10px] text-zinc-400 mb-1">Lokasi Kegiatan</label>
                     <input type="text" id="agLokasi" class="w-full p-2 text-xs rounded-lg glossy-input" placeholder="Misal: Kantor Desa / Rumah KPM...">
                 </div>
-                
                 <div class="mb-3">
                     <label class="block text-[10px] text-zinc-400 mb-1">Keterangan Tambahan</label>
                     <input type="text" id="agKet" class="w-full p-2 text-xs rounded-lg glossy-input" placeholder="Misal: Bawa berkas A, B, C...">
                 </div>
-                
                 <button onclick="simpanAgenda()" class="w-full bg-blue-500/20 border border-blue-500 text-blue-300 font-bold py-2 rounded-lg text-xs hover:bg-blue-500/40 transition-all">
                     <i class="fas fa-plus mr-1"></i> Tambah ke Agenda
                 </button>
             </div>
             
+            <!-- Analisa Laporan -->
             <div class="bg-red-900/20 border border-red-500/30 p-3 rounded-xl mb-4">
                 <h3 class="text-[10px] font-bold text-red-400 mb-2"><i class="fas fa-search-chart mr-1"></i> Analisis Kekurangan Laporan Bulan Ini</h3>
                 <ul id="analisaKekurangan" class="text-[9px] text-zinc-300 space-y-1 list-disc pl-4">
@@ -482,17 +508,15 @@
       </section>
 
       <!-- ============================================== -->
-      <!-- SECTION 4: FORM GENERATE LAPORAN DINAMIS       -->
+      <!-- SECTION 4: FORM GENERATE LAPORAN DINAMIS AI    -->
       <!-- ============================================== -->
       <section id="sec-generate" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
-        
         <div class="flex justify-between items-center border-b border-zinc-700 pb-2 mb-4">
              <h2 class="text-lg font-bold text-blue-400"><i class="fas fa-magic mr-2"></i> Form Laporan</h2>
              <span class="text-xs bg-blue-900/50 text-blue-300 px-2 py-1 rounded border border-blue-500/30">Token: <b id="formTokenCount">0</b></span>
         </div>
 
         <form id="reportForm" onsubmit="tampilkanReview(event)">
-          
           <div class="bg-black/30 p-3 rounded-xl border border-zinc-700/50 mb-4">
             <p class="text-[10px] text-blue-400 font-bold mb-2 uppercase tracking-wider"><i class="fas fa-envelope-open-text mr-1"></i> Data Surat (Opsional)</p>
              <div id="containerDataSurat">
@@ -514,11 +538,11 @@
 
           <div class="grid grid-cols-2 gap-3 mb-4">
              <div>
-                 <label class="block text-xs font-bold text-blue-300 mb-1">Tanggal</label>
+                 <label class="block text-xs font-bold text-blue-300 mb-1">Tanggal Kegiatan</label>
                  <input type="date" id="tanggalLaporan" class="w-full p-3 text-sm rounded-xl glossy-input" required>
              </div>
              <div>
-                 <label class="block text-xs font-bold text-blue-300 mb-1">Jam</label>
+                 <label class="block text-xs font-bold text-blue-300 mb-1">Jam Pelaksanaan</label>
                  <input type="time" id="jamMulai" class="w-full p-3 text-sm rounded-xl glossy-input" required>
              </div>
           </div>
@@ -545,7 +569,7 @@
              </div>
           </div>
 
-          <!-- JABATAN DROPDOWN KHUSUS UNTUK PDF (PERMINTAAN USER) -->
+          <!-- DROPDOWN JABATAN KHUSUS UNTUK PDF (Sesuai Permintaan) -->
           <div class="mb-4">
              <label class="block text-xs font-bold text-blue-300 mb-1">Jabatan (Untuk dicetak di PDF)</label>
              <select id="jabatanPDF" class="w-full p-3 text-sm rounded-xl glossy-input" required>
@@ -561,7 +585,7 @@
                 <input type="text" id="kabupaten" value="Tapin" class="w-full p-3 text-sm rounded-xl glossy-input" required>
             </div>
              <div>
-                 <label class="block text-xs font-bold text-blue-300 mb-1">Lokasi</label>
+                 <label class="block text-xs font-bold text-blue-300 mb-1">Lokasi Kegiatan</label>
                  <input type="text" id="lokasi" class="w-full p-3 text-sm rounded-xl glossy-input" placeholder="Kantor Desa..." required>
              </div>
           </div>
@@ -686,7 +710,7 @@
                    <tr>
                        <th class="p-3 whitespace-nowrap">Tanggal</th>
                        <th class="p-3">Rencana Aksi / Kegiatan</th>
-                       <th class="p-3 text-center whitespace-nowrap">Link Drive</th>
+                       <th class="p-3 text-center whitespace-nowrap">Link Drive & PDF</th>
                    </tr>
                </thead>
                <tbody id="tableArsipBody" class="divide-y divide-zinc-800/50">
@@ -699,7 +723,7 @@
       </section>
 
       <!-- ============================================== -->
-      <!-- SECTION 7: PENGATURAN USER (DRIVE ID)          -->
+      <!-- SECTION 7: PENGATURAN USER (DRIVE ID PRIBADI)  -->
       <!-- ============================================== -->
       <section id="sec-pengaturan" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
          <h2 class="text-lg font-bold text-blue-400 border-b border-zinc-700 pb-2"><i class="fab fa-google-drive mr-2"></i> Pengaturan Akun & Drive</h2>
@@ -710,7 +734,7 @@
              <input type="text" id="inputUbahDrive" class="w-full p-2 text-xs rounded-lg glossy-input mb-2" placeholder="Contoh: 1xaw6b... atau https://drive...">
              
              <div class="bg-blue-900/20 border border-blue-500/30 p-3 rounded-lg text-[10px] text-zinc-300 mb-4">
-                 <b>PENTING:</b><br>1. Buat folder di Google Drive Anda.<br>2. Ubah akses berbaginya menjadi <b>"Siapa saja yang memiliki link (Editor/Pelihat)"</b>.<br>3. Paste Link di atas. File PDF akan otomatis masuk ke folder tersebut secara terstruktur (Kategori/Bulan/Kegiatan).
+                 <b>PENTING:</b><br>1. Buat folder di Google Drive Anda.<br>2. Ubah akses berbaginya menjadi <b>"Siapa saja yang memiliki link (Editor)"</b>.<br>3. Paste Link di atas. File PDF akan otomatis masuk dan tersusun rapi di folder Anda tersebut!
              </div>
              
              <button onclick="simpanProfileUser()" class="w-full bg-blue-500/20 border border-blue-500 text-blue-300 font-bold py-2 rounded-lg text-xs hover:bg-blue-500/40 transition-all">
@@ -720,6 +744,7 @@
 
          <div class="bg-black/30 p-4 rounded-xl border border-zinc-700/50">
              <h3 class="text-xs font-bold text-blue-300 mb-3 uppercase tracking-wider">Ubah Identitas Login Anda</h3>
+             
              <label class="block text-[10px] text-zinc-400 mb-1">Username (Nama Lengkap)</label>
              <input type="text" id="inputUbahNamaUser" class="w-full p-2 text-xs rounded-lg glossy-input mb-3" placeholder="Nama Baru...">
              
@@ -749,7 +774,10 @@
         </div>
         
         <div class="mb-3 bg-blue-900/20 border border-blue-500/30 p-4 rounded-xl flex justify-between items-center">
-            <div><h3 class="font-bold text-white text-md">Paket Basic</h3><p class="text-xs text-zinc-300">6 Token</p></div>
+            <div>
+                <h3 class="font-bold text-white text-md">Paket Basic</h3>
+                <p class="text-xs text-zinc-300">6 Token</p>
+            </div>
             <div class="text-right">
                 <p class="text-lg font-black text-blue-400 mb-1">Rp 10.000</p>
                 <button onclick="konfirmasiWA('Basic', 6, 10000)" class="bg-green-600 text-white font-bold py-1.5 px-3 rounded-lg text-xs hover:scale-95 transition-transform">
@@ -759,7 +787,10 @@
         </div>
         
         <div class="mb-3 bg-blue-900/20 border border-blue-500/30 p-4 rounded-xl flex justify-between items-center">
-            <div><h3 class="font-bold text-white text-md flex items-center gap-1">Paket Pro <i class="fas fa-star text-yellow-400 text-[10px]"></i></h3><p class="text-xs text-zinc-300">20 Token</p></div>
+            <div>
+                <h3 class="font-bold text-white text-md flex items-center gap-1">Paket Pro <i class="fas fa-star text-yellow-400 text-[10px]"></i></h3>
+                <p class="text-xs text-zinc-300">20 Token</p>
+            </div>
             <div class="text-right">
                 <p class="text-lg font-black text-blue-400 mb-1">Rp 30.000</p>
                 <button onclick="konfirmasiWA('Pro', 20, 30000)" class="bg-green-600 text-white font-bold py-1.5 px-3 rounded-lg text-xs hover:scale-95 transition-transform">
@@ -769,7 +800,10 @@
         </div>
         
         <div class="mb-4 bg-blue-900/20 border border-blue-500/30 p-4 rounded-xl flex justify-between items-center">
-            <div><h3 class="font-bold text-white text-md flex items-center gap-1">Paket Ultra <i class="fas fa-crown text-yellow-400 text-[10px]"></i></h3><p class="text-xs text-zinc-300">35 Token</p></div>
+            <div>
+                <h3 class="font-bold text-white text-md flex items-center gap-1">Paket Ultra <i class="fas fa-crown text-yellow-400 text-[10px]"></i></h3>
+                <p class="text-xs text-zinc-300">35 Token</p>
+            </div>
             <div class="text-right">
                 <p class="text-lg font-black text-blue-400 mb-1">Rp 50.000</p>
                 <button onclick="konfirmasiWA('Ultra', 35, 50000)" class="bg-green-600 text-white font-bold py-1.5 px-3 rounded-lg text-xs hover:scale-95 transition-transform">
@@ -819,13 +853,16 @@
          
          <div class="mt-4 mb-4 bg-black/30 p-4 rounded-xl border border-zinc-700/50">
              <h3 class="text-xs font-bold text-blue-300 mb-3 uppercase tracking-wider">Setup Kontak & Pembayaran</h3>
+             
              <label class="block text-[10px] text-zinc-400 mb-1">Nomor WhatsApp Admin</label>
              <div class="flex gap-2 mb-3">
                  <span class="p-2 bg-zinc-800 rounded-lg text-xs font-bold text-zinc-400 border border-zinc-600">+62</span>
                  <input type="number" id="inputSetWA" class="w-full p-2 text-xs rounded-lg glossy-input" placeholder="89504686529">
              </div>
+             
              <label class="block text-[10px] text-zinc-400 mb-1">Nomor Rekening</label>
              <input type="text" id="inputSetRek" class="w-full p-2 text-xs rounded-lg glossy-input mb-3" placeholder="Misal: BSI 123456 a.n Zaen">
+             
              <label class="block text-[10px] text-zinc-400 mb-1">Link Gambar QRIS</label>
              <input type="text" id="inputSetQRIS" class="w-full p-2 text-xs rounded-lg glossy-input mb-4" placeholder="https://...">
              
@@ -891,14 +928,13 @@
              <p id="txtRekPanduan" class="text-[12px] font-mono text-yellow-400 font-bold bg-zinc-900 p-2 rounded-lg border border-zinc-700 inline-block mb-3">Memuat Rekening...</p>
              <p class="text-[10px] text-zinc-300 mb-2">Atau melalui QRIS:</p>
              <img id="imgQrisPanduan" src="" alt="QRIS DANA" class="w-full max-w-[200px] mx-auto rounded-xl shadow-[0_0_15px_rgba(59,130,246,0.3)] border-2 border-blue-500/50">
-             <p class="text-[9px] text-zinc-400 mt-2">*Simpan struk & kirim ke WhatsApp Admin via Menu Token</p>
          </div>
          
          <div class="text-xs text-zinc-300 space-y-4 text-justify">
              <div class="bg-red-900/20 border border-red-500/40 p-3 rounded-lg">
                 <p class="text-red-400 font-bold mb-1"><i class="fas fa-exclamation-triangle mr-1"></i> PERATURAN MUTLAK</p>
                 <p><b>1. TIDAK ADA REFUND.</b> Token yang dibeli tidak dapat diuangkan kembali.</p>
-                <p class="mt-1"><b>2. TOKEN HANGUS.</b> Jika laporan gagal di-generate karena salah input, token terpotong <b>HANGUS</b>.</p>
+                <p class="mt-1"><b>2. TOKEN HANGUS.</b> Jika laporan gagal karena salah input, token terpotong <b>HANGUS</b>.</p>
                 <p class="mt-1"><b>3. ID FOLDER DRIVE PRIBADI.</b> Anda bisa memasukkan ID Folder Google Drive Anda sendiri di menu Pengaturan Akun. <br><b>Syarat Wajib:</b> Ubah setelan Berbagi folder Anda menjadi <b>"Siapa saja yang memiliki link (Editor/Pelihat)"</b> agar AI bisa menyimpan PDF ke sana.</p>
             </div>
          </div>
@@ -960,7 +996,7 @@
     let tempBeliJml = 0;
     let tempBeliHarga = 0;
 
-    // HARDCODED FALLBACK RHK (AGAR TIDAK PERNAH KOSONG)
+    // HARDCODED FALLBACK RHK
     const fbRHK = [
         { j: "Penata layanan operasional", r: "RHK 1", k: "Melakukan edukasi pencairan tunai non tunai", t: "1" },
         { j: "Penata layanan operasional", r: "RHK 2", k: "Pertemuan Peningkatan Kemampuan Keluarga (P2K2)", t: "15" },
@@ -1010,7 +1046,7 @@
     ];
 
     // ==========================================
-    // FUNGSI KOMUNIKASI API FETCH KE GOOGLE APPS SCRIPT
+    // FUNGSI KOMUNIKASI API (FETCH)
     // ==========================================
     async function apiCall(action, dataObj = {}) {
         try {
@@ -1020,12 +1056,16 @@
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' } 
             });
             const txt = await res.text(); 
-            if (!txt) throw new Error("Server response kosong.");
+            if (!txt) {
+                throw new Error("Kosong.");
+            }
             const p = JSON.parse(txt); 
-            if (p.status === 'error') throw new Error(p.message); 
+            if (p.status === 'error') {
+                throw new Error(p.message); 
+            }
             return p;
         } catch (e) { 
-            throw new Error("Koneksi API Error/CORS. Pastikan Link GAS di-Deploy 'Anyone'. Error detail: " + e.message); 
+            throw new Error("Koneksi API Error/CORS. Cek Link GAS (Deploy 'Anyone')."); 
         }
     }
 
@@ -1034,48 +1074,74 @@
     // ==========================================
     function showToast(msg, type='success') {
         const t = document.createElement('div');
-        const i = type === 'success' ? '<i class="fas fa-check-circle text-blue-400 text-lg"></i>' : '<i class="fas fa-times-circle text-red-500 text-lg"></i>';
-        const b = type === 'success' ? 'bg-zinc-900 border-blue-500/40' : 'bg-red-950 border-red-500/50';
+        let iconHtml = '';
+        let bgClass = '';
+
+        if (type === 'success') {
+            iconHtml = '<i class="fas fa-check-circle text-blue-400 text-lg"></i>';
+            bgClass = 'bg-zinc-900 border-blue-500/40';
+        } else {
+            iconHtml = '<i class="fas fa-times-circle text-red-500 text-lg"></i>';
+            bgClass = 'bg-red-950 border-red-500/50';
+        }
+
+        t.className = `flex items-center gap-3 p-3 rounded-xl backdrop-blur-md shadow-2xl border transform transition-all duration-300 translate-y-[-20px] opacity-0 ${bgClass} text-white`; 
+        t.innerHTML = `${iconHtml} <span class="text-sm font-bold">${msg}</span>`; 
         
-        t.className = `flex items-center gap-3 p-3 rounded-xl backdrop-blur-md shadow-2xl border transform transition-all duration-300 translate-y-[-20px] opacity-0 ${b} text-white`; 
-        t.innerHTML = `${i} <span class="text-sm font-bold">${msg}</span>`; 
-        $('toastContainer').appendChild(t);
+        document.getElementById('toastContainer').appendChild(t);
         
-        setTimeout(() => t.classList.remove('translate-y-[-20px]', 'opacity-0'), 10); 
+        setTimeout(() => {
+            t.classList.remove('translate-y-[-20px]', 'opacity-0');
+        }, 10); 
+        
         setTimeout(() => { 
             t.classList.add('opacity-0', 'scale-95'); 
-            setTimeout(() => t.remove(), 300); 
+            setTimeout(() => {
+                t.remove();
+            }, 300); 
         }, 3000);
     }
 
     function toggleMenu() {
-        if($('sideMenu').classList.contains('menu-open')) { 
-            $('sideMenu').classList.remove('menu-open'); 
-            $('menuOverlay').classList.add('opacity-0'); 
-            setTimeout(() => $('menuOverlay').classList.add('hidden'), 300); 
+        const menu = document.getElementById('sideMenu');
+        const overlay = document.getElementById('menuOverlay');
+
+        if(menu.classList.contains('menu-open')) { 
+            menu.classList.remove('menu-open'); 
+            overlay.classList.add('opacity-0'); 
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+            }, 300); 
         } else { 
-            $('menuOverlay').classList.remove('hidden'); 
-            setTimeout(() => $('menuOverlay').classList.remove('opacity-0'), 10); 
-            $('sideMenu').classList.add('menu-open'); 
+            overlay.classList.remove('hidden'); 
+            setTimeout(() => {
+                overlay.classList.remove('opacity-0');
+            }, 10); 
+            menu.classList.add('menu-open'); 
         }
     }
 
     function togglePasswordVisibility(inId, icId) { 
-        if ($(inId).type === "password") { 
-            $(inId).type = "text"; 
-            $(icId).classList.replace("fa-eye", "fa-eye-slash"); 
+        const input = document.getElementById(inId);
+        const icon = document.getElementById(icId);
+
+        if (input.type === "password") { 
+            input.type = "text"; 
+            icon.classList.replace("fa-eye", "fa-eye-slash"); 
         } else { 
-            $(inId).type = "password"; 
-            $(icId).classList.replace("fa-eye-slash", "fa-eye"); 
+            input.type = "password"; 
+            icon.classList.replace("fa-eye-slash", "fa-eye"); 
         } 
     }
 
     function showLoadingUI(s) { 
-        const l = $('fullscreenLoading'); 
+        const l = document.getElementById('fullscreenLoading'); 
         if(s) { 
             l.classList.remove('hidden'); 
             l.classList.add('flex'); 
-            setTimeout(() => l.classList.remove('opacity-0'), 10); 
+            setTimeout(() => {
+                l.classList.remove('opacity-0');
+            }, 10); 
         } else { 
             l.classList.add('opacity-0'); 
             setTimeout(() => { 
@@ -1088,7 +1154,7 @@
     window.onload = async function() {
       setInterval(() => { 
           const now = new Date(); 
-          $('realtimeClock').innerText = new Intl.DateTimeFormat('id-ID', { timeZone: 'Asia/Makassar', hour: '2-digit', minute: '2-digit', second:'2-digit', hour12: false }).format(now).replace(/\./g, ':'); 
+          document.getElementById('realtimeClock').innerText = new Intl.DateTimeFormat('id-ID', { timeZone: 'Asia/Makassar', hour: '2-digit', minute: '2-digit', second:'2-digit', hour12: false }).format(now).replace(/\./g, ':'); 
       }, 1000);
       
       listKegiatanGlobal = fbRHK.map(x => ({ jabatan: x.j, kategori_rhk: x.r, kegiatan: x.k, target: x.t+" Lap/Bln" }));
@@ -1097,13 +1163,18 @@
           currentUser = JSON.parse(localStorage.getItem('egenlap_user')); 
           terapkanSesi(); 
       } else { 
-          $('sec-auth').classList.remove('section-hidden'); 
+          document.getElementById('sec-auth').classList.remove('section-hidden'); 
       }
       
       try { 
           const { data } = await db.from('master_rhk').select('*'); 
-          if (data && data.length > 0) listKegiatanGlobal = data; 
-          if(currentUser) { filterRHK(); renderTargetTable(); } 
+          if (data && data.length > 0) {
+              listKegiatanGlobal = data; 
+          }
+          if(currentUser) { 
+              filterRHK(); 
+              renderTargetTable(); 
+          } 
       } catch(e){}
     };
 
@@ -1112,8 +1183,11 @@
     // ==========================================
     function filterRHK() {
       if(!currentUser || !listKegiatanGlobal || listKegiatanGlobal.length === 0) return;
-      const kw = $('searchRHK') ? $('searchRHK').value.toLowerCase() : "";
+      
+      const searchInput = document.getElementById('searchRHK');
+      const kw = searchInput ? searchInput.value.toLowerCase() : "";
       const jUser = currentUser.data.jabatan.toLowerCase();
+      
       let o1 = `<option value="">-- Pilih RHK --</option>`;
       let o2 = `<option value="">-- Pilih Kegiatan --</option>`;
       
@@ -1124,14 +1198,20 @@
           }
       });
       
-      if($('kegiatanSelect')) $('kegiatanSelect').innerHTML = o1; 
-      if($('agKegiatan')) $('agKegiatan').innerHTML = o2;
+      const kegiatanSel = document.getElementById('kegiatanSelect');
+      const agKegiatan = document.getElementById('agKegiatan');
+      
+      if(kegiatanSel) kegiatanSel.innerHTML = o1; 
+      if(agKegiatan) agKegiatan.innerHTML = o2;
     }
 
     function renderTargetTable() {
-        if(!currentUser || !$('targetTable') || listKegiatanGlobal.length === 0) return;
+        const targetTable = document.getElementById('targetTable');
+        if(!currentUser || !targetTable || listKegiatanGlobal.length === 0) return;
+        
         let h = ''; 
         const jUser = currentUser.data.jabatan.toLowerCase();
+        
         listKegiatanGlobal.forEach(i => {
             if (i.jabatan.toLowerCase() === jUser) {
                 h += `<tr class="border-b border-zinc-800/50">
@@ -1141,30 +1221,45 @@
                       </tr>`;
             }
         });
-        $('targetTable').innerHTML = h || `<tr><td colspan="3" class="text-center italic">Kosong</td></tr>`;
+        
+        targetTable.innerHTML = h || `<tr><td colspan="3" class="text-center italic">Kosong</td></tr>`;
     }
 
     function loadDashboardData() {
         if(!currentUser) return;
-        apiCall('getDashboardData', { email: currentUser.data.email, role: currentUser.role, sessionToken: currentUser.data.sessionToken }).then(res => {
+        apiCall('getDashboardData', { email: currentUser.data.email, role: currentUser.role, sessionToken: currentUser.data.sessionToken })
+        .then(res => {
             globalDataRiwayat = res.riwayat;
+            
             if(currentUser.role !== 'admin') {
-                $('sisaTokenDash').innerText = res.token || "0"; 
-                $('formTokenCount').innerText = res.token || "0";
+                document.getElementById('sisaTokenDash').innerText = res.token || "0"; 
+                document.getElementById('formTokenCount').innerText = res.token || "0";
+                
+                const btnSubmit = document.getElementById('btnSubmit');
+                const btnText = document.getElementById('btnText');
+                
                 if(res.token <= 0) { 
-                    $('btnSubmit').disabled = true; $('btnSubmit').classList.add('opacity-50', 'cursor-not-allowed'); $('btnText').innerHTML = "Token Habis"; 
+                    btnSubmit.disabled = true; 
+                    btnSubmit.classList.add('opacity-50', 'cursor-not-allowed'); 
+                    btnText.innerHTML = "Token Habis"; 
                 } else { 
-                    $('btnSubmit').disabled = false; $('btnSubmit').classList.remove('opacity-50', 'cursor-not-allowed'); $('btnText').innerHTML = "<i class='fas fa-paper-plane mr-2'></i> Eksekusi AI (1 Token)"; 
+                    btnSubmit.disabled = false; 
+                    btnSubmit.classList.remove('opacity-50', 'cursor-not-allowed'); 
+                    btnText.innerHTML = "<i class='fas fa-paper-plane mr-2'></i> Eksekusi AI (1 Token)"; 
                 }
             }
+            
             hitungStatistikDashboard(); 
             resetRiwayatPaginationAndRender();
-        }).catch(err => console.log(err));
+        }).catch(err => {
+            console.log(err);
+        });
     }
 
     function hitungStatistikDashboard() {
         if(!currentUser || currentUser.role === 'admin' || listKegiatanGlobal.length === 0) return;
-        const bln = $('filterBulanDashboard').value;
+        
+        const bln = document.getElementById('filterBulanDashboard').value;
         const jUser = currentUser.data.jabatan.toLowerCase();
         const myRHK = listKegiatanGlobal.filter(i => i.jabatan.toLowerCase() === jUser);
         
@@ -1175,57 +1270,85 @@
             if(r.keterangan === 'Sukses') { 
                 s++; 
                 const m = myRHK.find(x => x.kegiatan.toLowerCase() === r.kegiatan.toLowerCase()); 
-                rSelesai[m ? m.kategori_rhk : "Lainnya"] = (rSelesai[m ? m.kategori_rhk : "Lainnya"] || 0) + 1; 
+                const key = m ? m.kategori_rhk : "Lainnya";
+                rSelesai[key] = (rSelesai[key] || 0) + 1; 
             } else {
                 g++;
             }
         });
         
         const fixed = { "RHK 1": 1, "RHK 2": 15, "RHK 3": 2, "RHK 4": 2, "RHK 5": 3, "RHK 6": 1, "RHK 7": 1, "RHK 8": 2, "RHK 9": 1 };
-        let hTr = ''; 
+        let hTr = '';
         let totalTarget = 0;
         
         [...new Set(myRHK.map(i => i.kategori_rhk))].sort().forEach(k => { 
             let tgt = fixed[k] || 0; 
-            totalTarget += tgt;
+            totalTarget += tgt; 
             let dn = rSelesai[k] || 0; 
+            let cl = dn >= tgt && tgt > 0 ? "text-lime-400" : "text-yellow-400";
+            
             hTr += `<tr class="border-b border-zinc-800/50">
                       <td class="p-2 font-bold">${k}</td>
-                      <td class="p-2 text-center ${dn >= tgt && tgt > 0 ? "text-lime-400" : "text-yellow-400"} font-black">${dn}</td>
+                      <td class="p-2 text-center ${cl} font-black">${dn}</td>
                       <td class="p-2 text-center">${tgt}</td>
                     </tr>`; 
         });
         
-        $('dashTotalTarget').innerText = totalTarget || "28"; 
-        $('dashTotalSelesai').innerText = s; 
-        $('dashRincianRHK').innerHTML = hTr || `<tr><td colspan="3" class="text-center italic py-3 text-zinc-500">Kosong</td></tr>`;
+        document.getElementById('dashTotalTarget').innerText = totalTarget || "28"; 
+        document.getElementById('dashTotalSelesai').innerText = s; 
+        
+        const dashRincianRHK = document.getElementById('dashRincianRHK');
+        if (dashRincianRHK) {
+            dashRincianRHK.innerHTML = hTr || `<tr><td colspan="3" class="text-center italic py-3 text-zinc-500">Kosong</td></tr>`;
+        }
     }
 
     // ==========================================
-    // AUTHENTICATION LOGIC (BYPASS ADMIN MUTLAK)
+    // AUTHENTICATION LOGIC (DENGAN BYPASS ADMIN)
     // ==========================================
     function toggleAuthForm() { 
-        $('formLogin').classList.toggle('hidden'); 
-        $('formRegister').classList.toggle('hidden'); 
+        document.getElementById('formLogin').classList.toggle('hidden'); 
+        document.getElementById('formRegister').classList.toggle('hidden'); 
     }
     
-    function bukaModalReset() { $('modalResetPass').classList.remove('hidden'); }
-    function tutupModalReset() { $('modalResetPass').classList.add('hidden'); }
+    function bukaModalReset() { 
+        document.getElementById('modalResetPass').classList.remove('hidden'); 
+    }
+    
+    function tutupModalReset() { 
+        document.getElementById('modalResetPass').classList.add('hidden'); 
+    }
     
     function eksekusiResetPass() {
-        const e = $('resetEmail').value, n = $('resetNIP').value, p = $('resetNewPass').value; 
-        if(!e || !n || !p) { showToast("Lengkapi form", "error"); return; }
+        const e = document.getElementById('resetEmail').value;
+        const n = document.getElementById('resetNIP').value;
+        const p = document.getElementById('resetNewPass').value; 
+        
+        if(!e || !n || !p) { 
+            showToast("Lengkapi form", "error"); 
+            return; 
+        } 
+        
         showLoadingUI(true); 
+        
         apiCall('resetPasswordLogic', { email:e, nip:n, newPass:p }).then(res => { 
-            showLoadingUI(false); showToast(res.message); tutupModalReset(); 
+            showLoadingUI(false); 
+            showToast(res.message, "success"); 
+            tutupModalReset(); 
         }).catch(err => { 
-            showLoadingUI(false); showToast(err.message, "error"); 
+            showLoadingUI(false); 
+            showToast(err.message, "error"); 
         });
     }
 
     function prosesLogin() {
-        const e = $('logEmail').value, p = $('logPassword').value; 
-        if(!e || !p) { showToast("Isi form!", "error"); return; }
+        const e = document.getElementById('logEmail').value;
+        const p = document.getElementById('logPassword').value; 
+        
+        if(!e || !p) { 
+            showToast("Isi form!", "error"); 
+            return; 
+        } 
         
         showLoadingUI(true);
         
@@ -1235,7 +1358,14 @@
                 showLoadingUI(false); 
                 currentUser = { 
                     role: 'admin', 
-                    data: { email: e, nama: 'M. Zaen Syachrullah', nip: '-', jabatan: 'Admin', sessionToken: 'admin_bypass', driveId: '' } 
+                    data: { 
+                        email: e, 
+                        nama: 'M. Zaen Syachrullah', 
+                        nip: '-', 
+                        jabatan: 'Admin', 
+                        sessionToken: 'admin_bypass', 
+                        driveId: '' 
+                    } 
                 }; 
                 localStorage.setItem('egenlap_user', JSON.stringify(currentUser)); 
                 terapkanSesi(); 
@@ -1255,22 +1385,31 @@
             renderTargetTable(); 
             showToast("Login Berhasil!"); 
         }).catch(err => { 
-            showLoadingUI(false); showToast(err.message, "error"); 
+            showLoadingUI(false); 
+            showToast(err.message, "error"); 
         });
     }
 
     function validasiRegister() {
         tempRegData = { 
-            nama: $('regNama').value, nip: $('regNIP').value, jabatan: $('regJabatan').value, 
-            email: $('regEmail').value, password: $('regPassword').value 
+            nama: document.getElementById('regNama').value, 
+            nip: document.getElementById('regNIP').value, 
+            jabatan: document.getElementById('regJabatan').value, 
+            email: document.getElementById('regEmail').value, 
+            password: document.getElementById('regPassword').value 
         };
-        if(!tempRegData.nama || !tempRegData.email || !tempRegData.password) { showToast("Lengkapi form!", "error"); return; } 
-        $('modalConfirmReg').classList.remove('hidden');
+        
+        if(!tempRegData.nama || !tempRegData.email || !tempRegData.password) { 
+            showToast("Lengkapi form!", "error"); 
+            return; 
+        } 
+        document.getElementById('modalConfirmReg').classList.remove('hidden');
     }
 
     function eksekusiRegister() {
-        $('modalConfirmReg').classList.add('hidden'); 
+        document.getElementById('modalConfirmReg').classList.add('hidden'); 
         showLoadingUI(true);
+        
         apiCall('validasiRegister', tempRegData).then(res => { 
             showLoadingUI(false); 
             localStorage.setItem('egenlap_user', JSON.stringify(res.userData)); 
@@ -1280,7 +1419,8 @@
             renderTargetTable(); 
             showToast("Daftar Berhasil!"); 
         }).catch(err => { 
-            showLoadingUI(false); showToast(err.message, "error"); 
+            showLoadingUI(false); 
+            showToast(err.message, "error"); 
         });
     }
 
@@ -1291,67 +1431,86 @@
             filterRHK(); 
             renderTargetTable(); 
         } else {
-            $('sec-auth').classList.remove('section-hidden'); 
+            document.getElementById('sec-auth').classList.remove('section-hidden'); 
         }
     }
 
     function terapkanSesi() {
-        $('sec-auth').classList.add('hidden'); 
-        $('bottomNav').classList.remove('hidden'); 
-        $('btnHeaderHamburger').classList.remove('hidden');
-        $('sideMenuRole').innerText = currentUser.data.email;
+        document.getElementById('sec-auth').classList.add('hidden'); 
+        document.getElementById('bottomNav').classList.remove('hidden'); 
+        document.getElementById('btnHeaderHamburger').classList.remove('hidden');
+        document.getElementById('sideMenuRole').innerText = currentUser.data.email;
         
         const readOnlyFields = ['namaPetugas', 'nip', 'jabatan', 'emailTarget', 'kabupaten'];
 
         if(currentUser.role === 'admin') { 
-            $('adminSideLinks').classList.remove('hidden'); 
-            $('adminFilterContainer').classList.remove('hidden'); 
+            document.getElementById('adminSideLinks').classList.remove('hidden'); 
+            document.getElementById('adminFilterContainer').classList.remove('hidden'); 
             
             // ADMIN BISA MENGUBAH FORM INPUT (TIDAK READONLY)
             readOnlyFields.forEach(id => {
-               const el = $(id);
-               if(el) { el.readOnly = false; el.classList.remove('opacity-70', 'cursor-not-allowed', 'bg-zinc-900/50'); }
+               const el = document.getElementById(id);
+               if(el) { 
+                   el.readOnly = false; 
+                   el.classList.remove('opacity-70', 'cursor-not-allowed', 'bg-zinc-900/50'); 
+               }
             });
             
             nav('admin'); 
             
-            // Cek Notifikasi untuk Admin
+            // Cek Notifikasi di Backend Supabase
             if(db) {
                 const tdy = new Date().toISOString().substring(0,10);
                 db.from('notifikasi_admin').select('*').gte('created_at', tdy).then(({data}) => {
                     if(data && data.length > 0) {
-                        setTimeout(() => { alert(`NOTIFIKASI E-GENLAP:\nAda ${data.length} transaksi token hari ini!\n\n- ` + data.map(d => d.pesan).join('\n- ')); }, 1500);
+                        setTimeout(() => { 
+                            alert(`NOTIFIKASI E-GENLAP:\nAda ${data.length} transaksi token hari ini!\n\n- ` + data.map(d => d.pesan).join('\n- ')); 
+                        }, 1500);
                     }
                 });
             }
         } else { 
-            $('adminSideLinks').classList.add('hidden'); 
-            $('adminFilterContainer').classList.add('hidden'); 
+            document.getElementById('adminSideLinks').classList.add('hidden'); 
+            document.getElementById('adminFilterContainer').classList.add('hidden'); 
             
             // USER BIASA DIKUNCI FORM INPUTNYA
             readOnlyFields.forEach(id => {
-               const el = $(id);
-               if(el) { el.readOnly = true; el.classList.add('opacity-70', 'cursor-not-allowed', 'bg-zinc-900/50'); }
+               const el = document.getElementById(id);
+               if(el) { 
+                   el.readOnly = true; 
+                   el.classList.add('opacity-70', 'cursor-not-allowed', 'bg-zinc-900/50'); 
+               }
             });
             
             nav('dashboard'); 
         }
         
-        $('namaPetugas').value = currentUser.data.nama; 
-        $('nip').value = currentUser.data.nip; 
-        $('jabatan').value = currentUser.data.jabatan; 
-        $('emailTarget').value = currentUser.data.email;
+        document.getElementById('namaPetugas').value = currentUser.data.nama; 
+        document.getElementById('nip').value = currentUser.data.nip; 
+        document.getElementById('jabatan').value = currentUser.data.jabatan; 
+        document.getElementById('emailTarget').value = currentUser.data.email;
         
-        if($('inputUbahDrive')) $('inputUbahDrive').value = currentUser.data.driveId || "";
+        if(document.getElementById('inputUbahDrive')) {
+            document.getElementById('inputUbahDrive').value = currentUser.data.driveId || "";
+        }
+        
         loadPengaturanAdmin();
     }
 
-    function logout() { localStorage.removeItem('egenlap_user'); window.location.reload(); }
+    function logout() { 
+        localStorage.removeItem('egenlap_user'); 
+        window.location.reload(); 
+    }
 
     function nav(target, btnElement = null) {
-      document.querySelectorAll('section').forEach(s => s.classList.add('section-hidden'));
-      const tSec = $('sec-' + target); 
-      if (tSec) tSec.classList.remove('section-hidden');
+      document.querySelectorAll('section').forEach(s => {
+          s.classList.add('section-hidden');
+      });
+      
+      const tSec = document.getElementById('sec-' + target); 
+      if (tSec) {
+          tSec.classList.remove('section-hidden');
+      }
       
       document.querySelectorAll('.nav-btn').forEach(b => { 
           b.classList.remove('text-blue-400'); 
@@ -1363,29 +1522,45 @@
           btnElement.classList.add('text-blue-400'); 
       }
       
-      if(target === 'dashboard' || target === 'report' || target === 'arsip') loadDashboardData();
-      if(target === 'admin' || target === 'keuangan') { loadAdminUsers(); loadMonitoringAdmin(); }
-      if(target === 'agenda') loadAgendaData();
+      if(target === 'dashboard' || target === 'report' || target === 'arsip') {
+          loadDashboardData();
+      }
+      if(target === 'admin' || target === 'keuangan') { 
+          loadAdminUsers(); 
+          loadMonitoringAdmin(); 
+      }
+      if(target === 'agenda') {
+          loadAgendaData();
+      }
+      
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     // ==========================================
     // AGENDA (ANALISA TARGET & EXPORT)
     // ==========================================
-    function loadAgendaData() {
+    async function loadAgendaData() {
         if(!currentUser) return;
-        $('containerListAgenda').innerHTML = `<p class="text-center text-[10px] py-4"><i class="fas fa-spinner fa-spin text-blue-400"></i></p>`; 
-        $('analisaKekurangan').innerHTML = `<li>Memuat...</li>`;
         
-        apiCall('getAgenda', { email: currentUser.data.email }).then(data => {
+        document.getElementById('containerListAgenda').innerHTML = `<p class="text-center text-[10px] py-4"><i class="fas fa-spinner fa-spin text-blue-400"></i></p>`; 
+        document.getElementById('analisaKekurangan').innerHTML = `<li>Memuat...</li>`;
+        
+        try {
+            const { data, error } = await db.from('agenda_kegiatan').select('*').eq('email_user', currentUser.data.email).order('tanggal', { ascending: false });
+            if(error) throw error; 
+            
             globalAgendaData = data || [];
-            let grouped = {}, mths = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+            let grouped = {};
+            const mths = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
             
             globalAgendaData.forEach(ag => { 
                 const p = ag.tanggal.split('-'); 
-                if(p.length!==3) return; 
+                if(p.length !== 3) return; 
+                
                 const mName = `${mths[parseInt(p[1])-1]} ${p[0]}`; 
-                if(!grouped[mName]) grouped[mName]=[]; 
+                if(!grouped[mName]) {
+                    grouped[mName] = []; 
+                }
                 grouped[mName].push(ag); 
             });
             
@@ -1394,6 +1569,7 @@
                 hAg += `<div class="bg-blue-900/20 border border-blue-500/30 p-4 rounded-xl mb-4">
                             <h3 class="text-sm font-bold text-blue-400 mb-3 border-b border-blue-500/30 pb-1"><i class="fas fa-calendar-alt mr-2"></i>Agenda ${m}</h3>
                             <div class="space-y-3">`;
+                
                 grouped[m].forEach(ag => { 
                     hAg += `<div class="bg-zinc-800/80 p-3 rounded-lg border border-zinc-700 hover:border-blue-500/50">
                                 <div class="flex justify-between items-start mb-1">
@@ -1407,50 +1583,88 @@
                                 </div>
                             </div>`; 
                 });
+                
                 hAg += `</div></div>`;
             }
-            $('containerListAgenda').innerHTML = hAg || `<p class="text-center text-[10px] text-zinc-500 py-4">Kosong.</p>`;
+            
+            document.getElementById('containerListAgenda').innerHTML = hAg || `<p class="text-center text-[10px] text-zinc-500 py-4">Kosong.</p>`;
             
             if(listKegiatanGlobal.length === 0) return;
+            
             const jUser = currentUser.data.jabatan.trim().toLowerCase();
             const myRHK = listKegiatanGlobal.filter(i => i.jabatan.trim().toLowerCase() === jUser);
             const fixTgt = { "RHK 1": 1, "RHK 2": 15, "RHK 3": 2, "RHK 4": 2, "RHK 5": 3, "RHK 6": 1, "RHK 7": 1, "RHK 8": 2, "RHK 9": 1 };
             
-            let rSelesai = {}, mStr = String(new Date().getMonth()+1).padStart(2,'0'), yStr = String(new Date().getFullYear());
+            let rSelesai = {};
+            const dNow = new Date();
+            const mStr = String(dNow.getMonth()+1).padStart(2,'0');
+            const yStr = String(dNow.getFullYear());
             
             globalDataRiwayat.forEach(r => { 
                 if(r.keterangan === 'Sukses' && r.tanggal.includes(`${yStr}-${mStr}-`)){ 
                     const mx = myRHK.find(x => x.kegiatan === r.kegiatan); 
-                    rSelesai[mx ? mx.kategori_rhk : "Lainnya"] = (rSelesai[mx ? mx.kategori_rhk : "Lainnya"] || 0) + 1; 
+                    if (mx) {
+                        rSelesai[mx.kategori_rhk] = (rSelesai[mx.kategori_rhk] || 0) + 1; 
+                    } else {
+                        rSelesai["Lainnya"] = (rSelesai["Lainnya"] || 0) + 1;
+                    }
                 } 
             });
             
             let aHTML = ''; 
-            [...new Set(myRHK.map(i=>i.kategori_rhk))].sort().forEach(k => { 
+            const uniqueKategori = [...new Set(myRHK.map(i=>i.kategori_rhk))].sort();
+            
+            uniqueKategori.forEach(k => { 
                 let sisa = (fixTgt[k] || 0) - (rSelesai[k] || 0); 
                 if(sisa > 0){ 
                     let srn = myRHK.find(x => x.kategori_rhk === k); 
                     aHTML += `<li class="mb-1"><b>${k}:</b> Kurang <span class="text-red-400 font-bold">${sisa} Laporan</span>.<br><span class="text-[8px] text-yellow-400">Saran: Buat agenda "${srn ? srn.kegiatan.substring(0,30) + '...' : '-'}"</span></li>`; 
                 } 
             });
-            $('analisaKekurangan').innerHTML = aHTML || `<li class="text-lime-400 font-bold"><i class="fas fa-check-circle"></i> Target bulan ini Terpenuhi!</li>`;
-        }).catch(e => { 
-            $('containerListAgenda').innerHTML = "Gagal memuat."; 
-        });
+            
+            document.getElementById('analisaKekurangan').innerHTML = aHTML || `<li class="text-lime-400 font-bold"><i class="fas fa-check-circle"></i> Target bulan ini Terpenuhi!</li>`;
+        } catch(e) { 
+            document.getElementById('containerListAgenda').innerHTML = "Gagal memuat."; 
+        }
     }
 
-    function simpanAgenda() {
-        const t=$('agTanggal').value, j=$('agJam').value, k=$('agKegiatan').value, l=$('agLokasi').value, kt=$('agKet').value;
-        if(!t||!j||!k||!l) { showToast("Lengkapi form!", "error"); return; } 
+    async function simpanAgenda() {
+        const t = document.getElementById('agTanggal').value;
+        const j = document.getElementById('agJam').value;
+        const k = document.getElementById('agKegiatan').value;
+        const l = document.getElementById('agLokasi').value;
+        const kt = document.getElementById('agKet').value;
+        
+        if(!t || !j || !k || !l) { 
+            showToast("Lengkapi form!", "error"); 
+            return; 
+        } 
         
         showLoadingUI(true);
-        apiCall('simpanAgenda', { email_user: currentUser.data.email, tanggal: t, jam: j, lokasi: l, kegiatan: k, keterangan: kt }).then(res => {
-            showLoadingUI(false); showToast("Agenda disimpan!"); 
-            $('agTanggal').value=''; $('agJam').value=''; $('agLokasi').value=''; $('agKet').value=''; 
+        
+        try { 
+            await db.from('agenda_kegiatan').insert([{ 
+                email_user: currentUser.data.email, 
+                tanggal: t, 
+                jam: j, 
+                lokasi: l, 
+                kegiatan: k, 
+                keterangan: kt 
+            }]); 
+            
+            showLoadingUI(false); 
+            showToast("Tersimpan!"); 
+            
+            document.getElementById('agTanggal').value = ''; 
+            document.getElementById('agJam').value = ''; 
+            document.getElementById('agLokasi').value = ''; 
+            document.getElementById('agKet').value = ''; 
+            
             loadAgendaData(); 
-        }).catch(e => { 
-            showLoadingUI(false); showToast("Error", "error"); 
-        });
+        } catch(e) { 
+            showLoadingUI(false); 
+            showToast("Error", "error"); 
+        }
     }
 
     function downloadCSV(fname, rows) { 
@@ -1463,76 +1677,151 @@
     }
 
     function exportAgendaCSV() { 
-        if(globalAgendaData.length === 0){ showToast("Kosong","error"); return; } 
+        if(globalAgendaData.length === 0){ 
+            showToast("Kosong","error"); 
+            return; 
+        } 
+        
         let rows = [["Hari/Tanggal","Jam","Kegiatan","Lokasi","Keterangan"]]; 
-        globalAgendaData.forEach(a => rows.push([a.tanggal, a.jam, a.kegiatan, a.lokasi, a.keterangan || ""])); 
+        globalAgendaData.forEach(a => {
+            rows.push([a.tanggal, a.jam, a.kegiatan, a.lokasi, a.keterangan || ""]);
+        }); 
+        
         downloadCSV(`Agenda.csv`, rows); 
     }
 
     function exportRiwayatCSV() { 
-        if(globalDataRiwayat.length === 0){ showToast("Kosong","error"); return; } 
+        if(globalDataRiwayat.length === 0){ 
+            showToast("Kosong","error"); 
+            return; 
+        } 
+        
         let rows = [["Nama Petugas","Tanggal","Jam","Kegiatan","Status","URL Drive"]]; 
         let dx = globalDataRiwayat; 
         
-        if(currentUser.role === 'admin' && $('inputFilterRiwayat').value) {
-            dx = globalDataRiwayat.filter(r => (r.nama||"").toLowerCase().includes($('inputFilterRiwayat').value.toLowerCase()) || (r.kegiatan||"").toLowerCase().includes($('inputFilterRiwayat').value.toLowerCase())); 
+        const filterEl = document.getElementById('inputFilterRiwayat');
+        if(currentUser.role === 'admin' && filterEl.value) {
+            dx = globalDataRiwayat.filter(r => 
+                (r.nama||"").toLowerCase().includes(filterEl.value.toLowerCase()) || 
+                (r.kegiatan||"").toLowerCase().includes(filterEl.value.toLowerCase())
+            ); 
         }
-        dx.forEach(r => rows.push([r.nama, r.tanggal, r.jam, r.kegiatan, r.keterangan, r.url||""])); 
+        
+        dx.forEach(r => {
+            rows.push([r.nama, r.tanggal, r.jam, r.kegiatan, r.keterangan, r.url||""]);
+        }); 
+        
         downloadCSV(`Riwayat.csv`, rows); 
     }
 
     // ==========================================
     // PAGINASI & RENDER RIWAYAT
     // ==========================================
-    function resetRiwayatPaginationAndRender() { currentRiwayatPage = 1; renderTable(); }
+    function resetRiwayatPaginationAndRender() { 
+        currentRiwayatPage = 1; 
+        renderTable(); 
+    }
     
     function renderTable() {
-        const tb = $('tableBody'), tba = $('tableArsipBody'), cs = currentUser.role==='admin'?4:3;
-        let f = currentUser.role === 'admin' ? globalDataRiwayat.filter(r => (r.nama||"").toLowerCase().includes($('inputFilterRiwayat').value.toLowerCase()) || (r.kegiatan||"").toLowerCase().includes($('inputFilterRiwayat').value.toLowerCase())) : globalDataRiwayat;
+        const tb = document.getElementById('tableBody');
+        const tba = document.getElementById('tableArsipBody');
+        const cs = currentUser.role === 'admin' ? 4 : 3;
+        
+        let f = globalDataRiwayat;
+        
+        if (currentUser.role === 'admin') {
+            const filterVal = document.getElementById('inputFilterRiwayat').value.toLowerCase();
+            f = globalDataRiwayat.filter(r => 
+                (r.nama||"").toLowerCase().includes(filterVal) || 
+                (r.kegiatan||"").toLowerCase().includes(filterVal)
+            );
+        }
         
         if(f.length === 0) { 
             tb.innerHTML = `<tr><td colspan="${cs}" class="text-center p-4">Kosong</td></tr>`; 
             tba.innerHTML = `<tr><td colspan="3" class="text-center p-4">Kosong</td></tr>`; 
-            $('riwayatPageIndicator').innerText = `Hal 1 / 1`; 
+            document.getElementById('riwayatPageIndicator').innerText = `Hal 1 / 1`; 
             return; 
         }
         
         const tP = Math.ceil(f.length/itemsPerPageRiwayat) || 1;
         const p = f.slice((currentRiwayatPage-1)*itemsPerPageRiwayat, currentRiwayatPage*itemsPerPageRiwayat);
+        
         let r = '', ra = '';
         
         p.forEach(x => { 
             let st = x.keterangan === 'Sukses' ? 'text-blue-400' : 'text-red-400';
             let hj = (x.jam && x.jam !== "-") ? `<span class="text-blue-300 bg-blue-900/30 px-1 rounded">${x.jam}</span>` : "";
-            let lA = x.url ? `<a href="${x.url}" target="_blank" class="text-blue-400 hover:text-white"><i class="fas fa-folder"></i></a>` : "-"; 
+            let lA = "-";
             
-            ra += `<tr class="border-b border-zinc-800/50"><td class="p-2 text-[9px]">${x.tanggal}</td><td class="p-2 text-[9px] text-blue-100">${x.kegiatan}</td><td class="p-2 text-center">${lA}</td></tr>`; 
-            r += `<tr class="border-b border-zinc-800/50">${currentUser.role === 'admin' ? `<td class="p-2 text-[9px] text-blue-300">${x.nama}</td>` : ''}<td class="p-2 text-[9px]">${x.tanggal}<br>${hj}</td><td class="p-2 text-[9px]">${x.kegiatan}</td><td class="p-2 text-[9px] ${st}">${x.keterangan}</td></tr>`; 
+            if (x.url) {
+                lA = `<a href="${x.url}" target="_blank" class="text-blue-400 hover:text-white underline"><i class="fas fa-file-pdf"></i> PDF</a>`;
+            }
+            
+            ra += `<tr class="border-b border-zinc-800/50">
+                      <td class="p-2 text-[9px]">${x.tanggal}</td>
+                      <td class="p-2 text-[9px] text-blue-100">${x.kegiatan}</td>
+                      <td class="p-2 text-center">${lA}</td>
+                   </tr>`; 
+                   
+            r += `<tr class="border-b border-zinc-800/50">
+                    ${currentUser.role === 'admin' ? `<td class="p-2 text-[9px] text-blue-300">${x.nama}</td>` : ''}
+                    <td class="p-2 text-[9px]">${x.tanggal}<br>${hj}</td>
+                    <td class="p-2 text-[9px]">${x.kegiatan}</td>
+                    <td class="p-2 text-[9px] ${st}">${x.keterangan}</td>
+                  </tr>`; 
         });
         
         tb.innerHTML = r; 
         tba.innerHTML = ra; 
-        $('riwayatPageIndicator').innerText = `Hal ${currentRiwayatPage} / ${tP}`;
+        document.getElementById('riwayatPageIndicator').innerText = `Hal ${currentRiwayatPage} / ${tP}`;
     }
     
-    function prevRiwayat() { if(currentRiwayatPage>1) { currentRiwayatPage--; renderTable(); } }
-    function nextRiwayat() { let f = currentUser.role==='admin'?globalDataRiwayat.filter(r=>(r.nama||"").toLowerCase().includes($('inputFilterRiwayat').value.toLowerCase())||(r.kegiatan||"").toLowerCase().includes($('inputFilterRiwayat').value.toLowerCase())):globalDataRiwayat; if(currentRiwayatPage<Math.ceil(f.length/itemsPerPageRiwayat)) { currentRiwayatPage++; renderTable(); } }
+    function prevRiwayat() { 
+        if(currentRiwayatPage > 1) { 
+            currentRiwayatPage--; 
+            renderTable(); 
+        } 
+    }
+    
+    function nextRiwayat() { 
+        let f = globalDataRiwayat;
+        if (currentUser.role === 'admin') {
+            const filterVal = document.getElementById('inputFilterRiwayat').value.toLowerCase();
+            f = globalDataRiwayat.filter(r => 
+                (r.nama||"").toLowerCase().includes(filterVal) || 
+                (r.kegiatan||"").toLowerCase().includes(filterVal)
+            );
+        }
+        if(currentRiwayatPage < Math.ceil(f.length/itemsPerPageRiwayat)) { 
+            currentRiwayatPage++; 
+            renderTable(); 
+        } 
+    }
 
     // ==========================================
-    // GENERATE LAPORAN AI (FORM DINAMIS & TTD & FOTO)
+    // GENERATE LAPORAN AI (FORM DINAMIS & TTD)
     // ==========================================
     function tambahSurat() { 
-        $('containerDataSurat').insertAdjacentHTML('beforeend', `
+        document.getElementById('containerDataSurat').insertAdjacentHTML('beforeend', `
             <div class="surat-item grid grid-cols-2 gap-3 mb-2 relative pt-4 border-t border-zinc-700/50 mt-2">
-                <button type="button" onclick="this.parentElement.remove()" class="absolute top-1 right-0 text-red-500 text-[10px] font-bold"><i class="fas fa-times"></i> Hapus</button>
-                <div><input type="text" class="input-dasar-surat w-full p-2 text-xs rounded-lg glossy-input" placeholder="Dasar Surat Tambahan"></div>
-                <div><input type="text" class="input-perihal-surat w-full p-2 text-xs rounded-lg glossy-input" placeholder="Perihal Tambahan"></div>
+                <button type="button" onclick="this.parentElement.remove()" class="absolute top-1 right-0 text-red-500 text-[10px] font-bold">
+                    <i class="fas fa-times"></i> Hapus
+                </button>
+                <div>
+                    <input type="text" class="input-dasar-surat w-full p-2 text-xs rounded-lg glossy-input" placeholder="Dasar Surat Tambahan">
+                </div>
+                <div>
+                    <input type="text" class="input-perihal-surat w-full p-2 text-xs rounded-lg glossy-input" placeholder="Perihal Tambahan">
+                </div>
             </div>`); 
     }
     
     function renderDynamicForm() { 
-        const s = $('kegiatanSelect'); if(!s.value) return; 
-        const v = s.value.toLowerCase();
+        const s = document.getElementById('kegiatanSelect'); 
+        if(!s.value) return; 
+        
+        const v = s.value.toLowerCase(); 
         let html = '';
         
         if (v.includes("supervisi")) {
@@ -1555,143 +1844,277 @@
                     <label class="block text-[10px] font-bold text-yellow-400 mb-1"><i class="fas fa-robot"></i> Catatan Khusus untuk AI (Acuan Pembuatan)</label>
                     <textarea id="dynAnalisaAI" rows="2" class="w-full p-2 text-xs rounded-lg glossy-input" placeholder="Arahan agar AI membuat laporan lebih tajam. Contoh: Fokuskan pada solusi masalah A..."></textarea>
                  </div>`;
-        
-        $('dynamicFormArea').innerHTML = html;
+                 
+        document.getElementById('dynamicFormArea').innerHTML = html;
     }
 
     function getDynamicDataForReview() {
-        const s = $('kegiatanSelect'); if(!s.value) return {};
-        const v = s.value.toLowerCase();
+        const s = document.getElementById('kegiatanSelect'); 
+        if(!s.value) return {}; 
+        
+        const v = s.value.toLowerCase(); 
         let data = {};
+        
         if (v.includes("supervisi")) {
-            if($('dynSupervisiTarget')) data['Pihak Disupervisi'] = $('dynSupervisiTarget').value;
-            if($('dynSupervisiHasil')) data['Hasil Supervisi'] = $('dynSupervisiHasil').value;
+            if(document.getElementById('dynSupervisiTarget')) data['Pihak Disupervisi'] = document.getElementById('dynSupervisiTarget').value;
+            if(document.getElementById('dynSupervisiHasil')) data['Hasil Supervisi'] = document.getElementById('dynSupervisiHasil').value;
         } else if (v.includes("graduasi")) {
-            if($('dynGraduasiNama')) data['Nama KPM Graduasi'] = $('dynGraduasiNama').value;
-            if($('dynGraduasiAlasan')) data['Alasan'] = $('dynGraduasiAlasan').value;
+            if(document.getElementById('dynGraduasiNama')) data['Nama KPM Graduasi'] = document.getElementById('dynGraduasiNama').value;
+            if(document.getElementById('dynGraduasiAlasan')) data['Alasan'] = document.getElementById('dynGraduasiAlasan').value;
         } else if (v.includes("p2k2") || v.includes("pertemuan")) {
-            if($('dynP2k2Hadir')) data['Hadir'] = $('dynP2k2Hadir').value + " Orang";
-            if($('dynP2k2Alpha')) data['Tidak Hadir'] = $('dynP2k2Alpha').value + " Orang";
-            if($('dynP2k2Materi')) data['Materi Modul'] = $('dynP2k2Materi').value;
+            if(document.getElementById('dynP2k2Hadir')) data['Hadir'] = document.getElementById('dynP2k2Hadir').value + " Orang";
+            if(document.getElementById('dynP2k2Alpha')) data['Tidak Hadir'] = document.getElementById('dynP2k2Alpha').value + " Orang";
+            if(document.getElementById('dynP2k2Materi')) data['Materi Modul'] = document.getElementById('dynP2k2Materi').value;
         } else {
-            if($('dynUmum')) data['Sasaran Umum'] = $('dynUmum').value;
+            if(document.getElementById('dynUmum')) data['Sasaran Umum'] = document.getElementById('dynUmum').value;
         }
         return data;
     }
     
     function resizeImg(f, maxS, cb) { 
-        const r=new FileReader(); 
+        const r = new FileReader(); 
         r.onload = e => { 
-            const img=new Image(); 
+            const img = new Image(); 
             img.onload = () => { 
-                let w=img.width, h=img.height; 
-                if(w>maxS){ h*=maxS/w; w=maxS; } 
-                const c=document.createElement('canvas'); 
-                c.width=w; c.height=h; 
-                const ctx=c.getContext('2d'); 
-                ctx.fillStyle="#ffffff"; 
+                let w = img.width;
+                let h = img.height; 
+                
+                if(w > maxS) { 
+                    h *= maxS / w; 
+                    w = maxS; 
+                } 
+                
+                const c = document.createElement('canvas'); 
+                c.width = w; 
+                c.height = h; 
+                
+                const ctx = c.getContext('2d'); 
+                ctx.fillStyle = "#ffffff"; 
                 ctx.fillRect(0,0,w,h); 
                 ctx.drawImage(img,0,0,w,h); 
+                
                 cb(c.toDataURL('image/jpeg', 0.6)); 
             }; 
-            img.src=e.target.result; 
+            img.src = e.target.result; 
         }; 
         r.readAsDataURL(f); 
     }
 
-    function prosesTtdForm(e) { if(e.target.files[0]) resizeImg(e.target.files[0], 400, b=>{ formTtdBase64=b; $('imgTtdPreview').src=b; $('previewTtdContainer').classList.remove('hidden'); }); }
-    function hapusTtdForm() { formTtdBase64=null; $('formTtdFile').value=""; $('previewTtdContainer').classList.add('hidden'); $('imgTtdPreview').src=""; }
+    function prosesTtdForm(e) { 
+        if(e.target.files[0]) {
+            resizeImg(e.target.files[0], 400, b => { 
+                formTtdBase64 = b; 
+                document.getElementById('imgTtdPreview').src = b; 
+                document.getElementById('previewTtdContainer').classList.remove('hidden'); 
+            });
+        }
+    }
+    
+    function hapusTtdForm() { 
+        formTtdBase64 = null; 
+        document.getElementById('formTtdFile').value = ""; 
+        document.getElementById('previewTtdContainer').classList.add('hidden'); 
+        document.getElementById('imgTtdPreview').src = ""; 
+    }
     
     function prosesLampiran(e) { 
         for(let f of e.target.files) { 
-            if(arrayLampiranBase64.length>=3)break; 
-            resizeImg(f, 800, b=>{ 
+            if(arrayLampiranBase64.length >= 3) break; 
+            
+            resizeImg(f, 800, b => { 
                 arrayLampiranBase64.push(b); 
                 renderLampiranPreviews(); 
             }); 
         } 
-        $('lampiranFile').value=""; 
+        document.getElementById('lampiranFile').value = ""; 
     }
     
     function renderLampiranPreviews() {
-        const c=$('previewLampiranContainer'); 
-        c.innerHTML=""; 
-        arrayLampiranBase64.forEach((b, i)=>c.innerHTML+=`<div class="relative shrink-0 w-12 h-12 rounded-lg border border-blue-500/50 overflow-hidden"><img src="${b}" class="w-full h-full object-cover"><div onclick="arrayLampiranBase64.splice(${i},1); renderLampiranPreviews()" class="absolute top-0 right-0 bg-red-600 text-white w-4 h-4 flex items-center justify-center cursor-pointer text-[8px]"><i class="fas fa-times"></i></div></div>`); 
-        $('lampiranStatus').innerText=`${arrayLampiranBase64.length} / 3 File`;
+        const c = document.getElementById('previewLampiranContainer'); 
+        c.innerHTML = ""; 
+        
+        arrayLampiranBase64.forEach((b, i) => {
+            c.innerHTML += `
+                <div class="relative shrink-0 w-12 h-12 rounded-lg border border-blue-500/50 overflow-hidden">
+                    <img src="${b}" class="w-full h-full object-cover">
+                    <div onclick="arrayLampiranBase64.splice(${i},1); renderLampiranPreviews()" class="absolute top-0 right-0 bg-red-600 text-white w-4 h-4 flex items-center justify-center cursor-pointer text-[8px]">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>`; 
+        });
+        
+        document.getElementById('lampiranStatus').innerText = `${arrayLampiranBase64.length} / 3 File`;
     }
     
     function prosesFoto(e) { 
         for(let f of e.target.files) { 
-            if(arrayFotoBase64.length>=10)break; 
-            resizeImg(f, 800, b=>{ 
+            if(arrayFotoBase64.length >= 10) break; 
+            
+            resizeImg(f, 800, b => { 
                 arrayFotoBase64.push(b); 
                 renderFotoPreviews(); 
             }); 
         } 
-        $('inputKamera').value=""; $('inputGaleri').value=""; 
+        document.getElementById('inputKamera').value = ""; 
+        document.getElementById('inputGaleri').value = ""; 
     }
     
     function renderFotoPreviews() {
-        const c=$('previewFotoContainer'); 
-        c.innerHTML=""; 
-        arrayFotoBase64.forEach((b, i)=>c.innerHTML+=`<div class="relative shrink-0 w-12 h-12 rounded-lg border border-blue-500/50 overflow-hidden"><img src="${b}" class="w-full h-full object-cover"><div onclick="arrayFotoBase64.splice(${i},1); renderFotoPreviews()" class="absolute top-0 right-0 bg-red-600 text-white w-4 h-4 flex items-center justify-center cursor-pointer text-[8px]"><i class="fas fa-times"></i></div></div>`); 
-        $('photoStatus').innerText=`${arrayFotoBase64.length} / 10 Foto`;
+        const c = document.getElementById('previewFotoContainer'); 
+        c.innerHTML = ""; 
+        
+        arrayFotoBase64.forEach((b, i) => {
+            c.innerHTML += `
+                <div class="relative shrink-0 w-12 h-12 rounded-lg border border-blue-500/50 overflow-hidden">
+                    <img src="${b}" class="w-full h-full object-cover">
+                    <div onclick="arrayFotoBase64.splice(${i},1); renderFotoPreviews()" class="absolute top-0 right-0 bg-red-600 text-white w-4 h-4 flex items-center justify-center cursor-pointer text-[8px]">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>`; 
+        });
+        
+        document.getElementById('photoStatus').innerText = `${arrayFotoBase64.length} / 10 Foto`;
     }
 
     function tampilkanReview(e) { 
         e.preventDefault(); 
-        if(!formTtdBase64) { showToast("Tanda tangan wajib!", "error"); return; }
-        const sel = $('kegiatanSelect'); if(!sel.value) { showToast("Pilih RHK!", "error"); return; }
         
-        let dynData = getDynamicDataForReview();
-        let dynHtml = '';
-        for(let k in dynData) {
-            if(dynData[k]) dynHtml += `<li><b>${k}:</b> <span class="text-white">${dynData[k]}</span></li>`;
+        let currentToken = parseInt(document.getElementById('sisaTokenDash').innerText) || 0;
+        
+        if (currentUser.role !== 'admin' && currentToken <= 0) {
+            showToast("Token habis! Silakan isi/beli token dulu.", "error"); 
+            return;
         }
         
-        let arahanAI = $('dynAnalisaAI') ? $('dynAnalisaAI').value : '';
+        if(!formTtdBase64) { 
+            showToast("Tanda tangan wajib!", "error"); 
+            return; 
+        }
         
-        $('reviewContent').innerHTML = `
+        const sel = document.getElementById('kegiatanSelect'); 
+        if(!sel.value) { 
+            showToast("Pilih RHK!", "error"); 
+            return; 
+        }
+        
+        let dynData = getDynamicDataForReview(); 
+        let dynHtml = ''; 
+        
+        for(let k in dynData) {
+            if(dynData[k]) {
+                dynHtml += `<li><b>${k}:</b> <span class="text-white">${dynData[k]}</span></li>`;
+            }
+        }
+        
+        let arahanAI = document.getElementById('dynAnalisaAI') ? document.getElementById('dynAnalisaAI').value : '';
+        
+        document.getElementById('reviewContent').innerHTML = `
             <p class="mb-1"><b>Kegiatan:</b> <span class="text-white">${sel.options[sel.selectedIndex].text}</span></p>
-            <p class="mb-1"><b>Waktu:</b> <span class="text-white">${$('tanggalLaporan').value} (${$('jamMulai').value})</span></p>
-            <p class="mb-1"><b>Lokasi:</b> <span class="text-white">${$('lokasi').value}, ${$('kabupaten').value}</span></p>
+            <p class="mb-1"><b>Waktu:</b> <span class="text-white">${document.getElementById('tanggalLaporan').value} (${document.getElementById('jamMulai').value})</span></p>
+            <p class="mb-1"><b>Lokasi:</b> <span class="text-white">${document.getElementById('lokasi').value}, ${document.getElementById('kabupaten').value}</span></p>
             ${dynHtml ? `<div class="mt-2 bg-blue-900/30 p-2 rounded border border-blue-500/20"><p class="text-[10px] text-blue-300 font-bold mb-1">Data Lapangan Khusus:</p><ul class="list-disc pl-4 space-y-1">${dynHtml}</ul></div>` : ''}
             ${arahanAI ? `<p class="mt-2 text-yellow-400"><b>Arahan AI:</b> "${arahanAI}"</p>` : ''}
-            <p class="mt-2 text-blue-400"><b>Lampiran:</b> ${arrayLampiranBase64.length} Berkas | <b>Foto:</b> ${arrayFotoBase64.length}</p>
+            <p class="mt-2 text-blue-400"><b>Lampiran:</b> ${arrayLampiranBase64.length} Berkas | <b>Foto:</b> ${arrayFotoBase64.length} Foto</p>
         `; 
-        $('modalReview').classList.remove('hidden'); 
+        
+        document.getElementById('modalReview').classList.remove('hidden'); 
     }
     
     function executeGenerate() { 
-        showLoadingUI(true); $('modalReview').classList.add('hidden');
-        const sel = $('kegiatanSelect'); let dsArr = []; 
-        document.querySelectorAll('.surat-item').forEach(i => { let ds=i.querySelector('.input-dasar-surat').value, ph=i.querySelector('.input-perihal-surat').value; if(ds||ph) dsArr.push(`${ds} - ${ph}`); });
+        let currentToken = parseInt(document.getElementById('sisaTokenDash').innerText) || 0;
         
-        const dynamicPayload = getDynamicDataForReview();
-        const catatanAI = $('dynAnalisaAI') ? $('dynAnalisaAI').value : '';
+        if (currentUser.role !== 'admin' && currentToken <= 0) {
+            showToast("Token habis! Silakan isi/beli token dulu.", "error"); 
+            document.getElementById('modalReview').classList.add('hidden'); 
+            return;
+        }
+        
+        showLoadingUI(true); 
+        document.getElementById('modalReview').classList.add('hidden');
+        
+        const sel = document.getElementById('kegiatanSelect'); 
+        let dsArr = []; 
+        
+        document.querySelectorAll('.surat-item').forEach(i => { 
+            let ds = i.querySelector('.input-dasar-surat').value;
+            let ph = i.querySelector('.input-perihal-surat').value; 
+            if(ds || ph) {
+                dsArr.push(`${ds} - ${ph}`);
+            }
+        });
+        
+        const dynamicPayload = getDynamicDataForReview(); 
+        const catatanAI = document.getElementById('dynAnalisaAI') ? document.getElementById('dynAnalisaAI').value : '';
         
         apiCall('prosesLaporan', {
-            tanggalLaporan: $('tanggalLaporan').value, jamMulai: $('jamMulai').value, namaPetugas: $('namaPetugas').value, nip: $('nip').value, jabatan: $('jabatan').value, jabatan_pdf: $('jabatanPDF').value, kabupaten: $('kabupaten').value, lokasi: $('lokasi').value, kegiatan: sel.value, kategoriRHK: sel.options[sel.selectedIndex].getAttribute('data-rhk'), dataSurat: dsArr.join("\n"), ttdData: formTtdBase64, lampiranPendukung: arrayLampiranBase64, koleksiFoto: arrayFotoBase64, dynamicData: dynamicPayload, analisaAI: catatanAI, currentUserEmail: currentUser.data.email, currentUserRole: currentUser.role, sessionToken: currentUser.data.sessionToken, driveId: currentUser.data.driveId
+            tanggalLaporan: document.getElementById('tanggalLaporan').value, 
+            jamMulai: document.getElementById('jamMulai').value, 
+            namaPetugas: document.getElementById('namaPetugas').value, 
+            nip: document.getElementById('nip').value, 
+            jabatan: document.getElementById('jabatan').value, 
+            jabatan_pdf: document.getElementById('jabatanPDF').value, 
+            kabupaten: document.getElementById('kabupaten').value, 
+            lokasi: document.getElementById('lokasi').value, 
+            kegiatan: sel.value, 
+            kategoriRHK: sel.options[sel.selectedIndex].getAttribute('data-rhk'), 
+            dataSurat: dsArr.join("\n"), 
+            ttdData: formTtdBase64, 
+            lampiranPendukung: arrayLampiranBase64, 
+            koleksiFoto: arrayFotoBase64, 
+            dynamicData: dynamicPayload, 
+            analisaAI: catatanAI, 
+            currentUserEmail: currentUser.data.email, 
+            currentUserRole: currentUser.role, 
+            sessionToken: currentUser.data.sessionToken, 
+            driveId: currentUser.data.driveId
         }).then(res => {
-            showLoadingUI(false); showToast("Sukses Generate PDF & Masuk Drive!", "success"); 
-            $('reportForm').reset(); arrayFotoBase64=[]; arrayLampiranBase64=[]; hapusTtdForm(); $('photoStatus').innerText="0 / 10 Foto"; $('lampiranStatus').innerText="0 / 3 File";
-            const sItem = $('containerDataSurat').querySelectorAll('.surat-item'); for(let i=1; i<sItem.length; i++) sItem[i].remove(); $('dynamicFormArea').innerHTML = '';
-            $('namaPetugas').value = currentUser.data.nama; $('nip').value = currentUser.data.nip; $('jabatan').value = currentUser.data.jabatan; $('emailTarget').value = currentUser.data.email;
+            showLoadingUI(false); 
+            showToast("Sukses Generate PDF & Masuk Drive!", "success"); 
             
-            if(currentUser.role !== 'admin') { loadDashboardData(); nav('dashboard'); }
-        }).catch(err => { showLoadingUI(false); showToast(err.message, "error"); });
+            document.getElementById('reportForm').reset(); 
+            arrayFotoBase64 = []; 
+            arrayLampiranBase64 = []; 
+            hapusTtdForm(); 
+            
+            document.getElementById('photoStatus').innerText = "0 / 10 Foto"; 
+            document.getElementById('lampiranStatus').innerText = "0 / 3 File";
+            
+            const sItem = document.getElementById('containerDataSurat').querySelectorAll('.surat-item'); 
+            for(let i=1; i<sItem.length; i++) {
+                sItem[i].remove(); 
+            }
+            
+            document.getElementById('dynamicFormArea').innerHTML = '';
+            document.getElementById('namaPetugas').value = currentUser.data.nama; 
+            document.getElementById('nip').value = currentUser.data.nip; 
+            document.getElementById('jabatan').value = currentUser.data.jabatan; 
+            document.getElementById('emailTarget').value = currentUser.data.email;
+            
+            if(currentUser.role !== 'admin') { 
+                loadDashboardData(); 
+                nav('dashboard'); 
+            }
+        }).catch(err => { 
+            showLoadingUI(false); 
+            showToast(err.message, "error"); 
+        });
     }
 
     // ==========================================
-    // FUNGSI ADMIN PENGATURAN & KEUANGAN
+    // ADMIN, KEUANGAN, DAN PENGATURAN
     // ==========================================
     function loadAdminUsers() {
-        const tb = $('adminUserTable'); tb.innerHTML = `<tr><td colspan="3" class="text-center p-4"><i class="fas fa-spinner fa-spin text-blue-400"></i></td></tr>`;
+        const tb = document.getElementById('adminUserTable'); 
+        tb.innerHTML = `<tr><td colspan="3" class="text-center p-4"><i class="fas fa-spinner fa-spin text-blue-400"></i></td></tr>`;
+        
         apiCall('getAllUsersAdmin', {}).then(users => {
             let h = ''; 
             users.forEach(u => { 
                 h += `<tr class="border-b border-zinc-800/50">
-                        <td class="p-2"><div class="font-bold text-blue-300 text-[10px]">${u.nama}</div><div class="text-[9px] text-zinc-500">${u.email}</div></td>
+                        <td class="p-2">
+                            <div class="font-bold text-blue-300 text-[10px]">${u.nama}</div>
+                            <div class="text-[9px] text-zinc-500">${u.email}</div>
+                        </td>
                         <td class="p-2 font-black text-center text-yellow-400">${u.token}</td>
                         <td class="p-2 text-center">
                             <div class="flex gap-1 justify-center">
@@ -1703,142 +2126,254 @@
                       </tr>`; 
             }); 
             tb.innerHTML = h;
-        }).catch(e => { tb.innerHTML = `<tr><td colspan="3" class="text-center p-4 text-red-500">${e.message}</td></tr>`; });
+        }).catch(e => { 
+            tb.innerHTML = `<tr><td colspan="3" class="text-center p-4 text-red-500">${e.message}</td></tr>`; 
+        });
     }
     
     function bukaModalTopupAdmin(email) {
-        $('txtAdminTopupEmail').innerText = email;
-        $('inputAdminTopupVal').value = '';
-        $('txtAdminTopupHarga').innerText = 'Rp 0';
-        $('modalAdminTopup').classList.remove('hidden');
+        document.getElementById('txtAdminTopupEmail').innerText = email; 
+        document.getElementById('inputAdminTopupVal').value = ''; 
+        document.getElementById('txtAdminTopupHarga').innerText = 'Rp 0'; 
+        document.getElementById('modalAdminTopup').classList.remove('hidden');
     }
     
     function hitungTopupAdmin() {
-        const val = parseInt($('inputAdminTopupVal').value) || 0;
+        const val = parseInt(document.getElementById('inputAdminTopupVal').value) || 0; 
         let est = 0;
-        if(val > 0) {
-            if (val <= 10) { est = Math.round((val/6)*10000); }
-            else if (val <= 25) { est = Math.round((val/20)*30000); }
-            else { est = Math.round((val/35)*50000); }
+        
+        if(val > 0) { 
+            if (val <= 10) { 
+                est = Math.round((val/6)*10000); 
+            } else if (val <= 25) { 
+                est = Math.round((val/20)*30000); 
+            } else { 
+                est = Math.round((val/35)*50000); 
+            } 
         }
-        $('txtAdminTopupHarga').innerText = `Rp ${est.toLocaleString('id-ID')}`;
+        document.getElementById('txtAdminTopupHarga').innerText = `Rp ${est.toLocaleString('id-ID')}`;
     }
     
     function eksekusiTopupAdmin() {
-        const email = $('txtAdminTopupEmail').innerText;
-        const val = parseInt($('inputAdminTopupVal').value);
-        if(!val) { showToast("Masukkan jumlah token!", "error"); return; }
+        const email = document.getElementById('txtAdminTopupEmail').innerText; 
+        const val = parseInt(document.getElementById('inputAdminTopupVal').value);
         
-        $('modalAdminTopup').classList.add('hidden');
+        if(!val) { 
+            showToast("Masukkan jumlah token!", "error"); 
+            return; 
+        }
+        
+        document.getElementById('modalAdminTopup').classList.add('hidden'); 
         showLoadingUI(true);
+        
         apiCall('updateTokenAdmin', { emailUser: email, nominalToken: val }).then(res => { 
-            showLoadingUI(false); showToast("Token berhasil di-update!"); loadAdminUsers(); 
-        }).catch(e => { showLoadingUI(false); showToast(e.message, "error"); });
+            showLoadingUI(false); 
+            showToast("Token berhasil di-update!"); 
+            loadAdminUsers(); 
+        }).catch(e => { 
+            showLoadingUI(false); 
+            showToast(e.message, "error"); 
+        });
     }
     
     function hapusUserByAdmin(emailUser) {
-        if(!confirm(`YAKIN HAPUS PERMANEN USER ${emailUser}?`)) return;
+        if(!confirm(`YAKIN HAPUS PERMANEN USER ${emailUser}?`)) return; 
         showLoadingUI(true);
-        apiCall('hapusUserAdmin', { emailTarget: emailUser }).then(res => {
-            showLoadingUI(false); showToast(res.message); loadAdminUsers();
-        }).catch(e => { showLoadingUI(false); showToast(e.message, "error"); });
+        
+        apiCall('hapusUserAdmin', { emailTarget: emailUser }).then(res => { 
+            showLoadingUI(false); 
+            showToast(res.message); 
+            loadAdminUsers(); 
+        }).catch(e => { 
+            showLoadingUI(false); 
+            showToast(e.message, "error"); 
+        });
     }
 
     function simpanProfileUser() {
-        const u = $('inputUbahNamaUser') ? $('inputUbahNamaUser').value : '';
-        const p = $('inputUbahPassUser') ? $('inputUbahPassUser').value : '';
-        const d = $('inputUbahDrive') ? $('inputUbahDrive').value : '';
+        const u = document.getElementById('inputUbahNamaUser') ? document.getElementById('inputUbahNamaUser').value : ''; 
+        const p = document.getElementById('inputUbahPassUser') ? document.getElementById('inputUbahPassUser').value : ''; 
+        const d = document.getElementById('inputUbahDrive') ? document.getElementById('inputUbahDrive').value : '';
         
-        if(!u && !p && !d) { showToast("Tidak ada data yang diubah!", "error"); return; }
+        if(!u && !p && !d) { 
+            showToast("Tidak ada data yang diubah!", "error"); 
+            return; 
+        } 
         
         showLoadingUI(true);
-        apiCall('adminUpdateProfile', { email: currentUser.data.email, newNama: u, newPass: p, newDriveId: d }).then(res => { 
+        
+        apiCall('adminUpdateProfile', { email: currentUser.data.email, newNama: u, newPass: p, driveId: d }).then(res => { 
             showLoadingUI(false); 
-            if(u){ currentUser.data.nama = u; }
-            if(d){ currentUser.data.driveId = d; }
+            if(u) { 
+                currentUser.data.nama = u; 
+                document.getElementById('userGreeting').innerText = "Halo, " + u; 
+            } 
+            if(d) { 
+                currentUser.data.driveId = d; 
+            } 
             localStorage.setItem('egenlap_user', JSON.stringify(currentUser)); 
             terapkanSesi(); 
-            showToast("Berhasil update data akun!"); 
-        }).catch(e => { showLoadingUI(false); showToast(e.message, "error"); });
+            showToast("Berhasil update data!"); 
+        }).catch(e => { 
+            showLoadingUI(false); 
+            showToast(e.message, "error"); 
+        });
     }
 
     function simpanProfileAdmin() {
-        const u = $('inputUbahNama').value, p = $('inputUbahPass').value; 
+        const u = document.getElementById('inputUbahNama').value;
+        const p = document.getElementById('inputUbahPass').value; 
+        
         if(!u && !p) return; 
         showLoadingUI(true);
+        
         apiCall('adminUpdateProfile', { email: currentUser.data.email, newNama: u, newPass: p }).then(res => { 
             showLoadingUI(false); 
-            if(u){ currentUser.data.nama = u; localStorage.setItem('egenlap_user', JSON.stringify(currentUser)); terapkanSesi(); } 
-            showToast("Berhasil update profile"); $('inputUbahNama').value=''; $('inputUbahPass').value='';
-        }).catch(e => { showLoadingUI(false); showToast(e.message, "error"); });
+            if(u) { 
+                currentUser.data.nama = u; 
+                document.getElementById('userGreeting').innerText = "Halo, " + u; 
+                localStorage.setItem('egenlap_user', JSON.stringify(currentUser)); 
+                terapkanSesi(); 
+            } 
+            showToast("Berhasil update profile"); 
+            document.getElementById('inputUbahNama').value = ''; 
+            document.getElementById('inputUbahPass').value = '';
+        }).catch(e => { 
+            showLoadingUI(false); 
+            showToast(e.message, "error"); 
+        });
     }
 
     function loadPengaturanAdmin() {
         apiCall('getPengaturan', {}).then(res => {
-            adminWA = res.wa || adminWA; adminRek = res.rek || adminRek; adminQRIS = res.qris || adminQRIS;
-            if($('inputSetWA')) $('inputSetWA').value = adminWA.replace('62', ''); if($('inputSetRek')) $('inputSetRek').value = adminRek; if($('inputSetQRIS')) $('inputSetQRIS').value = adminQRIS;
-            if($('txtRekDisplay')) $('txtRekDisplay').innerText = adminRek; if($('imgQrisDisplay')) $('imgQrisDisplay').src = adminQRIS; if($('txtRekPanduan')) $('txtRekPanduan').innerText = adminRek; if($('imgQrisPanduan')) $('imgQrisPanduan').src = adminQRIS;
+            adminWA = res.wa || adminWA; 
+            adminRek = res.rek || adminRek; 
+            adminQRIS = res.qris || adminQRIS;
+            
+            if(document.getElementById('inputSetWA')) document.getElementById('inputSetWA').value = adminWA.replace('62', ''); 
+            if(document.getElementById('inputSetRek')) document.getElementById('inputSetRek').value = adminRek; 
+            if(document.getElementById('inputSetQRIS')) document.getElementById('inputSetQRIS').value = adminQRIS;
+            
+            if(document.getElementById('txtRekDisplay')) document.getElementById('txtRekDisplay').innerText = adminRek; 
+            if(document.getElementById('imgQrisDisplay')) document.getElementById('imgQrisDisplay').src = adminQRIS; 
+            if(document.getElementById('txtRekPanduan')) document.getElementById('txtRekPanduan').innerText = adminRek; 
+            if(document.getElementById('imgQrisPanduan')) document.getElementById('imgQrisPanduan').src = adminQRIS;
         }).catch(e => {});
-        if($('inputUbahDrive') && currentUser) $('inputUbahDrive').value = currentUser.data.driveId || '';
+        
+        if(document.getElementById('inputUbahDrive') && currentUser) {
+            document.getElementById('inputUbahDrive').value = currentUser.data.driveId || '';
+        }
     }
 
     function simpanPengaturanAdmin() {
-        let wa = $('inputSetWA').value, r = $('inputSetRek').value, q = $('inputSetQRIS').value; 
-        if(!wa) return; if(wa.startsWith('0')) wa = wa.substring(1); if(!wa.startsWith('62')) wa = "62" + wa;
+        let wa = document.getElementById('inputSetWA').value;
+        let r = document.getElementById('inputSetRek').value;
+        let q = document.getElementById('inputSetQRIS').value; 
+        
+        if(!wa) return; 
+        if(wa.startsWith('0')) wa = wa.substring(1); 
+        if(!wa.startsWith('62')) wa = "62" + wa; 
+        
         showLoadingUI(true); 
+        
         apiCall('simpanPengaturan', { wa: wa, rek: r, qris: q }).then(res => { 
-            showLoadingUI(false); showToast("Pengaturan Disimpan!"); loadPengaturanAdmin(); 
-        }).catch(e => { showLoadingUI(false); showToast("Gagal", "error"); });
+            showLoadingUI(false); 
+            showToast("Pengaturan Disimpan!"); 
+            loadPengaturanAdmin(); 
+        }).catch(e => { 
+            showLoadingUI(false); 
+            showToast("Gagal", "error"); 
+        });
     }
     
     function loadMonitoringAdmin() {
-         $('rincianPembelianTable').innerHTML = `<tr><td colspan="4" class="text-center p-4"><i class="fas fa-spinner fa-spin text-blue-400"></i></td></tr>`;
-         apiCall('getMonitoringAdmin', {}).then(d => { globalKeuanganData = d; applyFilterKeuangan(); }).catch(e => showToast(e.message, "error"));
+         document.getElementById('rincianPembelianTable').innerHTML = `<tr><td colspan="4" class="text-center p-4"><i class="fas fa-spinner fa-spin text-blue-400"></i></td></tr>`;
+         apiCall('getMonitoringAdmin', {}).then(d => { 
+             globalKeuanganData = d; 
+             applyFilterKeuangan(); 
+         }).catch(e => showToast(e.message, "error"));
     }
     
     function applyFilterKeuangan() {
         if(!globalKeuanganData) return;
-        const fV = $('filterKeuangan').value, n = new Date(), sTD = new Date(n.getFullYear(), n.getMonth(), n.getDate()), sW = new Date(sTD); sW.setDate(n.getDate() - n.getDay()); const sM = new Date(n.getFullYear(), n.getMonth(), 1);
-        let filt = globalKeuanganData.filter(i => { const d = new Date(i.tanggalAsli); if(fV==='Hari Ini') return d>=sTD; if(fV==='Minggu Ini') return d>=sW; if(fV==='Bulan Ini') return d>=sM; return true; });
+        
+        const fV = document.getElementById('filterKeuangan').value;
+        const n = new Date(); 
+        const sTD = new Date(n.getFullYear(), n.getMonth(), n.getDate()); 
+        const sW = new Date(sTD); 
+        sW.setDate(n.getDate() - n.getDay()); 
+        const sM = new Date(n.getFullYear(), n.getMonth(), 1);
+        
+        let filt = globalKeuanganData.filter(i => { 
+            const d = new Date(i.tanggalAsli); 
+            if(fV === 'Hari Ini') return d >= sTD; 
+            if(fV === 'Minggu Ini') return d >= sW; 
+            if(fV === 'Bulan Ini') return d >= sM; 
+            return true; 
+        });
         
         let tN = 0, tT = 0, rek = {}, hR = '';
+        
         filt.forEach(r => { 
-            tN+=r.nominal; tT+=r.token; 
-            if(!rek[r.nama]) rek[r.nama]={token:0,nominal:0}; 
-            rek[r.nama].token+=r.token; rek[r.nama].nominal+=r.nominal; 
-            hR+=`<tr class="border-b border-zinc-800/50"><td class="p-2 text-[9px]">${r.tanggalTampil}</td><td class="p-2 text-[9px] font-bold text-blue-300">${r.nama}</td><td class="p-2 text-center text-yellow-400 font-bold">${r.token}</td><td class="p-2 text-right font-mono text-blue-100">${r.nominal.toLocaleString('id-ID')}</td></tr>`; 
+            tN += r.nominal; 
+            tT += r.token; 
+            if(!rek[r.nama]) rek[r.nama] = {token: 0, nominal: 0}; 
+            rek[r.nama].token += r.token; 
+            rek[r.nama].nominal += r.nominal; 
+            hR += `<tr class="border-b border-zinc-800/50">
+                     <td class="p-2 text-[9px]">${r.tanggalTampil}</td>
+                     <td class="p-2 text-[9px] font-bold text-blue-300">${r.nama}</td>
+                     <td class="p-2 text-center text-yellow-400 font-bold">${r.token}</td>
+                     <td class="p-2 text-right font-mono text-blue-100">${r.nominal.toLocaleString('id-ID')}</td>
+                   </tr>`; 
         });
         
-        $('txtTotalPendapatan').innerText = "Rp " + tN.toLocaleString('id-ID'); 
-        $('txtTotalToken').innerText = tT + " Token"; 
-        $('rincianPembelianTable').innerHTML = hR || `<tr><td colspan="4" class="text-center p-4">Kosong.</td></tr>`;
+        document.getElementById('txtTotalPendapatan').innerText = "Rp " + tN.toLocaleString('id-ID'); 
+        document.getElementById('txtTotalToken').innerText = tT + " Token"; 
+        document.getElementById('rincianPembelianTable').innerHTML = hR || `<tr><td colspan="4" class="text-center p-4">Kosong.</td></tr>`;
         
         let hRkp = ''; 
-        Object.keys(rek).sort((a,b)=>rek[b].nominal-rek[a].nominal).forEach(nm => { 
-            hRkp+=`<tr class="border-b border-zinc-800/50"><td class="p-2 text-[9px] font-bold text-blue-300">${nm}</td><td class="p-2 text-center font-bold text-yellow-400">${rek[nm].token}</td><td class="p-2 text-right font-mono text-blue-100">${rek[nm].nominal.toLocaleString('id-ID')}</td></tr>`; 
+        Object.keys(rek).sort((a,b) => rek[b].nominal - rek[a].nominal).forEach(nm => { 
+            hRkp += `<tr class="border-b border-zinc-800/50">
+                       <td class="p-2 text-[9px] font-bold text-blue-300">${nm}</td>
+                       <td class="p-2 text-center font-bold text-yellow-400">${rek[nm].token}</td>
+                       <td class="p-2 text-right font-mono text-blue-100">${rek[nm].nominal.toLocaleString('id-ID')}</td>
+                     </tr>`; 
         });
-        $('rekapUserTable').innerHTML = hRkp || `<tr><td colspan="3" class="text-center p-4">Kosong.</td></tr>`; 
-        $('monitoringSummary').classList.remove('hidden');
+        
+        document.getElementById('rekapUserTable').innerHTML = hRkp || `<tr><td colspan="3" class="text-center p-4">Kosong.</td></tr>`; 
+        document.getElementById('monitoringSummary').classList.remove('hidden');
     }
     
     function konfirmasiWA(namaPaket, jmlToken, hargaNum) {
-        if(!currentUser) { showToast("Login dulu!", "error"); nav('auth'); return; } 
-        if(!document.getElementById('cekSyaratToken').checked) { showToast("Centang Persetujuan Mutlak!", "error"); return; }
+        if(!currentUser) { 
+            showToast("Login dulu!", "error"); 
+            nav('auth'); 
+            return; 
+        } 
+        if(!document.getElementById('cekSyaratToken').checked) { 
+            showToast("Centang Persetujuan Mutlak!", "error"); 
+            return; 
+        }
         
-        tempBeliPaket = namaPaket;
-        tempBeliJml = jmlToken;
+        tempBeliPaket = namaPaket; 
+        tempBeliJml = jmlToken; 
         tempBeliHarga = hargaNum;
         
-        document.getElementById('txtPaketBeli').innerText = `Paket ${namaPaket} (${jmlToken} Token)`;
-        document.getElementById('txtHargaBeli').innerText = `Rp ${hargaNum.toLocaleString('id-ID')}`;
+        document.getElementById('txtPaketBeli').innerText = `Paket ${namaPaket} (${jmlToken} Token)`; 
+        document.getElementById('txtHargaBeli').innerText = `Rp ${hargaNum.toLocaleString('id-ID')}`; 
         document.getElementById('modalConfirmBeli').classList.remove('hidden');
     }
     
     function eksekusiBeliWA() {
         document.getElementById('modalConfirmBeli').classList.add('hidden');
+        
         if(db) {
-            try { db.from('notifikasi_admin').insert([{ pesan: `User ${currentUser.data.nama} klik BELI Paket ${tempBeliPaket} (${tempBeliJml} Token) seharga Rp ${tempBeliHarga.toLocaleString('id-ID')}` }]); } catch(e) {}
+            try { 
+                db.from('notifikasi_admin').insert([{ pesan: `User ${currentUser.data.nama} klik BELI Paket ${tempBeliPaket} (${tempBeliJml} Token) seharga Rp ${tempBeliHarga.toLocaleString('id-ID')}` }]); 
+            } catch(e) {}
         }
+        
         const pesan = `Halo Admin E-GenLap,%0A%0ASaya telah melakukan pembayaran QRIS/Transfer untuk token AI.%0A%0A*Nama:* ${currentUser.data.nama}%0A*Paket:* ${tempBeliPaket} (${tempBeliJml} Token)%0A*Nominal:* Rp ${tempBeliHarga.toLocaleString('id-ID')}%0A%0ABerikut saya lampirkan struknya. Terima kasih.`;
         window.open(`https://api.whatsapp.com/send?phone=${adminWA}&text=${pesan}`, '_blank');
     }
