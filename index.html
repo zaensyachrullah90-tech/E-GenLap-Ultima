@@ -6,11 +6,13 @@
   <meta name="theme-color" content="#09090b">
   <title>E-GenLap | SDM PKH Nasional</title>
   
-  <link rel="apple-touch-icon" href="https://drive.google.com/uc?export=download&id=1uPpCYwoX2w2ZrA0-mvmi69cBafF88J1e">
+  <!-- Library Tailwind CSS & FontAwesome & Supabase -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
+    /* Styling Dasar & Glossy UI */
     .glossy-monster { 
         background: linear-gradient(135deg, rgba(24, 24, 27, 0.95) 0%, rgba(9, 9, 11, 0.98) 100%); 
         box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); 
@@ -22,7 +24,7 @@
         background: rgba(255, 255, 255, 0.05); 
         border: 1px solid rgba(59, 130, 246, 0.3); 
         color: white; 
-        transition: all 0.2s ease; 
+        transition: all 0.3s ease; 
     }
     .glossy-input:focus { 
         background: rgba(255, 255, 255, 0.1); 
@@ -50,6 +52,8 @@
     .section-hidden { 
         display: none; 
     }
+    
+    /* Animasi Floating Button */
     .fab-button { 
         box-shadow: 0 0 20px rgba(59, 130, 246, 0.6); 
         animation: pulse-glow 2s infinite; 
@@ -58,9 +62,13 @@
         0%, 100% { transform: translateY(-50%) scale(1); box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); } 
         50% { transform: translateY(-50%) scale(1.05); box-shadow: 0 0 25px rgba(59, 130, 246, 0.8); } 
     }
+    
+    /* Custom Scrollbar */
     .custom-scrollbar::-webkit-scrollbar { height: 5px; width: 4px; }
     .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
     .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(59,130,246,0.5); border-radius: 4px; }
+    
+    /* Hamburger Menu Animation */
     #sideMenu { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
     .menu-open { transform: translateX(0) !important; }
   </style>
@@ -68,8 +76,10 @@
 
 <body class="app-bg font-sans antialiased text-gray-100 selection:bg-blue-500 selection:text-white relative">
 
-  <!-- LOADING UI (PASTI DI TENGAH HP) -->
-  <div id="fullscreenLoading" class="fixed inset-0 bg-[#09090b]/95 backdrop-blur-xl z-[9999] hidden flex-col items-center justify-center transition-opacity duration-200 opacity-0">
+  <!-- ============================================== -->
+  <!-- LOADING UI (PRESISI DI TENGAH HP)              -->
+  <!-- ============================================== -->
+  <div id="fullscreenLoading" class="fixed inset-0 bg-[#09090b]/95 backdrop-blur-xl z-[9999] hidden flex-col items-center justify-center transition-opacity duration-200 opacity-0 h-screen w-screen">
       <div class="relative w-24 h-24 flex items-center justify-center mb-6">
           <div class="absolute inset-0 border-4 border-blue-900/50 rounded-full animate-ping"></div>
           <div class="absolute inset-2 border-4 border-blue-500/30 rounded-full animate-spin shadow-[0_0_30px_rgba(59,130,246,0.4)]" style="animation-direction: reverse; animation-duration: 1.5s;"></div>
@@ -78,15 +88,18 @@
               <i class="fas fa-bolt text-2xl text-blue-400 animate-pulse"></i>
           </div>
       </div>
-      <h2 class="text-lg font-black text-blue-400 tracking-[0.2em] animate-pulse">MEMPROSES DATA...</h2>
+      <h2 class="text-xl font-black text-blue-400 tracking-[0.2em] animate-pulse text-center">MEMPROSES...</h2>
   </div>
 
-  <!-- TOAST NOTIFICATION CONTAINER -->
   <div id="toastContainer" class="fixed top-5 left-1/2 transform -translate-x-1/2 w-11/12 max-w-sm z-[9999] flex flex-col gap-2 pointer-events-none"></div>
 
-  <!-- HAMBURGER SIDEBAR MENU -->
+  <!-- ============================================== -->
+  <!-- HAMBURGER SIDEBAR MENU                         -->
+  <!-- ============================================== -->
   <div id="menuOverlay" onclick="toggleMenu()" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[8000] hidden opacity-0 transition-opacity duration-300"></div>
   <div id="sideMenu" class="fixed top-0 right-0 h-full w-64 bg-[#09090b]/95 backdrop-blur-2xl z-[8100] transform translate-x-full border-l border-blue-500/30 pt-5 pb-6 flex flex-col shadow-[-10px_0_30px_rgba(0,0,0,0.9)]">
+      
+      <!-- Header Sidebar -->
       <div class="px-5 pb-4 border-b border-zinc-700/50 flex justify-between items-center">
           <div class="overflow-hidden">
               <h2 class="font-bold text-blue-400 text-lg tracking-wide"><i class="fas fa-bars mr-2"></i> Navigasi</h2>
@@ -97,6 +110,7 @@
           </button>
       </div>
 
+      <!-- List Menu Utama -->
       <div class="flex-grow overflow-y-auto py-4 px-4 space-y-1.5 custom-scrollbar">
           <button onclick="nav('dashboard'); toggleMenu()" class="w-full flex items-center p-3 rounded-xl hover:bg-blue-600/10 text-sm font-bold text-zinc-300 hover:text-blue-400 transition-all border border-transparent hover:border-blue-500/30">
               <i class="fas fa-home w-6 text-center mr-2 text-blue-500"></i> Dashboard
@@ -114,14 +128,22 @@
               <i class="fas fa-file-excel w-6 text-center mr-2 text-green-500"></i> Riwayat & Export
           </button>
 
+          <button onclick="nav('arsip'); toggleMenu()" class="w-full flex items-center p-3 rounded-xl hover:bg-blue-600/10 text-sm font-bold text-zinc-300 hover:text-blue-400 transition-all border border-transparent hover:border-blue-500/30">
+              <i class="fas fa-folder-open w-6 text-center mr-2 text-blue-500"></i> Arsip Drive
+          </button>
+
           <button onclick="nav('pengaturan'); toggleMenu()" class="w-full flex items-center p-3 rounded-xl hover:bg-blue-600/10 text-sm font-bold text-zinc-300 hover:text-blue-400 transition-all border border-transparent hover:border-blue-500/30">
-              <i class="fab fa-google-drive w-6 text-center mr-2 text-blue-500"></i> Pengaturan Drive
+              <i class="fab fa-google-drive w-6 text-center mr-2 text-blue-500"></i> Pengaturan Akun
           </button>
 
           <button onclick="nav('token'); toggleMenu()" class="w-full flex items-center p-3 rounded-xl hover:bg-yellow-600/10 text-sm font-bold text-zinc-300 hover:text-yellow-400 transition-all border border-transparent hover:border-yellow-500/30">
               <i class="fas fa-coins w-6 text-center mr-2 text-yellow-500"></i> Beli Token
           </button>
 
+          <button onclick="nav('panduan'); toggleMenu()" class="w-full flex items-center p-3 rounded-xl hover:bg-blue-600/10 text-sm font-bold text-zinc-300 hover:text-blue-400 transition-all border border-transparent hover:border-blue-500/30">
+              <i class="fas fa-book w-6 text-center mr-2 text-blue-500"></i> Panduan & Aturan
+          </button>
+          
           <!-- Menu Khusus Admin -->
           <div id="adminSideLinks" class="hidden mt-4 pt-4 border-t border-zinc-700/50 space-y-1.5">
               <p class="text-[10px] text-blue-500 font-black px-3 uppercase tracking-wider mb-2">Super Admin</p>
@@ -147,7 +169,34 @@
       </div>
   </div>
 
-  <!-- MODAL KONFIRMASI BELI RAKSASA -->
+  <!-- ============================================== -->
+  <!-- MODAL ADMIN TOPUP TOKEN RAKSASA                -->
+  <!-- ============================================== -->
+  <div id="modalAdminTopup" class="fixed inset-0 bg-[#09090b]/90 backdrop-blur-md z-[9999] hidden flex-col items-center justify-center p-4">
+      <div class="glossy-monster w-full max-w-sm rounded-2xl p-6 text-center shadow-[0_0_40px_rgba(59,130,246,0.6)]">
+          <i class="fas fa-coins text-5xl text-yellow-400 mb-4 drop-shadow-[0_0_15px_rgba(250,204,21,0.8)]"></i>
+          <h3 class="text-xl font-black text-white mb-1 uppercase tracking-widest">Topup Token User</h3>
+          <p class="text-xs text-zinc-400 font-bold mb-4" id="txtAdminTopupEmail">email@user.com</p>
+          
+          <input type="number" id="inputAdminTopupVal" class="w-full p-4 text-center text-xl font-bold rounded-xl glossy-input mb-4" placeholder="Jumlah Token (+ / -)" onkeyup="hitungTopupAdmin()">
+          
+          <div class="bg-black/50 p-4 rounded-xl border border-yellow-500/50 mb-5">
+              <p class="text-xs text-zinc-400 font-bold uppercase mb-1">Estimasi Pembayaran:</p>
+              <p class="text-4xl font-black text-yellow-400 tracking-tighter" id="txtAdminTopupHarga">Rp 0</p>
+          </div>
+          
+          <div class="flex gap-3">
+              <button onclick="document.getElementById('modalAdminTopup').classList.add('hidden')" class="w-1/2 p-3 rounded-xl bg-zinc-800 text-sm font-bold text-zinc-300 hover:bg-zinc-700 transition-all">Batal</button>
+              <button onclick="eksekusiTopupAdmin()" class="w-1/2 p-3 rounded-xl bg-gradient-to-r from-blue-500 to-blue-400 text-white text-sm font-extrabold hover:shadow-[0_0_20px_rgba(59,130,246,0.6)] transition-all">
+                  <i class="fas fa-check mr-1"></i> Konfirmasi
+              </button>
+          </div>
+      </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL USER KONFIRMASI BELI RAKSASA             -->
+  <!-- ============================================== -->
   <div id="modalConfirmBeli" class="fixed inset-0 bg-[#09090b]/90 backdrop-blur-md z-[9999] hidden flex-col items-center justify-center p-4">
       <div class="glossy-monster w-full max-w-sm rounded-2xl p-6 text-center shadow-[0_0_40px_rgba(59,130,246,0.6)] border border-blue-500/50">
           <i class="fas fa-shopping-cart text-5xl text-yellow-400 mb-4 drop-shadow-[0_0_15px_rgba(250,204,21,0.8)]"></i>
@@ -168,33 +217,44 @@
       </div>
   </div>
 
-  <!-- MODAL REVIEW PREVIEW SEBELUM GENERATE -->
+  <!-- ============================================== -->
+  <!-- MODAL REVIEW KESELURUHAN SEBELUM GENERATE      -->
+  <!-- ============================================== -->
   <div id="modalReview" class="fixed inset-0 bg-[#09090b]/90 backdrop-blur-sm z-[7000] hidden flex-col items-center justify-center p-4">
       <div class="glossy-monster w-full max-w-sm rounded-2xl p-4 border border-blue-500/50 shadow-2xl">
           <div class="border-b border-zinc-700 pb-2 mb-3">
               <h3 class="text-lg font-bold text-blue-400"><i class="fas fa-clipboard-check mr-2"></i> Review Laporan</h3>
-              <p class="text-[10px] text-zinc-400">Pastikan isian form dinamis sudah tepat sebelum terpotong 1 Token.</p>
+              <p class="text-[10px] text-zinc-400">Pastikan seluruh isian sudah benar sebelum terpotong 1 Token.</p>
           </div>
-          <div id="reviewContent" class="max-h-[50vh] overflow-y-auto custom-scrollbar pr-2 mb-4 text-xs text-zinc-300 space-y-2"></div>
+          
+          <div id="reviewContent" class="max-h-[50vh] overflow-y-auto custom-scrollbar pr-2 mb-4 text-xs text-zinc-300 space-y-2">
+              <!-- Content Review Detail dari JS -->
+          </div>
+          
           <div class="flex gap-3">
-              <button onclick="document.getElementById('modalReview').classList.add('hidden')" class="w-1/2 p-3 rounded-xl bg-zinc-800 text-sm font-bold text-white hover:bg-zinc-700">Edit Kembali</button>
-              <button onclick="executeGenerate()" class="w-1/2 p-3 rounded-xl bg-blue-500 text-white text-sm font-extrabold hover:bg-blue-400">Generate AI</button>
+              <button onclick="document.getElementById('modalReview').classList.add('hidden')" class="w-1/2 p-3 rounded-xl bg-zinc-800 text-sm font-bold hover:bg-zinc-700 transition-all">Edit Kembali</button>
+              <button onclick="executeGenerate()" class="w-1/2 p-3 rounded-xl bg-blue-500 text-white text-sm font-extrabold hover:bg-blue-400 transition-all">Generate AI</button>
           </div>
       </div>
   </div>
 
-  <!-- MODALS AUTH LAINNYA -->
+  <!-- ============================================== -->
+  <!-- MODAL AUTHENTIKASI                             -->
+  <!-- ============================================== -->
   <div id="modalResetPass" class="fixed inset-0 bg-[#09090b]/90 backdrop-blur-sm z-[7000] hidden flex-col items-center justify-center p-4">
     <div class="glossy-monster w-full max-w-sm rounded-2xl p-5 text-center border border-blue-500/50">
         <i class="fas fa-key text-4xl text-blue-400 mb-3"></i>
         <h3 class="text-lg font-bold text-white mb-2">Reset Password</h3>
         <p class="text-xs text-zinc-400 mb-4">Masukkan Email dan NIP untuk validasi identitas.</p>
+        
         <input type="email" id="resetEmail" class="w-full p-3 text-sm rounded-xl glossy-input mb-3" placeholder="Email Terdaftar" required>
         <input type="number" id="resetNIP" class="w-full p-3 text-sm rounded-xl glossy-input mb-3" placeholder="NIP Terdaftar" required>
+        
         <div class="relative mb-4 text-left">
             <input type="password" id="resetNewPass" class="w-full p-3 text-sm rounded-xl glossy-input" placeholder="Password Baru" required>
             <i class="fas fa-eye absolute right-4 top-4 text-zinc-400 cursor-pointer" id="iconResetPass" onclick="togglePasswordVisibility('resetNewPass', 'iconResetPass')"></i>
         </div>
+        
         <div class="flex gap-3 mt-4">
             <button onclick="document.getElementById('modalResetPass').classList.add('hidden')" class="w-1/2 p-3 rounded-xl bg-zinc-800 text-sm font-bold hover:bg-zinc-700">Batal</button>
             <button onclick="eksekusiResetPass()" class="w-1/2 p-3 rounded-xl bg-blue-500 text-white font-extrabold hover:bg-blue-400">Simpan</button>
@@ -217,6 +277,7 @@
   <!-- CONTAINER UTAMA APLIKASI -->
   <div class="max-w-md w-full mx-auto relative min-h-screen shadow-2xl bg-black/40 flex flex-col pb-24 z-10">
     
+    <!-- HEADER ATAS -->
     <header class="glossy-monster p-4 rounded-b-3xl shadow-lg flex-shrink-0 z-20 border-b border-blue-500/30 sticky top-0 flex justify-between items-center">
         <div>
             <h1 class="text-2xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-blue-500">
@@ -242,25 +303,29 @@
             <h2 class="text-xl font-bold text-white">E-GenLap Nasional</h2>
         </div>
         
+        <!-- TEKS KEHEBATAN APLIKASI -->
         <div class="mb-5 bg-blue-900/20 border border-blue-500/40 p-4 rounded-xl shadow-inner">
             <h3 class="text-blue-400 font-extrabold text-sm mb-2"><i class="fas fa-rocket mr-1"></i> Kehebatan Aplikasi Ini</h3>
             <ul class="text-[10px] text-zinc-300 text-left space-y-2">
                 <li><i class="fas fa-robot text-blue-500 w-4"></i> <b>Generate AI Cerdas:</b> Laporan otomatis disusun sempurna berdasarkan data dinamis & arahan AI.</li>
                 <li><i class="fas fa-balance-scale text-blue-500 w-4"></i> <b>Analisis Hukum:</b> Dasar hukum riil Kemensos dianalisa & disisipkan otomatis ke PDF.</li>
-                <li><i class="fas fa-folder-tree text-blue-500 w-4"></i> <b>Arsip Drive Terstruktur:</b> File tersusun rapi di Google Drive Anda (Kategori RHK/Bulan/Kegiatan).</li>
+                <li><i class="fas fa-folder-tree text-blue-500 w-4"></i> <b>Arsip Drive Terstruktur:</b> PDF tersusun rapi dalam folder berhierarki (RHK/Bulan/Kegiatan).</li>
                 <li><i class="fas fa-gift text-yellow-400 w-4 animate-pulse"></i> <b class="text-yellow-400">Daftar Sekarang:</b> Dapatkan 1 Token Laporan GRATIS hari ini!</li>
             </ul>
         </div>
 
         <div id="formLogin">
             <input type="email" id="logEmail" class="w-full p-3 text-sm rounded-xl glossy-input mb-3" placeholder="Email Anda" required>
+            
             <div class="relative mb-4">
                 <input type="password" id="logPassword" class="w-full p-3 text-sm rounded-xl glossy-input" placeholder="Password Login">
                 <i class="fas fa-eye absolute right-4 top-4 text-zinc-400 cursor-pointer" id="iconLogPass" onclick="togglePasswordVisibility('logPassword', 'iconLogPass')"></i>
             </div>
+            
             <button onclick="prosesLogin()" class="w-full bg-blue-500 text-white font-extrabold py-3 rounded-xl hover:bg-blue-400 text-sm mb-3 shadow-[0_0_15px_rgba(59,130,246,0.3)] transition-all">
                 <i class="fas fa-sign-in-alt mr-2"></i> Masuk Sistem
             </button>
+            
             <div class="flex justify-between mt-2 px-1 text-xs">
                 <span onclick="toggleAuthForm()" class="text-blue-400 cursor-pointer font-bold underline">Daftar Akun Baru</span>
                 <span onclick="bukaModalReset()" class="text-yellow-500 cursor-pointer font-bold underline">Lupa Password?</span>
@@ -280,10 +345,12 @@
             </select>
             
             <input type="email" id="regEmail" class="w-full p-3 text-sm rounded-xl glossy-input mb-3" placeholder="Email Aktif" required>
+            
             <div class="relative mb-4">
                 <input type="password" id="regPassword" class="w-full p-3 text-sm rounded-xl glossy-input" placeholder="Buat Password" required>
                 <i class="fas fa-eye absolute right-4 top-4 text-zinc-400 cursor-pointer" id="iconRegPass" onclick="togglePasswordVisibility('regPassword', 'iconRegPass')"></i>
             </div>
+            
             <button onclick="validasiRegister()" class="w-full bg-blue-500 text-white font-extrabold py-3 rounded-xl hover:bg-blue-400 text-sm mb-3 transition-all">
                 <i class="fas fa-user-plus mr-2"></i> Daftar Akun
             </button>
@@ -295,6 +362,7 @@
       <!-- SECTION 2: DASHBOARD (TARGET 28 & FILTER)      -->
       <!-- ============================================== -->
       <section id="sec-dashboard" class="section-hidden">
+        
         <div class="glossy-monster p-4 rounded-2xl mb-4 flex justify-between items-center">
             <div>
                 <h2 class="text-lg font-bold text-blue-400" id="userGreeting">Halo, User</h2>
@@ -309,6 +377,7 @@
         <div class="glossy-monster p-4 rounded-2xl mb-4">
             <div class="flex justify-between items-center border-b border-zinc-700 pb-2 mb-3">
                 <h3 class="text-sm font-bold text-blue-400"><i class="fas fa-chart-pie mr-2"></i> Statistik Laporan</h3>
+                
                 <select id="filterBulanDashboard" class="p-1 text-[10px] rounded bg-zinc-800 text-white border border-zinc-600 font-bold" onchange="hitungStatistikDashboard()">
                     <option value="all">Semua Bulan</option>
                     <option value="01">Januari</option><option value="02">Februari</option><option value="03">Maret</option>
@@ -333,7 +402,11 @@
             <div class="max-h-56 overflow-y-auto custom-scrollbar border border-zinc-700 rounded-lg">
                 <table class="w-full text-left text-[9px] text-zinc-300">
                     <thead class="bg-zinc-900/80 text-blue-400 sticky top-0">
-                        <tr><th class="p-2">Kategori RHK</th><th class="p-2 text-center">Dibuat</th><th class="p-2 text-center">Target</th></tr>
+                        <tr>
+                            <th class="p-2">Kategori RHK</th>
+                            <th class="p-2 text-center">Dibuat</th>
+                            <th class="p-2 text-center">Target</th>
+                        </tr>
                     </thead>
                     <tbody id="dashRincianRHK" class="divide-y divide-zinc-800/50">
                         <tr><td colspan="3" class="text-center italic p-3 text-zinc-500">Memuat rincian...</td></tr>
@@ -344,7 +417,7 @@
       </section>
 
       <!-- ============================================== -->
-      <!-- SECTION 3: AGENDA (ANALISA & EXPORT EXCEL)     -->
+      <!-- SECTION 3: AGENDA (ANALISA & EXPORT)           -->
       <!-- ============================================== -->
       <section id="sec-agenda" class="section-hidden">
         <div class="glossy-monster p-5 rounded-2xl mb-4">
@@ -360,22 +433,35 @@
             
             <div class="bg-black/30 p-4 rounded-xl border border-zinc-700/50 mb-5">
                 <h3 class="text-xs font-bold text-blue-300 mb-3 uppercase tracking-wider">Tambah Jadwal Baru</h3>
+                
                 <div class="grid grid-cols-2 gap-3 mb-3">
-                    <div><label class="block text-[10px] text-zinc-400 mb-1">Tanggal Hari</label><input type="date" id="agTanggal" class="w-full p-2 text-xs rounded-lg glossy-input"></div>
-                    <div><label class="block text-[10px] text-zinc-400 mb-1">Jam Kegiatan</label><input type="time" id="agJam" class="w-full p-2 text-xs rounded-lg glossy-input"></div>
+                    <div>
+                        <label class="block text-[10px] text-zinc-400 mb-1">Tanggal Hari</label>
+                        <input type="date" id="agTanggal" class="w-full p-2 text-xs rounded-lg glossy-input">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] text-zinc-400 mb-1">Jam Kegiatan</label>
+                        <input type="time" id="agJam" class="w-full p-2 text-xs rounded-lg glossy-input">
+                    </div>
                 </div>
+                
                 <div class="mb-3">
                     <label class="block text-[10px] text-zinc-400 mb-1">Pilih Rencana Aksi Harian (RHK)</label>
-                    <select id="agKegiatan" class="w-full p-2 text-xs rounded-lg glossy-input"><option value="">-- Pilih Kegiatan --</option></select>
+                    <select id="agKegiatan" class="w-full p-2 text-xs rounded-lg glossy-input">
+                        <option value="">-- Pilih Kegiatan --</option>
+                    </select>
                 </div>
+                
                 <div class="mb-3">
                     <label class="block text-[10px] text-zinc-400 mb-1">Lokasi Kegiatan</label>
                     <input type="text" id="agLokasi" class="w-full p-2 text-xs rounded-lg glossy-input" placeholder="Misal: Kantor Desa / Rumah KPM...">
                 </div>
+                
                 <div class="mb-3">
                     <label class="block text-[10px] text-zinc-400 mb-1">Keterangan Tambahan</label>
                     <input type="text" id="agKet" class="w-full p-2 text-xs rounded-lg glossy-input" placeholder="Misal: Bawa berkas A, B, C...">
                 </div>
+                
                 <button onclick="simpanAgenda()" class="w-full bg-blue-500/20 border border-blue-500 text-blue-300 font-bold py-2 rounded-lg text-xs hover:bg-blue-500/40 transition-all">
                     <i class="fas fa-plus mr-1"></i> Tambah ke Agenda
                 </button>
@@ -389,20 +475,24 @@
             </div>
             
             <h3 class="text-xs font-bold text-blue-300 mb-2 border-b border-zinc-700 pb-1">Daftar Agenda Saya</h3>
-            <div id="containerListAgenda" class="space-y-3 max-h-[50vh] overflow-y-auto custom-scrollbar pr-1"></div>
+            <div id="containerListAgenda" class="space-y-3 max-h-[50vh] overflow-y-auto custom-scrollbar pr-1">
+                <!-- Data Card Agenda disuntik melalui Javascript -->
+            </div>
         </div>
       </section>
 
       <!-- ============================================== -->
-      <!-- SECTION 4: FORM GENERATE LAPORAN DINAMIS AI    -->
+      <!-- SECTION 4: FORM GENERATE LAPORAN DINAMIS       -->
       <!-- ============================================== -->
       <section id="sec-generate" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
+        
         <div class="flex justify-between items-center border-b border-zinc-700 pb-2 mb-4">
              <h2 class="text-lg font-bold text-blue-400"><i class="fas fa-magic mr-2"></i> Form Laporan</h2>
              <span class="text-xs bg-blue-900/50 text-blue-300 px-2 py-1 rounded border border-blue-500/30">Token: <b id="formTokenCount">0</b></span>
         </div>
 
         <form id="reportForm" onsubmit="tampilkanReview(event)">
+          
           <div class="bg-black/30 p-3 rounded-xl border border-zinc-700/50 mb-4">
             <p class="text-[10px] text-blue-400 font-bold mb-2 uppercase tracking-wider"><i class="fas fa-envelope-open-text mr-1"></i> Data Surat (Opsional)</p>
              <div id="containerDataSurat">
@@ -423,49 +513,81 @@
           </div>
 
           <div class="grid grid-cols-2 gap-3 mb-4">
-             <div><label class="block text-xs font-bold text-blue-300 mb-1">Tanggal Kegiatan</label><input type="date" id="tanggalLaporan" class="w-full p-3 text-sm rounded-xl glossy-input" required></div>
-             <div><label class="block text-xs font-bold text-blue-300 mb-1">Jam Pelaksanaan</label><input type="time" id="jamMulai" class="w-full p-3 text-sm rounded-xl glossy-input" required></div>
+             <div>
+                 <label class="block text-xs font-bold text-blue-300 mb-1">Tanggal</label>
+                 <input type="date" id="tanggalLaporan" class="w-full p-3 text-sm rounded-xl glossy-input" required>
+             </div>
+             <div>
+                 <label class="block text-xs font-bold text-blue-300 mb-1">Jam</label>
+                 <input type="time" id="jamMulai" class="w-full p-3 text-sm rounded-xl glossy-input" required>
+             </div>
           </div>
   
           <div class="grid grid-cols-2 gap-3 mb-4">
-             <div><label class="block text-xs font-bold text-blue-300 mb-1">Nama Petugas</label><input type="text" id="namaPetugas" class="w-full p-3 text-sm rounded-xl glossy-input" readonly></div>
-             <div><label class="block text-xs font-bold text-blue-300 mb-1">NIP (Opsional)</label><input type="text" id="nip" class="w-full p-3 text-sm rounded-xl glossy-input" readonly></div>
+             <div>
+                 <label class="block text-xs font-bold text-blue-300 mb-1">Nama Petugas</label>
+                 <input type="text" id="namaPetugas" class="w-full p-3 text-sm rounded-xl glossy-input" readonly>
+             </div>
+             <div>
+                 <label class="block text-xs font-bold text-blue-300 mb-1">NIP (Opsional)</label>
+                 <input type="text" id="nip" class="w-full p-3 text-sm rounded-xl glossy-input" readonly>
+             </div>
           </div>
  
+          <div class="grid grid-cols-2 gap-3 mb-4">
+             <div>
+                 <label class="block text-xs font-bold text-blue-300 mb-1">Jabatan Hak Akses</label>
+                 <input type="text" id="jabatan" class="w-full p-3 text-sm rounded-xl glossy-input" readonly>
+             </div>
+             <div>
+                 <label class="block text-xs font-bold text-blue-300 mb-1">Email Target</label>
+                 <input type="email" id="emailTarget" class="w-full p-3 text-sm rounded-xl glossy-input" readonly>
+             </div>
+          </div>
+
+          <!-- JABATAN DROPDOWN KHUSUS UNTUK PDF (PERMINTAAN USER) -->
           <div class="mb-4">
-             <label class="block text-xs font-bold text-blue-300 mb-1">Jabatan (Sesuai Kebutuhan Template PDF)</label>
-             <select id="jabatanPDF" class="w-full p-3 text-sm rounded-xl glossy-input">
+             <label class="block text-xs font-bold text-blue-300 mb-1">Jabatan (Untuk dicetak di PDF)</label>
+             <select id="jabatanPDF" class="w-full p-3 text-sm rounded-xl glossy-input" required>
                  <option value="Penata layanan operasional">Penata layanan operasional</option>
                  <option value="Pengelola layanan operasional">Pengelola layanan operasional</option>
                  <option value="Operator layanan operasional">Operator layanan operasional</option>
              </select>
-             <p class="text-[9px] text-zinc-400 mt-1">*Jabatan ini yang akan tercetak di PDF. Berbeda dengan hak akses RHK Anda.</p>
           </div>
-
+       
           <div class="grid grid-cols-2 gap-3 mb-4">
-            <div><label class="block text-xs font-bold text-blue-300 mb-1">Kabupaten/Kota</label><input type="text" id="kabupaten" value="Tapin" class="w-full p-3 text-sm rounded-xl glossy-input" required></div>
-             <div><label class="block text-xs font-bold text-blue-300 mb-1">Lokasi</label><input type="text" id="lokasi" class="w-full p-3 text-sm rounded-xl glossy-input" placeholder="Kantor Desa..." required></div>
+            <div>
+                <label class="block text-xs font-bold text-blue-300 mb-1">Kabupaten/Kota</label>
+                <input type="text" id="kabupaten" value="Tapin" class="w-full p-3 text-sm rounded-xl glossy-input" required>
+            </div>
+             <div>
+                 <label class="block text-xs font-bold text-blue-300 mb-1">Lokasi</label>
+                 <input type="text" id="lokasi" class="w-full p-3 text-sm rounded-xl glossy-input" placeholder="Kantor Desa..." required>
+             </div>
           </div>
 
           <div class="mb-4 bg-blue-900/10 p-3 rounded-xl border border-blue-500/30">
              <label class="block text-xs font-bold text-blue-300 mb-2"><i class="fas fa-search mr-1"></i> Cari Rencana Aksi Harian</label>
-             <input type="text" id="searchRHK" class="w-full p-2 mb-3 text-sm rounded-lg glossy-input" placeholder="🔍 Ketik Rencana Aksi..." onkeyup="filterRHKByJabatan()">
+             <input type="text" id="searchRHK" class="w-full p-2 mb-3 text-sm rounded-lg glossy-input" placeholder="🔍 Ketik Rencana Aksi..." onkeyup="filterRHK()">
              <select id="kegiatanSelect" class="w-full p-3 text-sm rounded-xl glossy-input font-medium text-[11px]" onchange="renderDynamicForm()" required>
                 <option value="">Memuat data kegiatan...</option>
              </select>
           </div>
 
-          <!-- FORM DINAMIS (CERDAS) -->
-          <div id="dynamicFormArea" class="bg-black/30 p-3 rounded-xl border border-zinc-700/50 mb-4 transition-all duration-300">
-              <p class="text-[10px] text-zinc-500 text-center italic">Pilih kegiatan untuk menampilkan form dinamis dan catatan AI.</p>
+          <!-- AREA FORM DINAMIS & CATATAN AI -->
+          <div id="dynamicFormArea" class="space-y-4 mb-4 transition-all duration-300 bg-black/30 p-3 rounded-xl border border-zinc-700/50">
+              <p class="text-[10px] text-zinc-500 text-center italic">Pilih kegiatan untuk menampilkan form dinamis dan analisa AI.</p>
           </div>
 
           <div class="mb-4">
             <label class="block text-xs font-bold text-blue-300 mb-1">Upload TTD</label>
             <input type="file" id="formTtdFile" accept="image/png, image/jpeg" class="w-full text-sm rounded-xl glossy-input text-zinc-400 file:mr-3 file:py-2 file:px-4 file:rounded-l-xl file:border-0 file:text-xs file:font-bold file:bg-blue-500 file:text-white cursor-pointer" onchange="prosesTtdForm(event)" required>
-            <div id="previewTtdContainer" class="hidden mt-3 relative w-[100px] h-[50px] bg-white rounded-lg p-1 shadow-md">
+            
+            <div id="previewTtdContainer" class="hidden mt-3 relative w-[100px] h-[50px] bg-white rounded-lg p-1 shadow-md border border-blue-500/50">
                 <img id="imgTtdPreview" src="" class="w-full h-full object-contain">
-                <div onclick="hapusTtdForm()" class="absolute -top-2 -right-2 bg-red-600 text-white w-5 h-5 flex items-center justify-center rounded-full cursor-pointer"><i class="fas fa-times"></i></div>
+                <div onclick="hapusTtdForm()" class="absolute -top-2 -right-2 bg-red-600 text-white w-5 h-5 flex items-center justify-center rounded-full cursor-pointer z-10">
+                    <i class="fas fa-times"></i>
+                </div>
             </div>
           </div>
 
@@ -497,7 +619,7 @@
             <p id="photoStatus" class="text-[10px] text-zinc-500 mt-1">0 / 10 Foto</p>
           </div>
 
-           <button type="submit" id="btnSubmit" class="w-full bg-gradient-to-r from-blue-500 to-blue-400 text-white font-extrabold py-4 px-4 rounded-xl shadow-[0_5px_20px_rgba(59,130,246,0.4)] transition-all text-sm tracking-wide">
+           <button type="submit" id="btnSubmit" class="w-full bg-gradient-to-r from-blue-500 to-blue-400 text-white font-extrabold py-4 px-4 rounded-xl shadow-[0_5px_20px_rgba(59,130,246,0.4)] transition-all text-sm tracking-wide hover:shadow-[0_0_25px_rgba(59,130,246,0.8)]">
               <span id="btnText"><i class="fas fa-paper-plane mr-2"></i> Eksekusi AI & Drive (1 Token)</span>
             </button>
         </form>
@@ -526,10 +648,17 @@
         <div class="overflow-x-auto overflow-y-auto custom-scrollbar rounded-lg border border-zinc-700 pb-2 relative w-full">
              <table class="min-w-full text-left text-[10px] text-zinc-300">
                 <thead class="bg-zinc-900/80 text-blue-400 border-b border-blue-500/20 sticky top-0 z-10">
-                    <tr><th class="p-3 whitespace-nowrap">Nama</th><th class="p-3 whitespace-nowrap">Tanggal & Jam</th><th class="p-3 whitespace-nowrap">Kegiatan</th><th class="p-3 whitespace-nowrap">Status</th></tr>
+                    <tr>
+                        <th class="p-3 whitespace-nowrap">Nama</th>
+                        <th class="p-3 whitespace-nowrap">Tanggal & Jam</th>
+                        <th class="p-3 whitespace-nowrap">Kegiatan</th>
+                        <th class="p-3 whitespace-nowrap">Status</th>
+                    </tr>
                 </thead>
                 <tbody id="tableBody" class="divide-y divide-zinc-800/50">
-                    <tr><td colspan="4" class="text-center p-6"><i class="fas fa-spinner fa-spin text-blue-500 mb-2"></i></td></tr>
+                    <tr>
+                        <td colspan="4" class="text-center p-6"><i class="fas fa-spinner fa-spin text-blue-500 mb-2"></i></td>
+                    </tr>
                 </tbody>
              </table>
         </div>
@@ -542,10 +671,38 @@
       </section>
 
       <!-- ============================================== -->
-      <!-- SECTION 6: PENGATURAN USER (DRIVE ID)          -->
+      <!-- SECTION 6: ARSIP DRIVE                         -->
+      <!-- ============================================== -->
+      <section id="sec-arsip" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
+        <div class="flex justify-between items-center mb-4 border-b border-zinc-700 pb-2">
+            <h2 class="text-lg font-bold text-blue-400"><i class="fas fa-folder-open mr-2"></i> Arsip Laporan (Drive)</h2>
+            <button onclick="loadDashboardData()" class="text-xs bg-blue-500/20 text-blue-400 hover:bg-blue-500/40 p-2 rounded-lg">
+                <i class="fas fa-sync-alt"></i>
+            </button>
+        </div>
+        <div class="overflow-y-auto max-h-[65vh] custom-scrollbar rounded-lg border border-zinc-700 w-full">
+           <table class="min-w-full text-left text-[10px] text-zinc-300">
+               <thead class="bg-zinc-900/80 text-blue-400 sticky top-0 z-10">
+                   <tr>
+                       <th class="p-3 whitespace-nowrap">Tanggal</th>
+                       <th class="p-3">Rencana Aksi / Kegiatan</th>
+                       <th class="p-3 text-center whitespace-nowrap">Link Drive</th>
+                   </tr>
+               </thead>
+               <tbody id="tableArsipBody" class="divide-y divide-zinc-800/50">
+                   <tr>
+                       <td colspan="3" class="text-center p-6"><i class="fas fa-spinner fa-spin text-blue-500"></i></td>
+                   </tr>
+               </tbody>
+           </table>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- SECTION 7: PENGATURAN USER (DRIVE ID)          -->
       <!-- ============================================== -->
       <section id="sec-pengaturan" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
-         <h2 class="text-lg font-bold text-blue-400 border-b border-zinc-700 pb-2"><i class="fab fa-google-drive mr-2"></i> Pengaturan Penyimpanan</h2>
+         <h2 class="text-lg font-bold text-blue-400 border-b border-zinc-700 pb-2"><i class="fab fa-google-drive mr-2"></i> Pengaturan Akun & Drive</h2>
          
          <div class="mt-4 mb-4 bg-black/30 p-4 rounded-xl border border-zinc-700/50">
              <h3 class="text-xs font-bold text-blue-300 mb-3 uppercase tracking-wider">ID Folder Google Drive Pribadi</h3>
@@ -553,7 +710,7 @@
              <input type="text" id="inputUbahDrive" class="w-full p-2 text-xs rounded-lg glossy-input mb-2" placeholder="Contoh: 1xaw6b... atau https://drive...">
              
              <div class="bg-blue-900/20 border border-blue-500/30 p-3 rounded-lg text-[10px] text-zinc-300 mb-4">
-                 <b>PENTING:</b><br>1. Buat folder di Google Drive Anda.<br>2. Ubah akses berbaginya menjadi <b>"Siapa saja yang memiliki link (Pelihat)"</b>.<br>3. Copy Link-nya dan tempel di atas. File PDF akan otomatis masuk dan tersusun rapi di folder Anda tersebut!
+                 <b>PENTING:</b><br>1. Buat folder di Google Drive Anda.<br>2. Ubah akses berbaginya menjadi <b>"Siapa saja yang memiliki link (Editor/Pelihat)"</b>.<br>3. Paste Link di atas. File PDF akan otomatis masuk ke folder tersebut secara terstruktur (Kategori/Bulan/Kegiatan).
              </div>
              
              <button onclick="simpanProfileUser()" class="w-full bg-blue-500/20 border border-blue-500 text-blue-300 font-bold py-2 rounded-lg text-xs hover:bg-blue-500/40 transition-all">
@@ -579,7 +736,7 @@
       </section>
 
       <!-- ============================================== -->
-      <!-- SECTION 7: TOKEN (DINAMIS DARI PENGATURAN)     -->
+      <!-- SECTION 8: TOKEN (DINAMIS DARI PENGATURAN)     -->
       <!-- ============================================== -->
       <section id="sec-token" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
         <h2 class="text-lg font-bold text-blue-400 border-b border-zinc-700 pb-2"><i class="fas fa-coins mr-2"></i> Beli Token AI</h2>
@@ -588,22 +745,37 @@
             <p class="text-xs text-blue-300 mb-2 font-bold uppercase">Pembayaran / Transfer ke:</p>
             <p id="txtRekDisplay" class="text-[12px] font-mono text-yellow-400 font-bold bg-zinc-900 p-2 rounded-lg border border-zinc-700 inline-block mb-3 tracking-wider">Memuat Rekening...</p>
             <p class="text-[10px] text-zinc-400 mb-2">Atau Scan QRIS di bawah ini:</p>
-            <img id="imgQrisDisplay" src="https://drive.google.com/thumbnail?id=1DenWfIyBEbCrK1zaFHe_Xa9cHqfZXYCf&sz=w800" alt="QRIS" class="w-full max-w-[200px] mx-auto rounded-xl shadow-[0_0_15px_rgba(59,130,246,0.3)] border-2 border-blue-500/50">
+            <img id="imgQrisDisplay" src="" alt="QRIS" class="w-full max-w-[200px] mx-auto rounded-xl shadow-[0_0_15px_rgba(59,130,246,0.3)] border-2 border-blue-500/50">
         </div>
         
         <div class="mb-3 bg-blue-900/20 border border-blue-500/30 p-4 rounded-xl flex justify-between items-center">
             <div><h3 class="font-bold text-white text-md">Paket Basic</h3><p class="text-xs text-zinc-300">6 Token</p></div>
-            <div class="text-right"><p class="text-lg font-black text-blue-400 mb-1">Rp 10.000</p><button onclick="konfirmasiWA('Basic', 6, 10000)" class="bg-green-600 text-white font-bold py-1.5 px-3 rounded-lg text-xs hover:scale-95 transition-transform"><i class="fab fa-whatsapp"></i> Beli</button></div>
+            <div class="text-right">
+                <p class="text-lg font-black text-blue-400 mb-1">Rp 10.000</p>
+                <button onclick="konfirmasiWA('Basic', 6, 10000)" class="bg-green-600 text-white font-bold py-1.5 px-3 rounded-lg text-xs hover:scale-95 transition-transform">
+                    <i class="fab fa-whatsapp"></i> Beli
+                </button>
+            </div>
         </div>
         
         <div class="mb-3 bg-blue-900/20 border border-blue-500/30 p-4 rounded-xl flex justify-between items-center">
             <div><h3 class="font-bold text-white text-md flex items-center gap-1">Paket Pro <i class="fas fa-star text-yellow-400 text-[10px]"></i></h3><p class="text-xs text-zinc-300">20 Token</p></div>
-            <div class="text-right"><p class="text-lg font-black text-blue-400 mb-1">Rp 30.000</p><button onclick="konfirmasiWA('Pro', 20, 30000)" class="bg-green-600 text-white font-bold py-1.5 px-3 rounded-lg text-xs hover:scale-95 transition-transform"><i class="fab fa-whatsapp"></i> Beli</button></div>
+            <div class="text-right">
+                <p class="text-lg font-black text-blue-400 mb-1">Rp 30.000</p>
+                <button onclick="konfirmasiWA('Pro', 20, 30000)" class="bg-green-600 text-white font-bold py-1.5 px-3 rounded-lg text-xs hover:scale-95 transition-transform">
+                    <i class="fab fa-whatsapp"></i> Beli
+                </button>
+            </div>
         </div>
         
         <div class="mb-4 bg-blue-900/20 border border-blue-500/30 p-4 rounded-xl flex justify-between items-center">
             <div><h3 class="font-bold text-white text-md flex items-center gap-1">Paket Ultra <i class="fas fa-crown text-yellow-400 text-[10px]"></i></h3><p class="text-xs text-zinc-300">35 Token</p></div>
-            <div class="text-right"><p class="text-lg font-black text-blue-400 mb-1">Rp 50.000</p><button onclick="konfirmasiWA('Ultra', 35, 50000)" class="bg-green-600 text-white font-bold py-1.5 px-3 rounded-lg text-xs hover:scale-95 transition-transform"><i class="fab fa-whatsapp"></i> Beli</button></div>
+            <div class="text-right">
+                <p class="text-lg font-black text-blue-400 mb-1">Rp 50.000</p>
+                <button onclick="konfirmasiWA('Ultra', 35, 50000)" class="bg-green-600 text-white font-bold py-1.5 px-3 rounded-lg text-xs hover:scale-95 transition-transform">
+                    <i class="fab fa-whatsapp"></i> Beli
+                </button>
+            </div>
         </div>
         
         <div class="p-3 bg-red-900/20 border border-red-500/30 rounded-xl mb-2">
@@ -615,7 +787,7 @@
       </section>
 
       <!-- ============================================== -->
-      <!-- SECTION 8: ADMIN (KELOLA USER & KEUANGAN)      -->
+      <!-- SECTION 9: ADMIN (KELOLA USER & KEUANGAN)      -->
       <!-- ============================================== -->
       <section id="sec-admin" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
          <h2 class="text-lg font-bold text-blue-400 border-b border-zinc-700 pb-2"><i class="fas fa-user-shield mr-2"></i> Manajemen User & Token</h2>
@@ -646,29 +818,19 @@
          <h2 class="text-lg font-bold text-blue-400 border-b border-zinc-700 pb-2"><i class="fas fa-cogs mr-2"></i> Pengaturan Master Sistem</h2>
          
          <div class="mt-4 mb-4 bg-black/30 p-4 rounded-xl border border-zinc-700/50">
-             <h3 class="text-xs font-bold text-blue-300 mb-3 uppercase tracking-wider">Setup Kontak & Pembayaran User</h3>
-             
-             <label class="block text-[10px] text-zinc-400 mb-1">Nomor WhatsApp Admin (Dihubungi User)</label>
+             <h3 class="text-xs font-bold text-blue-300 mb-3 uppercase tracking-wider">Setup Kontak & Pembayaran</h3>
+             <label class="block text-[10px] text-zinc-400 mb-1">Nomor WhatsApp Admin</label>
              <div class="flex gap-2 mb-3">
                  <span class="p-2 bg-zinc-800 rounded-lg text-xs font-bold text-zinc-400 border border-zinc-600">+62</span>
                  <input type="number" id="inputSetWA" class="w-full p-2 text-xs rounded-lg glossy-input" placeholder="89504686529">
              </div>
-             
              <label class="block text-[10px] text-zinc-400 mb-1">Nomor Rekening</label>
              <input type="text" id="inputSetRek" class="w-full p-2 text-xs rounded-lg glossy-input mb-3" placeholder="Misal: BSI 123456 a.n Zaen">
-             
-             <label class="block text-[10px] text-zinc-400 mb-1">Link Gambar QRIS (Gunakan link Download Google Drive)</label>
+             <label class="block text-[10px] text-zinc-400 mb-1">Link Gambar QRIS</label>
              <input type="text" id="inputSetQRIS" class="w-full p-2 text-xs rounded-lg glossy-input mb-4" placeholder="https://...">
              
              <button onclick="simpanPengaturanAdmin()" class="w-full bg-blue-500/20 border border-blue-500 text-blue-300 font-bold py-2 rounded-lg text-xs hover:bg-blue-500/40">
                  <i class="fas fa-save mr-1"></i> Update Pengaturan Master
-             </button>
-         </div>
-         
-         <div class="mt-4 mb-4 bg-black/30 p-4 rounded-xl border border-zinc-700/50">
-             <h3 class="text-xs font-bold text-blue-300 mb-3 uppercase tracking-wider">Update Keamanan (Admin Master)</h3>
-             <button onclick="jalankanSetupAwal()" class="w-full bg-red-500/20 border border-red-500 text-red-400 font-bold py-2 rounded-lg text-xs hover:bg-red-500/40">
-                 <i class="fas fa-database mr-1"></i> Factory Reset Setup Database
              </button>
          </div>
       </section>
@@ -718,7 +880,7 @@
       </section>
 
       <!-- ============================================== -->
-      <!-- SECTION 9: PANDUAN                             -->
+      <!-- SECTION 10: PANDUAN                            -->
       <!-- ============================================== -->
       <section id="sec-panduan" class="glossy-monster p-5 rounded-2xl mb-6 section-hidden">
          <h2 class="text-lg font-bold text-blue-400 border-b border-zinc-700 pb-2"><i class="fas fa-book mr-2"></i> Panduan & Aturan</h2>
@@ -737,7 +899,7 @@
                 <p class="text-red-400 font-bold mb-1"><i class="fas fa-exclamation-triangle mr-1"></i> PERATURAN MUTLAK</p>
                 <p><b>1. TIDAK ADA REFUND.</b> Token yang dibeli tidak dapat diuangkan kembali.</p>
                 <p class="mt-1"><b>2. TOKEN HANGUS.</b> Jika laporan gagal di-generate karena salah input, token terpotong <b>HANGUS</b>.</p>
-                <p class="mt-1"><b>3. ID FOLDER DRIVE PRIBADI.</b> Anda bisa memasukkan ID Folder Google Drive Anda sendiri di pengaturan akun. <br><b>Syarat Wajib:</b> Folder tersebut harus disetting Share <b>"Siapa saja yang memiliki link (Anyone with the link)"</b> sebagai Editor/Pelihat agar AI bisa menyimpan PDF kesana.</p>
+                <p class="mt-1"><b>3. ID FOLDER DRIVE PRIBADI.</b> Anda bisa memasukkan ID Folder Google Drive Anda sendiri di menu Pengaturan Akun. <br><b>Syarat Wajib:</b> Ubah setelan Berbagi folder Anda menjadi <b>"Siapa saja yang memiliki link (Editor/Pelihat)"</b> agar AI bisa menyimpan PDF ke sana.</p>
             </div>
          </div>
       </section>
@@ -761,14 +923,19 @@
     </nav>
   </div>
 
-  <!-- SCRIPT LOGIKA UTAMA -->
+  <!-- ============================================== -->
+  <!-- SCRIPT LOGIKA JAVASCRIPT                       -->
+  <!-- ============================================== -->
   <script>
     // ==========================================
     // API ENDPOINT - LINK WEB APP GAS ANDA (PENTING)
     // ==========================================
-    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxDgjllxkw0Hs2ZrNjaC3cohzmOagfxV8vfm_uf-KCk1b19_RBc5H--6MUswNMD8S5z/exec";
+    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbyXBJ0C3oHNtR3LtH3gYbpcY10CqBOdSSdoEIpelXxthCjbU6pm7wlAyP3SkAHM_a1P/exec";
 
     const $ = id => document.getElementById(id);
+    const SUPABASE_URL = "https://rtqfwssxwsrgttvfgerg.supabase.co"; 
+    const SUPABASE_ANON_KEY = "sb_publishable_fKkgsEIK1Z1yT4Vvy4Uu7g_nSo1fofJ"; 
+    const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     // Variabel Global
     let currentUser = null;
@@ -793,19 +960,73 @@
     let tempBeliJml = 0;
     let tempBeliHarga = 0;
 
+    // HARDCODED FALLBACK RHK (AGAR TIDAK PERNAH KOSONG)
+    const fbRHK = [
+        { j: "Penata layanan operasional", r: "RHK 1", k: "Melakukan edukasi pencairan tunai non tunai", t: "1" },
+        { j: "Penata layanan operasional", r: "RHK 2", k: "Pertemuan Peningkatan Kemampuan Keluarga (P2K2)", t: "15" },
+        { j: "Penata layanan operasional", r: "RHK 3", k: "Verifikasi Komitmen Pendidikan, Kesehatan", t: "2" },
+        { j: "Penata layanan operasional", r: "RHK 4", k: "Usulan KPM Graduasi mandiri", t: "2" },
+        { j: "Penata layanan operasional", r: "RHK 5", k: "Pemutakhiran Data", t: "3" },
+        { j: "Penata layanan operasional", r: "RHK 6", k: "Respon Kasus Pengaduan", t: "1" },
+        { j: "Penata layanan operasional", r: "RHK 7", k: "Laporan bulanan pelaksanaan PKH", t: "1" },
+        { j: "Penata layanan operasional", r: "RHK 8", k: "Tindak Lanjut Hasil Pemeriksaan (TLHP)", t: "2" },
+        { j: "Penata layanan operasional", r: "RHK 9", k: "Berita Baik di Media Sosial", t: "1" },
+        { j: "Pengelola layanan operasional", r: "RHK 1", k: "Melakukan edukasi pencairan tunai non tunai", t: "1" },
+        { j: "Pengelola layanan operasional", r: "RHK 2", k: "Pertemuan Peningkatan Kemampuan Keluarga (P2K2)", t: "15" },
+        { j: "Pengelola layanan operasional", r: "RHK 3", k: "Verifikasi Komitmen Pendidikan, Kesehatan", t: "2" },
+        { j: "Pengelola layanan operasional", r: "RHK 4", k: "Usulan KPM Graduasi mandiri", t: "2" },
+        { j: "Pengelola layanan operasional", r: "RHK 5", k: "Pemutakhiran Data", t: "3" },
+        { j: "Pengelola layanan operasional", r: "RHK 6", k: "Respon Kasus Pengaduan", t: "1" },
+        { j: "Pengelola layanan operasional", r: "RHK 7", k: "Laporan bulanan pelaksanaan PKH", t: "1" },
+        { j: "Pengelola layanan operasional", r: "RHK 8", k: "Tindak Lanjut Hasil Pemeriksaan (TLHP)", t: "2" },
+        { j: "Pengelola layanan operasional", r: "RHK 9", k: "Berita Baik di Media Sosial", t: "1" },
+        { j: "Operator layanan operasional", r: "RHK 1", k: "Melakukan edukasi pencairan tunai non tunai", t: "1" },
+        { j: "Operator layanan operasional", r: "RHK 2", k: "Pertemuan Peningkatan Kemampuan Keluarga (P2K2)", t: "15" },
+        { j: "Operator layanan operasional", r: "RHK 3", k: "Verifikasi Komitmen Pendidikan, Kesehatan", t: "2" },
+        { j: "Operator layanan operasional", r: "RHK 4", k: "Usulan KPM Graduasi mandiri", t: "2" },
+        { j: "Operator layanan operasional", r: "RHK 5", k: "Pemutakhiran Data", t: "3" },
+        { j: "Operator layanan operasional", r: "RHK 6", k: "Respon Kasus Pengaduan", t: "1" },
+        { j: "Operator layanan operasional", r: "RHK 7", k: "Laporan bulanan pelaksanaan PKH", t: "1" },
+        { j: "Operator layanan operasional", r: "RHK 8", k: "Tindak Lanjut Hasil Pemeriksaan (TLHP)", t: "2" },
+        { j: "Operator layanan operasional", r: "RHK 9", k: "Berita Baik di Media Sosial", t: "1" },
+        { j: "Katim Kabupaten/Kota", r: "RHK 1", k: "Melaksanakan supervisi Kebijakan Bantuan Sosial", t: "1" },
+        { j: "Katim Kabupaten/Kota", r: "RHK 2", k: "Pertemuan Peningkatan Kemampuan Keluarga (P2K2)", t: "15" },
+        { j: "Katim Kabupaten/Kota", r: "RHK 3", k: "Verifikasi Komitmen Pendidikan, Kesehatan", t: "2" },
+        { j: "Katim Kabupaten/Kota", r: "RHK 4", k: "Usulan KPM Graduasi mandiri", t: "2" },
+        { j: "Katim Kabupaten/Kota", r: "RHK 5", k: "Pemutakhiran Data", t: "3" },
+        { j: "Katim Kabupaten/Kota", r: "RHK 6", k: "Respon Kasus Pengaduan", t: "1" },
+        { j: "Katim Kabupaten/Kota", r: "RHK 7", k: "Laporan bulanan pelaksanaan PKH", t: "1" },
+        { j: "Katim Kabupaten/Kota", r: "RHK 8", k: "Tindak Lanjut Hasil Pemeriksaan (TLHP)", t: "2" },
+        { j: "Katim Kabupaten/Kota", r: "RHK 9", k: "Berita Baik di Media Sosial", t: "1" },
+        { j: "Katim Provinsi", r: "RHK 1", k: "Melaksanakan supervisi Kebijakan Bantuan Sosial", t: "1" },
+        { j: "Katim Provinsi", r: "RHK 2", k: "Pertemuan Peningkatan Kemampuan Keluarga (P2K2)", t: "15" },
+        { j: "Katim Provinsi", r: "RHK 3", k: "Verifikasi Komitmen Pendidikan, Kesehatan", t: "2" },
+        { j: "Katim Provinsi", r: "RHK 4", k: "Usulan KPM Graduasi mandiri", t: "2" },
+        { j: "Katim Provinsi", r: "RHK 5", k: "Pemutakhiran Data", t: "3" },
+        { j: "Katim Provinsi", r: "RHK 6", k: "Respon Kasus Pengaduan", t: "1" },
+        { j: "Katim Provinsi", r: "RHK 7", k: "Laporan bulanan pelaksanaan PKH", t: "1" },
+        { j: "Katim Provinsi", r: "RHK 8", k: "Tindak Lanjut Hasil Pemeriksaan (TLHP)", t: "2" },
+        { j: "Katim Provinsi", r: "RHK 9", k: "Berita Baik di Media Sosial", t: "1" }
+    ];
+
     // ==========================================
-    // FUNGSI KOMUNIKASI PURE GOOGLE APPS SCRIPT
+    // FUNGSI KOMUNIKASI API FETCH KE GOOGLE APPS SCRIPT
     // ==========================================
-    function apiCall(action, dataObj = {}) {
-        return new Promise((resolve, reject) => {
-            google.script.run
-                .withSuccessHandler(res => {
-                    if (res && res.status === 'error') reject(new Error(res.message));
-                    else resolve(res);
-                })
-                .withFailureHandler(err => reject(new Error("Koneksi Error. " + err.message)))
-                .apiRouter(action, dataObj);
-        });
+    async function apiCall(action, dataObj = {}) {
+        try {
+            const res = await fetch(GAS_API_URL, { 
+                method: 'POST', 
+                body: JSON.stringify({ action: action, data: dataObj }), 
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' } 
+            });
+            const txt = await res.text(); 
+            if (!txt) throw new Error("Server response kosong.");
+            const p = JSON.parse(txt); 
+            if (p.status === 'error') throw new Error(p.message); 
+            return p;
+        } catch (e) { 
+            throw new Error("Koneksi API Error/CORS. Pastikan Link GAS di-Deploy 'Anyone'. Error detail: " + e.message); 
+        }
     }
 
     // ==========================================
@@ -813,8 +1034,8 @@
     // ==========================================
     function showToast(msg, type='success') {
         const t = document.createElement('div');
-        const i = type==='success' ? '<i class="fas fa-check-circle text-blue-400 text-lg"></i>' : '<i class="fas fa-times-circle text-red-500 text-lg"></i>';
-        const b = type==='success' ? 'bg-zinc-900 border-blue-500/40' : 'bg-red-950 border-red-500/50';
+        const i = type === 'success' ? '<i class="fas fa-check-circle text-blue-400 text-lg"></i>' : '<i class="fas fa-times-circle text-red-500 text-lg"></i>';
+        const b = type === 'success' ? 'bg-zinc-900 border-blue-500/40' : 'bg-red-950 border-red-500/50';
         
         t.className = `flex items-center gap-3 p-3 rounded-xl backdrop-blur-md shadow-2xl border transform transition-all duration-300 translate-y-[-20px] opacity-0 ${b} text-white`; 
         t.innerHTML = `${i} <span class="text-sm font-bold">${msg}</span>`; 
@@ -852,19 +1073,25 @@
     function showLoadingUI(s) { 
         const l = $('fullscreenLoading'); 
         if(s) { 
-            l.classList.replace('hidden', 'flex'); 
+            l.classList.remove('hidden'); 
+            l.classList.add('flex'); 
             setTimeout(() => l.classList.remove('opacity-0'), 10); 
         } else { 
             l.classList.add('opacity-0'); 
-            setTimeout(() => l.classList.replace('flex', 'hidden'), 200); 
+            setTimeout(() => { 
+                l.classList.remove('flex'); 
+                l.classList.add('hidden'); 
+            }, 200); 
         } 
     }
 
-    window.onload = function() {
+    window.onload = async function() {
       setInterval(() => { 
           const now = new Date(); 
           $('realtimeClock').innerText = new Intl.DateTimeFormat('id-ID', { timeZone: 'Asia/Makassar', hour: '2-digit', minute: '2-digit', second:'2-digit', hour12: false }).format(now).replace(/\./g, ':'); 
       }, 1000);
+      
+      listKegiatanGlobal = fbRHK.map(x => ({ jabatan: x.j, kategori_rhk: x.r, kegiatan: x.k, target: x.t+" Lap/Bln" }));
       
       if (localStorage.getItem('egenlap_user')) { 
           currentUser = JSON.parse(localStorage.getItem('egenlap_user')); 
@@ -873,10 +1100,11 @@
           $('sec-auth').classList.remove('section-hidden'); 
       }
       
-      google.script.run.withSuccessHandler(data => {
-          listKegiatanGlobal = data;
+      try { 
+          const { data } = await db.from('master_rhk').select('*'); 
+          if (data && data.length > 0) listKegiatanGlobal = data; 
           if(currentUser) { filterRHK(); renderTargetTable(); } 
-      }).getMasterRHK();
+      } catch(e){}
     };
 
     // ==========================================
@@ -974,7 +1202,7 @@
     }
 
     // ==========================================
-    // AUTHENTICATION LOGIC (DENGAN BYPASS ADMIN MUTLAK)
+    // AUTHENTICATION LOGIC (BYPASS ADMIN MUTLAK)
     // ==========================================
     function toggleAuthForm() { 
         $('formLogin').classList.toggle('hidden'); 
@@ -1014,7 +1242,7 @@
                 filterRHK(); 
                 renderTargetTable(); 
                 showToast("Bypass Admin Aktif!"); 
-            }, 300); 
+            }, 500); 
             return;
         }
         
@@ -1073,25 +1301,34 @@
         $('btnHeaderHamburger').classList.remove('hidden');
         $('sideMenuRole').innerText = currentUser.data.email;
         
-        const readOnlyFields = ['namaPetugas', 'nip', 'jabatan', 'emailTarget'];
+        const readOnlyFields = ['namaPetugas', 'nip', 'jabatan', 'emailTarget', 'kabupaten'];
 
         if(currentUser.role === 'admin') { 
             $('adminSideLinks').classList.remove('hidden'); 
             $('adminFilterContainer').classList.remove('hidden'); 
             
-            // ADMIN BISA MENGUBAH SEMUA (BYPASS READONLY)
+            // ADMIN BISA MENGUBAH FORM INPUT (TIDAK READONLY)
             readOnlyFields.forEach(id => {
                const el = $(id);
                if(el) { el.readOnly = false; el.classList.remove('opacity-70', 'cursor-not-allowed', 'bg-zinc-900/50'); }
             });
             
             nav('admin'); 
-            cekNotifAdmin(); 
+            
+            // Cek Notifikasi untuk Admin
+            if(db) {
+                const tdy = new Date().toISOString().substring(0,10);
+                db.from('notifikasi_admin').select('*').gte('created_at', tdy).then(({data}) => {
+                    if(data && data.length > 0) {
+                        setTimeout(() => { alert(`NOTIFIKASI E-GENLAP:\nAda ${data.length} transaksi token hari ini!\n\n- ` + data.map(d => d.pesan).join('\n- ')); }, 1500);
+                    }
+                });
+            }
         } else { 
             $('adminSideLinks').classList.add('hidden'); 
             $('adminFilterContainer').classList.add('hidden'); 
             
-            // USER BIASA DIKUNCI
+            // USER BIASA DIKUNCI FORM INPUTNYA
             readOnlyFields.forEach(id => {
                const el = $(id);
                if(el) { el.readOnly = true; el.classList.add('opacity-70', 'cursor-not-allowed', 'bg-zinc-900/50'); }
@@ -1197,8 +1434,8 @@
                 } 
             });
             $('analisaKekurangan').innerHTML = aHTML || `<li class="text-lime-400 font-bold"><i class="fas fa-check-circle"></i> Target bulan ini Terpenuhi!</li>`;
-        }).catch(e => {
-            $('containerListAgenda').innerHTML = "Gagal memuat.";
+        }).catch(e => { 
+            $('containerListAgenda').innerHTML = "Gagal memuat."; 
         });
     }
 
@@ -1211,7 +1448,9 @@
             showLoadingUI(false); showToast("Agenda disimpan!"); 
             $('agTanggal').value=''; $('agJam').value=''; $('agLokasi').value=''; $('agKet').value=''; 
             loadAgendaData(); 
-        }).catch(e => { showLoadingUI(false); showToast("Error", "error"); });
+        }).catch(e => { 
+            showLoadingUI(false); showToast("Error", "error"); 
+        });
     }
 
     function downloadCSV(fname, rows) { 
@@ -1316,6 +1555,7 @@
                     <label class="block text-[10px] font-bold text-yellow-400 mb-1"><i class="fas fa-robot"></i> Catatan Khusus untuk AI (Acuan Pembuatan)</label>
                     <textarea id="dynAnalisaAI" rows="2" class="w-full p-2 text-xs rounded-lg glossy-input" placeholder="Arahan agar AI membuat laporan lebih tajam. Contoh: Fokuskan pada solusi masalah A..."></textarea>
                  </div>`;
+        
         $('dynamicFormArea').innerHTML = html;
     }
 
@@ -1438,19 +1678,6 @@
             const sItem = $('containerDataSurat').querySelectorAll('.surat-item'); for(let i=1; i<sItem.length; i++) sItem[i].remove(); $('dynamicFormArea').innerHTML = '';
             $('namaPetugas').value = currentUser.data.nama; $('nip').value = currentUser.data.nip; $('jabatan').value = currentUser.data.jabatan; $('emailTarget').value = currentUser.data.email;
             
-            // DOWNLOAD FILE VIA BROWSER
-            if(res.files && res.files.length > 0) {
-               res.files.forEach(f => {
-                   const byteCharacters = atob(f.base64);
-                   const byteNumbers = new Array(byteCharacters.length);
-                   for (let i = 0; i < byteCharacters.length; i++) byteNumbers[i] = byteCharacters.charCodeAt(i);
-                   const byteArray = new Uint8Array(byteNumbers);
-                   const blob = new Blob([byteArray], {type: f.mimeType});
-                   const url = window.URL.createObjectURL(blob);
-                   const a = document.createElement('a'); a.style.display = 'none'; a.href = url; a.download = f.name;
-                   document.body.appendChild(a); a.click(); window.URL.revokeObjectURL(url); document.body.removeChild(a);
-               });
-            }
             if(currentUser.role !== 'admin') { loadDashboardData(); nav('dashboard'); }
         }).catch(err => { showLoadingUI(false); showToast(err.message, "error"); });
     }
@@ -1458,19 +1685,6 @@
     // ==========================================
     // FUNGSI ADMIN PENGATURAN & KEUANGAN
     // ==========================================
-    function cekNotifAdmin() {
-        apiCall('getMonitoringAdmin', {}).then(data => {
-            let countToday = 0; let totalRp = 0;
-            const tdy = new Date().toISOString().substring(0,10);
-            data.forEach(d => { if(d.tanggalAsli.includes(tdy)) { countToday++; totalRp += d.nominal; } });
-            if(countToday > 0) {
-                setTimeout(() => { 
-                    alert(`NOTIFIKASI E-GENLAP:\nAda ${countToday} pesanan token baru hari ini!\nTotal: Rp ${totalRp.toLocaleString('id-ID')}`); 
-                }, 1500);
-            }
-        }).catch(e => console.log(e));
-    }
-
     function loadAdminUsers() {
         const tb = $('adminUserTable'); tb.innerHTML = `<tr><td colspan="3" class="text-center p-4"><i class="fas fa-spinner fa-spin text-blue-400"></i></td></tr>`;
         apiCall('getAllUsersAdmin', {}).then(users => {
@@ -1538,7 +1752,7 @@
         if(!u && !p && !d) { showToast("Tidak ada data yang diubah!", "error"); return; }
         
         showLoadingUI(true);
-        apiCall('updateProfileUser', { email: currentUser.data.email, newNama: u, newPass: p, driveId: d }).then(res => { 
+        apiCall('adminUpdateProfile', { email: currentUser.data.email, newNama: u, newPass: p, newDriveId: d }).then(res => { 
             showLoadingUI(false); 
             if(u){ currentUser.data.nama = u; }
             if(d){ currentUser.data.driveId = d; }
@@ -1606,8 +1820,6 @@
         $('rekapUserTable').innerHTML = hRkp || `<tr><td colspan="3" class="text-center p-4">Kosong.</td></tr>`; 
         $('monitoringSummary').classList.remove('hidden');
     }
-
-    function jalankanSetupAwal() { if(!confirm("BAHAYA! Reset Database?")) return; showLoadingUI(true); apiCall('setupAwal', {}).then(res => { showLoadingUI(false); alert(res); }).catch(err => { showLoadingUI(false); alert(err.message); }); }
     
     function konfirmasiWA(namaPaket, jmlToken, hargaNum) {
         if(!currentUser) { showToast("Login dulu!", "error"); nav('auth'); return; } 
@@ -1624,7 +1836,9 @@
     
     function eksekusiBeliWA() {
         document.getElementById('modalConfirmBeli').classList.add('hidden');
-        apiCall('updateTokenAdmin', { emailUser: currentUser.data.email, nominalToken: 0 }).then(r=>{}); // Trigger catat pending di backend
+        if(db) {
+            try { db.from('notifikasi_admin').insert([{ pesan: `User ${currentUser.data.nama} klik BELI Paket ${tempBeliPaket} (${tempBeliJml} Token) seharga Rp ${tempBeliHarga.toLocaleString('id-ID')}` }]); } catch(e) {}
+        }
         const pesan = `Halo Admin E-GenLap,%0A%0ASaya telah melakukan pembayaran QRIS/Transfer untuk token AI.%0A%0A*Nama:* ${currentUser.data.nama}%0A*Paket:* ${tempBeliPaket} (${tempBeliJml} Token)%0A*Nominal:* Rp ${tempBeliHarga.toLocaleString('id-ID')}%0A%0ABerikut saya lampirkan struknya. Terima kasih.`;
         window.open(`https://api.whatsapp.com/send?phone=${adminWA}&text=${pesan}`, '_blank');
     }
